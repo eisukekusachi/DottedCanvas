@@ -1,0 +1,39 @@
+disabled_rules:
+  - unused_optional_binding
+  - trailing_whitespace
+  - vertical_whitespace
+  - type_name
+  
+excluded:
+  - Pods
+  - Carthage
+  - SourcePackages
+  - Generated
+
+line_length:
+  warning: 300
+  error: 500
+
+type_body_length:
+- 400
+- 2000
+
+file_length:
+- 1000
+- 1500
+
+function_body_length:
+- 100
+- 200
+
+large_tuple: # warn user when using 3 values in tuple, give error if there are 4
+- 4
+- 5
+
+function_parameter_count:
+- 6
+- 7
+
+identifier_name:
+  min_length:
+    warning: 1
