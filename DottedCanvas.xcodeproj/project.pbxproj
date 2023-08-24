@@ -1,0 +1,588 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */; };
+		D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60C32A97AC9F009FCEE3 /* ContentView.swift */; };
+		D4CF60C62A97ACA1009FCEE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4CF60C52A97ACA1009FCEE3 /* Assets.xcassets */; };
+		D4CF60C92A97ACA1009FCEE3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4CF60C82A97ACA1009FCEE3 /* Preview Assets.xcassets */; };
+		D4CF60D32A97ACA1009FCEE3 /* DottedCanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60D22A97ACA1009FCEE3 /* DottedCanvasTests.swift */; };
+		D4CF60DD2A97ACA1009FCEE3 /* DottedCanvasUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60DC2A97ACA1009FCEE3 /* DottedCanvasUITests.swift */; };
+		D4CF60DF2A97ACA1009FCEE3 /* DottedCanvasUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60DE2A97ACA1009FCEE3 /* DottedCanvasUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D4CF60CF2A97ACA1009FCEE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4CF60B62A97AC9F009FCEE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4CF60BD2A97AC9F009FCEE3;
+			remoteInfo = DottedCanvas;
+		};
+		D4CF60D92A97ACA1009FCEE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4CF60B62A97AC9F009FCEE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4CF60BD2A97AC9F009FCEE3;
+			remoteInfo = DottedCanvas;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D4CF60BE2A97AC9F009FCEE3 /* DottedCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DottedCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasApp.swift; sourceTree = "<group>"; };
+		D4CF60C32A97AC9F009FCEE3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D4CF60C52A97ACA1009FCEE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D4CF60C82A97ACA1009FCEE3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D4CF60CE2A97ACA1009FCEE3 /* DottedCanvasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DottedCanvasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4CF60D22A97ACA1009FCEE3 /* DottedCanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasTests.swift; sourceTree = "<group>"; };
+		D4CF60D82A97ACA1009FCEE3 /* DottedCanvasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DottedCanvasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4CF60DC2A97ACA1009FCEE3 /* DottedCanvasUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasUITests.swift; sourceTree = "<group>"; };
+		D4CF60DE2A97ACA1009FCEE3 /* DottedCanvasUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D4CF60BB2A97AC9F009FCEE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4CF60CB2A97ACA1009FCEE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4CF60D52A97ACA1009FCEE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D4CF60B52A97AC9F009FCEE3 = {
+			isa = PBXGroup;
+			children = (
+				D4CF60C02A97AC9F009FCEE3 /* DottedCanvas */,
+				D4CF60D12A97ACA1009FCEE3 /* DottedCanvasTests */,
+				D4CF60DB2A97ACA1009FCEE3 /* DottedCanvasUITests */,
+				D4CF60BF2A97AC9F009FCEE3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D4CF60BF2A97AC9F009FCEE3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4CF60BE2A97AC9F009FCEE3 /* DottedCanvas.app */,
+				D4CF60CE2A97ACA1009FCEE3 /* DottedCanvasTests.xctest */,
+				D4CF60D82A97ACA1009FCEE3 /* DottedCanvasUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4CF60C02A97AC9F009FCEE3 /* DottedCanvas */ = {
+			isa = PBXGroup;
+			children = (
+				D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */,
+				D4CF60C32A97AC9F009FCEE3 /* ContentView.swift */,
+				D4CF60C52A97ACA1009FCEE3 /* Assets.xcassets */,
+				D4CF60C72A97ACA1009FCEE3 /* Preview Content */,
+			);
+			path = DottedCanvas;
+			sourceTree = "<group>";
+		};
+		D4CF60C72A97ACA1009FCEE3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D4CF60C82A97ACA1009FCEE3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D4CF60D12A97ACA1009FCEE3 /* DottedCanvasTests */ = {
+			isa = PBXGroup;
+			children = (
+				D4CF60D22A97ACA1009FCEE3 /* DottedCanvasTests.swift */,
+			);
+			path = DottedCanvasTests;
+			sourceTree = "<group>";
+		};
+		D4CF60DB2A97ACA1009FCEE3 /* DottedCanvasUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D4CF60DC2A97ACA1009FCEE3 /* DottedCanvasUITests.swift */,
+				D4CF60DE2A97ACA1009FCEE3 /* DottedCanvasUITestsLaunchTests.swift */,
+			);
+			path = DottedCanvasUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D4CF60BD2A97AC9F009FCEE3 /* DottedCanvas */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4CF60E22A97ACA1009FCEE3 /* Build configuration list for PBXNativeTarget "DottedCanvas" */;
+			buildPhases = (
+				D4CF60BA2A97AC9F009FCEE3 /* Sources */,
+				D4CF60BB2A97AC9F009FCEE3 /* Frameworks */,
+				D4CF60BC2A97AC9F009FCEE3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DottedCanvas;
+			productName = DottedCanvas;
+			productReference = D4CF60BE2A97AC9F009FCEE3 /* DottedCanvas.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D4CF60CD2A97ACA1009FCEE3 /* DottedCanvasTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4CF60E52A97ACA1009FCEE3 /* Build configuration list for PBXNativeTarget "DottedCanvasTests" */;
+			buildPhases = (
+				D4CF60CA2A97ACA1009FCEE3 /* Sources */,
+				D4CF60CB2A97ACA1009FCEE3 /* Frameworks */,
+				D4CF60CC2A97ACA1009FCEE3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4CF60D02A97ACA1009FCEE3 /* PBXTargetDependency */,
+			);
+			name = DottedCanvasTests;
+			productName = DottedCanvasTests;
+			productReference = D4CF60CE2A97ACA1009FCEE3 /* DottedCanvasTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D4CF60D72A97ACA1009FCEE3 /* DottedCanvasUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4CF60E82A97ACA1009FCEE3 /* Build configuration list for PBXNativeTarget "DottedCanvasUITests" */;
+			buildPhases = (
+				D4CF60D42A97ACA1009FCEE3 /* Sources */,
+				D4CF60D52A97ACA1009FCEE3 /* Frameworks */,
+				D4CF60D62A97ACA1009FCEE3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4CF60DA2A97ACA1009FCEE3 /* PBXTargetDependency */,
+			);
+			name = DottedCanvasUITests;
+			productName = DottedCanvasUITests;
+			productReference = D4CF60D82A97ACA1009FCEE3 /* DottedCanvasUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D4CF60B62A97AC9F009FCEE3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					D4CF60BD2A97AC9F009FCEE3 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					D4CF60CD2A97ACA1009FCEE3 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = D4CF60BD2A97AC9F009FCEE3;
+					};
+					D4CF60D72A97ACA1009FCEE3 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = D4CF60BD2A97AC9F009FCEE3;
+					};
+				};
+			};
+			buildConfigurationList = D4CF60B92A97AC9F009FCEE3 /* Build configuration list for PBXProject "DottedCanvas" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D4CF60B52A97AC9F009FCEE3;
+			productRefGroup = D4CF60BF2A97AC9F009FCEE3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D4CF60BD2A97AC9F009FCEE3 /* DottedCanvas */,
+				D4CF60CD2A97ACA1009FCEE3 /* DottedCanvasTests */,
+				D4CF60D72A97ACA1009FCEE3 /* DottedCanvasUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D4CF60BC2A97AC9F009FCEE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4CF60C92A97ACA1009FCEE3 /* Preview Assets.xcassets in Resources */,
+				D4CF60C62A97ACA1009FCEE3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4CF60CC2A97ACA1009FCEE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4CF60D62A97ACA1009FCEE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D4CF60BA2A97AC9F009FCEE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */,
+				D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4CF60CA2A97ACA1009FCEE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4CF60D32A97ACA1009FCEE3 /* DottedCanvasTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4CF60D42A97ACA1009FCEE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4CF60DF2A97ACA1009FCEE3 /* DottedCanvasUITestsLaunchTests.swift in Sources */,
+				D4CF60DD2A97ACA1009FCEE3 /* DottedCanvasUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D4CF60D02A97ACA1009FCEE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4CF60BD2A97AC9F009FCEE3 /* DottedCanvas */;
+			targetProxy = D4CF60CF2A97ACA1009FCEE3 /* PBXContainerItemProxy */;
+		};
+		D4CF60DA2A97ACA1009FCEE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4CF60BD2A97AC9F009FCEE3 /* DottedCanvas */;
+			targetProxy = D4CF60D92A97ACA1009FCEE3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D4CF60E02A97ACA1009FCEE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D4CF60E12A97ACA1009FCEE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D4CF60E32A97ACA1009FCEE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DottedCanvas/Preview Content\"";
+				DEVELOPMENT_TEAM = 59LR79WH8J;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eisukekusachi.DottedCanvas;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D4CF60E42A97ACA1009FCEE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DottedCanvas/Preview Content\"";
+				DEVELOPMENT_TEAM = 59LR79WH8J;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eisukekusachi.DottedCanvas;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D4CF60E62A97ACA1009FCEE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59LR79WH8J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eisukekusachi.DottedCanvasTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DottedCanvas.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DottedCanvas";
+			};
+			name = Debug;
+		};
+		D4CF60E72A97ACA1009FCEE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59LR79WH8J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eisukekusachi.DottedCanvasTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DottedCanvas.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DottedCanvas";
+			};
+			name = Release;
+		};
+		D4CF60E92A97ACA1009FCEE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59LR79WH8J;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eisukekusachi.DottedCanvasUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DottedCanvas;
+			};
+			name = Debug;
+		};
+		D4CF60EA2A97ACA1009FCEE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59LR79WH8J;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eisukekusachi.DottedCanvasUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DottedCanvas;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D4CF60B92A97AC9F009FCEE3 /* Build configuration list for PBXProject "DottedCanvas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4CF60E02A97ACA1009FCEE3 /* Debug */,
+				D4CF60E12A97ACA1009FCEE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4CF60E22A97ACA1009FCEE3 /* Build configuration list for PBXNativeTarget "DottedCanvas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4CF60E32A97ACA1009FCEE3 /* Debug */,
+				D4CF60E42A97ACA1009FCEE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4CF60E52A97ACA1009FCEE3 /* Build configuration list for PBXNativeTarget "DottedCanvasTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4CF60E62A97ACA1009FCEE3 /* Debug */,
+				D4CF60E72A97ACA1009FCEE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4CF60E82A97ACA1009FCEE3 /* Build configuration list for PBXNativeTarget "DottedCanvasUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4CF60E92A97ACA1009FCEE3 /* Debug */,
+				D4CF60EA2A97ACA1009FCEE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D4CF60B62A97AC9F009FCEE3 /* Project object */;
+}
