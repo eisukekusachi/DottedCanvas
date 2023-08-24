@@ -30,6 +30,10 @@
 		D4CF610D2A97B1C7009FCEE3 /* ColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4CF610C2A97B1C7009FCEE3 /* ColorAssets.xcassets */; };
 		D4CF610F2A97B1FE009FCEE3 /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF610E2A97B1FE009FCEE3 /* GlobalData.swift */; };
 		D4CF61112A97B205009FCEE3 /* DottedCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */; };
+		D4CF61132A97B524009FCEE3 /* TwoRowsSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61122A97B524009FCEE3 /* TwoRowsSliderView.swift */; };
+		D4CF61152A97B54A009FCEE3 /* DotImageCreationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61142A97B54A009FCEE3 /* DotImageCreationData.swift */; };
+		D4CF61172A97B5EF009FCEE3 /* DotImageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61162A97B5EF009FCEE3 /* DotImageCreationView.swift */; };
+		D4CF61192A97B64A009FCEE3 /* SubImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +80,10 @@
 		D4CF610C2A97B1C7009FCEE3 /* ColorAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ColorAssets.xcassets; sourceTree = "<group>"; };
 		D4CF610E2A97B1FE009FCEE3 /* GlobalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
 		D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasView.swift; sourceTree = "<group>"; };
+		D4CF61122A97B524009FCEE3 /* TwoRowsSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRowsSliderView.swift; sourceTree = "<group>"; };
+		D4CF61142A97B54A009FCEE3 /* DotImageCreationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotImageCreationData.swift; sourceTree = "<group>"; };
+		D4CF61162A97B5EF009FCEE3 /* DotImageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotImageCreationView.swift; sourceTree = "<group>"; };
+		D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImagePreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +192,7 @@
 			children = (
 				D4CF60FA2A97B12D009FCEE3 /* IntSlider.swift */,
 				D4CF60FB2A97B12D009FCEE3 /* SliderStyle.swift */,
+				D4CF61122A97B524009FCEE3 /* TwoRowsSliderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -192,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				D4CF60FE2A97B13D009FCEE3 /* SubImageData.swift */,
+				D4CF61142A97B54A009FCEE3 /* DotImageCreationData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -210,7 +220,9 @@
 				D4CF61022A97B157009FCEE3 /* MainImagePreviewView.swift */,
 				D4CF61032A97B157009FCEE3 /* SubImageListItem.swift */,
 				D4CF61042A97B158009FCEE3 /* SubImageListView.swift */,
+				D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */,
 				D4CF61052A97B158009FCEE3 /* Toolbar.swift */,
+				D4CF61162A97B5EF009FCEE3 /* DotImageCreationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -378,14 +390,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4CF60FD2A97B12E009FCEE3 /* SliderStyle.swift in Sources */,
+				D4CF61132A97B524009FCEE3 /* TwoRowsSliderView.swift in Sources */,
 				D4CF61072A97B158009FCEE3 /* SubImageListItem.swift in Sources */,
+				D4CF61172A97B5EF009FCEE3 /* DotImageCreationView.swift in Sources */,
 				D4CF60FF2A97B13D009FCEE3 /* SubImageData.swift in Sources */,
 				D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */,
+				D4CF61192A97B64A009FCEE3 /* SubImagePreviewView.swift in Sources */,
 				D4CF60F62A97B121009FCEE3 /* TextExtensions.swift in Sources */,
 				D4CF610B2A97B15F009FCEE3 /* DotImageViewModel.swift in Sources */,
 				D4CF610F2A97B1FE009FCEE3 /* GlobalData.swift in Sources */,
 				D4CF61112A97B205009FCEE3 /* DottedCanvasView.swift in Sources */,
 				D4CF61062A97B158009FCEE3 /* MainImagePreviewView.swift in Sources */,
+				D4CF61152A97B54A009FCEE3 /* DotImageCreationData.swift in Sources */,
 				D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */,
 				D4CF61092A97B158009FCEE3 /* Toolbar.swift in Sources */,
 				D4CF60F92A97B121009FCEE3 /* UIImageExtensions.swift in Sources */,

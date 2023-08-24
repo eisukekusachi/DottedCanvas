@@ -30,6 +30,29 @@ struct SubImageData: Identifiable, Hashable {
 
     init(title: String,
          image: UIImage? = nil,
+         isVisible: Bool = true,
+         data: DotImageCreationData) {
+
+        self.title = title
+        self.image = image
+        self.thumbnail = image?.resize(to: CGSize(width: 256, height: 256))
+
+        self.isVisible = isVisible
+
+        self.red = data.red
+        self.green = data.green
+        self.blue = data.blue
+        self.alpha = data.alpha
+
+        self.diameter = data.diameter
+
+        self.spacing = data.spacing
+
+        self.offsetX = data.offsetX
+        self.offsetY = data.offsetY
+    }
+    init(title: String,
+         image: UIImage? = nil,
 
          red: Int = 0,
          green: Int = 0,

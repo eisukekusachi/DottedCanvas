@@ -15,6 +15,8 @@ struct DottedCanvasView: View {
 
     let imageSize: CGSize = CGSize(width: 1000, height: 1000)
 
+    @State var isCreationViewPresented: Bool = false
+
     init(viewModel: DotImageViewModel) {
 
         dotImageViewModel = viewModel
@@ -24,20 +26,7 @@ struct DottedCanvasView: View {
         VStack {
             Toolbar(
                 addSubImageData: {
-                    let index = dotImageViewModel.subImageDataArrayIndex
-                    let title = TimeStampFormatter.currentTimestamp(template: "MMM dd HH mm ss")
-                    let data = SubImageData(title: title, image: makeImage())
-
-                    if  dotImageViewModel.subImageDataArray.count == 0 ||
-                        index == dotImageViewModel.subImageDataArray.count - 1 {
-
-                        dotImageViewModel.appendSubImageData(data)
-                        
-                    } else {
-                        dotImageViewModel.insertSubImageData(data, at: index + 1)
-                    }
-
-                    dotImageViewModel.updateMainImage()
+                    isCreationViewPresented = true
                 },
                 removeSubImageData: {
                     let index = dotImageViewModel.subImageDataArrayIndex
@@ -58,6 +47,27 @@ struct DottedCanvasView: View {
 
             } else {
                 SubImageListView(viewModel: dotImageViewModel)
+            }
+        }
+        .sheet(isPresented: $isCreationViewPresented) {
+            DotImageCreationView(isViewPresented: $isCreationViewPresented,
+                                 creationData: dotImageViewModel.storedCreationData) {
+
+                let index = dotImageViewModel.subImageDataArrayIndex
+                let title = TimeStampFormatter.currentTimestamp(template: "MMM dd HH mm ss")
+                let dotImage = dotImageViewModel.storedCreationData.dotImage
+                let newData = SubImageData(title: title,
+                                           image: dotImage,
+                                           data: dotImageViewModel.storedCreationData)
+
+                if dotImageViewModel.subImageDataArray.count == 0 {
+                    dotImageViewModel.appendSubImageData(newData)
+                } else {
+                    dotImageViewModel.insertSubImageData(newData, at: index + 1)
+                }
+
+                dotImageViewModel.updateSelectedSubImageData(newData)
+                dotImageViewModel.updateMainImage()
             }
         }
         .padding()

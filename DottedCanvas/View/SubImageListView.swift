@@ -84,6 +84,7 @@ extension SubImageListView {
                 })
                     .contentShape(Rectangle())
                     .onTapGesture {
+                        viewModel.storedCreationData.apply(subImageData)
                         viewModel.updateSelectedSubImageData(subImageData)
                     }
             }

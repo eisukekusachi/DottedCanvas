@@ -31,6 +31,8 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
     private var cancellables: Set<AnyCancellable> = []
 
+    var storedCreationData = DotImageCreationData()
+
     var flatteningSubImages: UIImage? {
 
         var image: UIImage?
