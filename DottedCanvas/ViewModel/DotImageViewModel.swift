@@ -31,8 +31,15 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
     private var cancellables: Set<AnyCancellable> = []
 
+    private (set) var name: String = Calendar.currentDate
+
     var storedCreationData = DotImageCreationData()
 
+    var dotImageData: DotImageData? {
+        DotImageData(mainImage: mainImage?.resize(width: 256, scale: 1),
+                     subImageDataArray: subImageDataArray,
+                     subImageIndex: getSelectedSubImageIndex() ?? 0)
+    }
     var flatteningSubImages: UIImage? {
 
         var image: UIImage?
@@ -149,10 +156,17 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
         return true
     }
+
+    func getSelectedSubImageIndex() -> Int? {
+        if let selectedSubImageData {
+            return getIndex(from: selectedSubImageData.id)
+        }
+        return nil
+    }
 }
 
 extension DotImageViewModel {
-    private func getIndex(from id: UUID) -> Int? {
+    func getIndex(from id: UUID) -> Int? {
         for (index, elem) in subImageDataArray.enumerated() where elem.id == id {
             return index
         }

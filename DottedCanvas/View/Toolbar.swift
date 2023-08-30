@@ -11,6 +11,7 @@ struct Toolbar: View {
 
     var addSubImageData: () -> Void
     var removeSubImageData: () -> Void
+    var saveImage: () -> Void
 
     private let buttonDiameter: CGFloat = 24
 
@@ -34,6 +35,18 @@ struct Toolbar: View {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
+
+            Divider()
+                .frame(height: 24)
+
+            Button(
+                action: {
+                    saveImage()
+            },
+                label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .buttonModifier(diameter: buttonDiameter)
+            })
         }
     }
 }
@@ -46,6 +59,10 @@ struct Toolbar_Previews: PreviewProvider {
             },
             removeSubImageData: {
                 print("remove")
-            })
+            },
+            saveImage: {
+                print("saveImage")
+            }
+        )
     }
 }

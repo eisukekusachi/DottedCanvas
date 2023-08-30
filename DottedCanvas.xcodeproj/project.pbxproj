@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D41DF7302A98C0E10063202F /* Snackbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41DF72F2A98C0E10063202F /* Snackbar.swift */; };
+		D4A91A062A9CBD3600CE13A0 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A91A052A9CBD3600CE13A0 /* Input.swift */; };
+		D4BDAC802A99DC9400A765CA /* SubImageCodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */; };
+		D4BDAC822A99DF1200A765CA /* DotImageCodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC812A99DF1200A765CA /* DotImageCodableData.swift */; };
+		D4BDAC852A99E27900A765CA /* Output.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC842A99E27900A765CA /* Output.swift */; };
+		D4BDAC872A99E39700A765CA /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC862A99E39700A765CA /* FileManagerExtensions.swift */; };
+		D4BDAC892A99E4FA00A765CA /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC882A99E4FA00A765CA /* URLExtensions.swift */; };
+		D4BDAC8B2A99E7B200A765CA /* CalendarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC8A2A99E7B200A765CA /* CalendarExtensions.swift */; };
+		D4BDAE5B2A9A04A100A765CA /* DotImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAE5A2A9A04A100A765CA /* DotImageData.swift */; };
+		D4BDAE5E2A9A165600A765CA /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = D4BDAE5D2A9A165600A765CA /* ZipArchive */; };
 		D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */; };
 		D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60C32A97AC9F009FCEE3 /* ContentView.swift */; };
 		D4CF60C62A97ACA1009FCEE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4CF60C52A97ACA1009FCEE3 /* Assets.xcassets */; };
@@ -34,6 +44,7 @@
 		D4CF61152A97B54A009FCEE3 /* DotImageCreationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61142A97B54A009FCEE3 /* DotImageCreationData.swift */; };
 		D4CF61172A97B5EF009FCEE3 /* DotImageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61162A97B5EF009FCEE3 /* DotImageCreationView.swift */; };
 		D4CF61192A97B64A009FCEE3 /* SubImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */; };
+		D4CF611B2A98BD43009FCEE3 /* LoadingDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF611A2A98BD43009FCEE3 /* LoadingDialog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +65,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D41DF72F2A98C0E10063202F /* Snackbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snackbar.swift; sourceTree = "<group>"; };
+		D4A91A052A9CBD3600CE13A0 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
+		D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageCodableData.swift; sourceTree = "<group>"; };
+		D4BDAC812A99DF1200A765CA /* DotImageCodableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotImageCodableData.swift; sourceTree = "<group>"; };
+		D4BDAC842A99E27900A765CA /* Output.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Output.swift; sourceTree = "<group>"; };
+		D4BDAC862A99E39700A765CA /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
+		D4BDAC882A99E4FA00A765CA /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
+		D4BDAC8A2A99E7B200A765CA /* CalendarExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExtensions.swift; sourceTree = "<group>"; };
+		D4BDAE5A2A9A04A100A765CA /* DotImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotImageData.swift; sourceTree = "<group>"; };
+		D4BDAE5F2A9A172500A765CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D4CF60BE2A97AC9F009FCEE3 /* DottedCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DottedCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasApp.swift; sourceTree = "<group>"; };
 		D4CF60C32A97AC9F009FCEE3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,6 +105,7 @@
 		D4CF61142A97B54A009FCEE3 /* DotImageCreationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotImageCreationData.swift; sourceTree = "<group>"; };
 		D4CF61162A97B5EF009FCEE3 /* DotImageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotImageCreationView.swift; sourceTree = "<group>"; };
 		D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImagePreviewView.swift; sourceTree = "<group>"; };
+		D4CF611A2A98BD43009FCEE3 /* LoadingDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDialog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4BDAE5E2A9A165600A765CA /* ZipArchive in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +134,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D4BDAC832A99E26F00A765CA /* IO */ = {
+			isa = PBXGroup;
+			children = (
+				D4BDAC842A99E27900A765CA /* Output.swift */,
+				D4A91A052A9CBD3600CE13A0 /* Input.swift */,
+			);
+			path = IO;
+			sourceTree = "<group>";
+		};
 		D4CF60B52A97AC9F009FCEE3 = {
 			isa = PBXGroup;
 			children = (
@@ -134,9 +166,11 @@
 		D4CF60C02A97AC9F009FCEE3 /* DottedCanvas */ = {
 			isa = PBXGroup;
 			children = (
+				D4BDAE5F2A9A172500A765CA /* Info.plist */,
 				D4CF60ED2A97B0DA009FCEE3 /* Components */,
 				D4CF60EE2A97B0E5009FCEE3 /* Data */,
 				D4CF60EC2A97AE1C009FCEE3 /* Extensions */,
+				D4BDAC832A99E26F00A765CA /* IO */,
 				D4CF60F02A97B0F7009FCEE3 /* View */,
 				D4CF60F12A97B0FF009FCEE3 /* ViewModel */,
 				D4CF60EF2A97B0EE009FCEE3 /* Utils */,
@@ -183,6 +217,9 @@
 				D4CF60F22A97B11F009FCEE3 /* TextExtensions.swift */,
 				D4CF60F42A97B120009FCEE3 /* UIColorExtensions.swift */,
 				D4CF60F52A97B121009FCEE3 /* UIImageExtensions.swift */,
+				D4BDAC862A99E39700A765CA /* FileManagerExtensions.swift */,
+				D4BDAC882A99E4FA00A765CA /* URLExtensions.swift */,
+				D4BDAC8A2A99E7B200A765CA /* CalendarExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -201,6 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				D4CF60FE2A97B13D009FCEE3 /* SubImageData.swift */,
+				D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */,
+				D4BDAE5A2A9A04A100A765CA /* DotImageData.swift */,
+				D4BDAC812A99DF1200A765CA /* DotImageCodableData.swift */,
 				D4CF61142A97B54A009FCEE3 /* DotImageCreationData.swift */,
 			);
 			path = Data;
@@ -223,6 +263,8 @@
 				D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */,
 				D4CF61052A97B158009FCEE3 /* Toolbar.swift */,
 				D4CF61162A97B5EF009FCEE3 /* DotImageCreationView.swift */,
+				D4CF611A2A98BD43009FCEE3 /* LoadingDialog.swift */,
+				D41DF72F2A98C0E10063202F /* Snackbar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -252,6 +294,9 @@
 			dependencies = (
 			);
 			name = DottedCanvas;
+			packageProductDependencies = (
+				D4BDAE5D2A9A165600A765CA /* ZipArchive */,
+			);
 			productName = DottedCanvas;
 			productReference = D4CF60BE2A97AC9F009FCEE3 /* DottedCanvas.app */;
 			productType = "com.apple.product-type.application";
@@ -324,6 +369,9 @@
 				Base,
 			);
 			mainGroup = D4CF60B52A97AC9F009FCEE3;
+			packageReferences = (
+				D4BDAE5C2A9A165600A765CA /* XCRemoteSwiftPackageReference "ZipArchive" */,
+			);
 			productRefGroup = D4CF60BF2A97AC9F009FCEE3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -389,23 +437,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4BDAC802A99DC9400A765CA /* SubImageCodableData.swift in Sources */,
+				D4BDAC872A99E39700A765CA /* FileManagerExtensions.swift in Sources */,
+				D4BDAC892A99E4FA00A765CA /* URLExtensions.swift in Sources */,
 				D4CF60FD2A97B12E009FCEE3 /* SliderStyle.swift in Sources */,
+				D41DF7302A98C0E10063202F /* Snackbar.swift in Sources */,
 				D4CF61132A97B524009FCEE3 /* TwoRowsSliderView.swift in Sources */,
+				D4CF611B2A98BD43009FCEE3 /* LoadingDialog.swift in Sources */,
 				D4CF61072A97B158009FCEE3 /* SubImageListItem.swift in Sources */,
 				D4CF61172A97B5EF009FCEE3 /* DotImageCreationView.swift in Sources */,
 				D4CF60FF2A97B13D009FCEE3 /* SubImageData.swift in Sources */,
+				D4BDAC822A99DF1200A765CA /* DotImageCodableData.swift in Sources */,
 				D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */,
 				D4CF61192A97B64A009FCEE3 /* SubImagePreviewView.swift in Sources */,
 				D4CF60F62A97B121009FCEE3 /* TextExtensions.swift in Sources */,
 				D4CF610B2A97B15F009FCEE3 /* DotImageViewModel.swift in Sources */,
+				D4BDAC852A99E27900A765CA /* Output.swift in Sources */,
 				D4CF610F2A97B1FE009FCEE3 /* GlobalData.swift in Sources */,
+				D4BDAE5B2A9A04A100A765CA /* DotImageData.swift in Sources */,
 				D4CF61112A97B205009FCEE3 /* DottedCanvasView.swift in Sources */,
 				D4CF61062A97B158009FCEE3 /* MainImagePreviewView.swift in Sources */,
 				D4CF61152A97B54A009FCEE3 /* DotImageCreationData.swift in Sources */,
 				D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */,
+				D4A91A062A9CBD3600CE13A0 /* Input.swift in Sources */,
 				D4CF61092A97B158009FCEE3 /* Toolbar.swift in Sources */,
 				D4CF60F92A97B121009FCEE3 /* UIImageExtensions.swift in Sources */,
 				D4CF60F72A97B121009FCEE3 /* ImageExtensions.swift in Sources */,
+				D4BDAC8B2A99E7B200A765CA /* CalendarExtensions.swift in Sources */,
 				D4CF61082A97B158009FCEE3 /* SubImageListView.swift in Sources */,
 				D4CF60FC2A97B12E009FCEE3 /* IntSlider.swift in Sources */,
 				D4CF60F82A97B121009FCEE3 /* UIColorExtensions.swift in Sources */,
@@ -565,12 +623,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DottedCanvas/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DottedCanvas/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -596,12 +656,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DottedCanvas/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DottedCanvas/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -738,6 +800,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D4BDAE5C2A9A165600A765CA /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZipArchive/ZipArchive";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D4BDAE5D2A9A165600A765CA /* ZipArchive */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4BDAE5C2A9A165600A765CA /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			productName = ZipArchive;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D4CF60B62A97AC9F009FCEE3 /* Project object */;
 }

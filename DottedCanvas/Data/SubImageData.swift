@@ -28,6 +28,10 @@ struct SubImageData: Identifiable, Hashable {
     var offsetX: Int = 0
     var offsetY: Int = 0
 
+    var imagePath: String {
+        id.uuidString
+    }
+
     init(title: String,
          image: UIImage? = nil,
          isVisible: Bool = true,
