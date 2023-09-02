@@ -9,9 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var dotImageViewModel = DotImageViewModel()
+    @StateObject var documentsFolderFileViewModel = DocumentsFolderFileViewModel()
 
     var body: some View {
-        DottedCanvasView(viewModel: dotImageViewModel)
+        DottedCanvasView(dotImageViewModel: dotImageViewModel,
+                         documentsFolderFileViewModel: documentsFolderFileViewModel)
+        .onAppear {
+            Task {
+                do {
+                    try await documentsFolderFileViewModel.appendDocumentsFolderFile()
+
+                    documentsFolderFileViewModel.fileDataArray.sort {
+                        $0.latestUpdateDate < $1.latestUpdateDate
+                    }
+
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
 }
 

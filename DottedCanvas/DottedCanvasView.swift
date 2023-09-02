@@ -10,6 +10,7 @@ import SwiftUI
 struct DottedCanvasView: View {
 
     @ObservedObject var dotImageViewModel: DotImageViewModel
+    @ObservedObject var documentsFolderFileViewModel: DocumentsFolderFileViewModel
 
     private let previewImageDiamter: CGFloat
 
@@ -23,9 +24,12 @@ struct DottedCanvasView: View {
 
     @State var message: String = ""
 
-    init(viewModel: DotImageViewModel) {
+    init(dotImageViewModel: DotImageViewModel,
+         documentsFolderFileViewModel: DocumentsFolderFileViewModel) {
 
-        dotImageViewModel = viewModel
+        self.dotImageViewModel = dotImageViewModel
+        self.documentsFolderFileViewModel = documentsFolderFileViewModel
+
         previewImageDiamter = min(UIScreen.main.bounds.size.width * 0.8, 500)
     }
     var body: some View {
@@ -84,7 +88,7 @@ struct DottedCanvasView: View {
             }
         }
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
-            DocumentsFolderView()
+            DocumentsFolderView(fileDataArray: $documentsFolderFileViewModel.fileDataArray)
         }
     }
 
@@ -132,6 +136,9 @@ struct DottedCanvasView: View {
 
                 try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
 
+                documentsFolderFileViewModel.upsert(title: dotImageViewModel.name,
+                                                    imageData: dotImageViewModel.dotImageData)
+
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {
                     try await Task.sleep(nanoseconds: UInt64(sleep * 1000 * 1000 * 1000))
@@ -160,7 +167,8 @@ struct DottedCanvasView_Previews: PreviewProvider {
                         .init(title: "Title 1", alpha: 225, isVisible: false),
                         .init(title: "Title 2", alpha: 25)
                        ])
-        DottedCanvasView(viewModel: dotImageViewModel)
-        DottedCanvasView(viewModel: DotImageViewModel())
+
+        DottedCanvasView(dotImageViewModel: DotImageViewModel(),
+                         documentsFolderFileViewModel: DocumentsFolderFileViewModel())
     }
 }
