@@ -19,6 +19,7 @@ struct DottedCanvasView: View {
     @State var isVisibleLoadingView: Bool = false
     @State var isVisibleSnackbar: Bool = false
     @State var isZippingCompleted: Bool = false
+    @State var isDocumentsFolderViewPresented: Bool = false
 
     @State var message: String = ""
 
@@ -39,6 +40,9 @@ struct DottedCanvasView: View {
                     },
                     saveImage: {
                         saveImage()
+                    },
+                    loadImage: {
+                        loadImage()
                     }
                 )
 
@@ -78,6 +82,9 @@ struct DottedCanvasView: View {
                                  creationData: dotImageViewModel.storedCreationData) {
                 updateMainImage()
             }
+        }
+        .sheet(isPresented: $isDocumentsFolderViewPresented) {
+            DocumentsFolderView()
         }
     }
 
@@ -137,6 +144,9 @@ struct DottedCanvasView: View {
                 showAlert(error)
             }
         }
+    }
+    private func loadImage() {
+        isDocumentsFolderViewPresented = true
     }
     private func showAlert(_ error: Error) {
         print(error)
