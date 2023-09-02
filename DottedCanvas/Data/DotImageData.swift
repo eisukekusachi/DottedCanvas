@@ -22,6 +22,7 @@ struct DotImageData {
     var mainImage: UIImage?
     var subImageDataArray: [SubImageData]
     var subImageIndex: Int
+    var latestUpdateDate: Date
 
     func writeData(to folder: URL) throws {
         try FileManager.createNewDirectory(url: folder)

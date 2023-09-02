@@ -34,11 +34,13 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     private (set) var name: String = Calendar.currentDate
 
     var storedCreationData = DotImageCreationData()
+    var latestUpdateDate: Date = Date()
 
     var dotImageData: DotImageData? {
         DotImageData(mainImage: mainImage?.resize(width: 256, scale: 1),
                      subImageDataArray: subImageDataArray,
-                     subImageIndex: getSelectedSubImageIndex() ?? 0)
+                     subImageIndex: getSelectedSubImageIndex() ?? 0,
+                     latestUpdateDate: latestUpdateDate)
     }
     var flatteningSubImages: UIImage? {
 
@@ -87,6 +89,7 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
     func updateMainImage() {
         mainImage = flatteningSubImages
+        latestUpdateDate = Date()
     }
     func updateSelectedSubImageData(_ data: SubImageData) {
         selectedSubImageData = data
