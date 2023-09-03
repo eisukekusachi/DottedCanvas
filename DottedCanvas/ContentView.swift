@@ -19,10 +19,6 @@ struct ContentView: View {
                 do {
                     try await documentsFolderFileViewModel.appendDocumentsFolderFile()
 
-                    documentsFolderFileViewModel.fileDataArray.sort {
-                        $0.latestUpdateDate < $1.latestUpdateDate
-                    }
-
                 } catch {
                     print(error)
                 }
