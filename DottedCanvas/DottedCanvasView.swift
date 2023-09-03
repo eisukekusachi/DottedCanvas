@@ -40,13 +40,13 @@ struct DottedCanvasView: View {
                         isCreationViewPresented = true
                     },
                     removeSubImageData: {
-                        removeSubImageData()
+                        dotImageViewModel.removeCurrentSelectedSubImageData()
                     },
                     saveImage: {
-                        saveImage()
+                        saveDotImageToDocumentsFolder()
                     },
                     loadImage: {
-                        showDocumentsFolderView()
+                        isDocumentsFolderViewPresented = true
                     }
                 )
 
@@ -91,35 +91,22 @@ struct DottedCanvasView: View {
             DocumentsFolderView(
                 isViewPresented: $isDocumentsFolderViewPresented,
                 viewModel: documentsFolderFileViewModel) { url in
-                    loadImage(zipFileURL: url)
+                    loadDotImageFromDocumentsFolder(zipFileURL: url)
                 }
         }
     }
 
 
     private func updateMainImage() {
-        let index = dotImageViewModel.subImageDataArrayIndex
         let title = TimeStampFormatter.currentTimestamp(template: "MMM dd HH mm ss")
         let dotImage = dotImageViewModel.storedCreationData.dotImage
         let newData = SubImageData(title: title,
                                    image: dotImage,
                                    data: dotImageViewModel.storedCreationData)
 
-        if dotImageViewModel.subImageDataArray.isEmpty {
-            dotImageViewModel.appendSubImageData(newData)
-        } else {
-            dotImageViewModel.insertSubImageData(newData, at: index + 1)
-        }
-
-        dotImageViewModel.updateSelectedSubImageData(newData)
-        dotImageViewModel.updateMainImage()
+        dotImageViewModel.addSubImageData(newData)
     }
-    private func removeSubImageData() {
-        let index = dotImageViewModel.subImageDataArrayIndex
-        dotImageViewModel.removeSubImageData(index)
-        dotImageViewModel.updateMainImage()
-    }
-    private func saveImage() {
+    private func saveDotImageToDocumentsFolder() {
         let folderURL = URL.documents.appendingPathComponent(tmpFolder)
         let zipFileURL = URL.documents.appendingPathComponent(dotImageViewModel.name + "." + "\(zipSuffix)")
 
@@ -136,9 +123,8 @@ struct DottedCanvasView: View {
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try dotImageViewModel.dotImageData?.writeData(to: folderURL)
-
-                try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
+                try dotImageViewModel.outputDataAsZipFile(src: folderURL,
+                                                          to: zipFileURL)
 
                 documentsFolderFileViewModel.upsert(title: dotImageViewModel.name,
                                                     imageData: dotImageViewModel.dotImageData)
@@ -156,9 +142,8 @@ struct DottedCanvasView: View {
             }
         }
     }
-    private func loadImage(zipFileURL: URL) {
+    private func loadDotImageFromDocumentsFolder(zipFileURL: URL) {
         let folderURL = URL.documents.appendingPathComponent(tmpFolder)
-        let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
 
         Task {
             do {
@@ -167,33 +152,18 @@ struct DottedCanvasView: View {
                 }
 
                 try FileManager.createNewDirectory(url: folderURL)
+                try Input.unzip(srcZipURL: zipFileURL, to: folderURL)
+                try dotImageViewModel.loadData(from: folderURL)
 
-                try unzipFile(from: zipFileURL, to: folderURL)
-
-                if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL) {
-
-                    let newSubImageDataArray: [SubImageData] = data.subImages.map {
-                        SubImageData(codableData: $0, folderURL: folderURL)
-                    }
-
-                    dotImageViewModel.updateName(zipFileURL)
-                    dotImageViewModel.updateSubImageDataArray(newSubImageDataArray)
-                    dotImageViewModel.updateSelectedSubImageData(data.selectedSubImageIndex)
-                }
-
+                dotImageViewModel.updateName(zipFileURL)
+                
             } catch {
                 print(error)
             }
         }
     }
-    private func showDocumentsFolderView() {
-        isDocumentsFolderViewPresented = true
-    }
     private func showAlert(_ error: Error) {
         print(error)
-    }
-    private func unzipFile(from sourceURL: URL, to destinationURL: URL) throws {
-        try Input.unzip(srcZipURL: sourceURL, to: destinationURL)
     }
 }
 
