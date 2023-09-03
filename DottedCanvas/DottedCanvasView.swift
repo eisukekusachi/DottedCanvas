@@ -155,7 +155,9 @@ struct DottedCanvasView: View {
                 try Input.unzip(srcZipURL: zipFileURL, to: folderURL)
                 try dotImageViewModel.loadData(from: folderURL)
 
-                dotImageViewModel.updateName(zipFileURL)
+                if let fileName = zipFileURL.fileName {
+                    dotImageViewModel.updateName(fileName)
+                }
                 
             } catch {
                 print(error)

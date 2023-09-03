@@ -23,6 +23,13 @@ extension URL {
         }
         return []
     }
+    var fileName: String? {
+        if let name = self.lastPathComponent.components(separatedBy: ".").first {
+            return name
+        }
+        return nil
+    }
+
     func hasSuffix(_ suffix: String) -> Bool {
         let nameArray = self.path.components(separatedBy: ".")
 

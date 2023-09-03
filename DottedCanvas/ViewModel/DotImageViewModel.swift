@@ -130,10 +130,8 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         }
     }
 
-    func updateName(_ url: URL) {
-        if let name = url.lastPathComponent.components(separatedBy: ".").first {
-            self.name = name
-        }
+    func updateName(_ name: String) {
+        self.name = name
     }
     func updateMainImage() {
         mainImage = flatteningSubImages
