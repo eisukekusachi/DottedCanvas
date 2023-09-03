@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Toolbar: View {
+    @ObservedObject var dotImageViewModel: DotImageViewModel
 
     var addSubImageData: () -> Void
     var removeSubImageData: () -> Void
@@ -37,6 +38,7 @@ struct Toolbar: View {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
+            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.subImageDataArray.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -49,6 +51,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.up")
                         .buttonModifier(diameter: buttonDiameter)
             })
+            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.subImageDataArray.isEmpty))
 
             Button(
                 action: {
@@ -70,6 +73,7 @@ struct Toolbar: View {
                     Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
+            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.subImageDataArray.isEmpty))
         }
     }
 }
@@ -77,6 +81,7 @@ struct Toolbar: View {
 struct Toolbar_Previews: PreviewProvider {
     static var previews: some View {
         Toolbar(
+            dotImageViewModel: DotImageViewModel(),
             addSubImageData: {
                 print("add")
             },

@@ -37,6 +37,7 @@ struct DottedCanvasView: View {
         ZStack {
             VStack {
                 Toolbar(
+                    dotImageViewModel: dotImageViewModel,
                     addSubImageData: {
                         isCreationViewPresented = true
                     },
@@ -200,7 +201,7 @@ struct DottedCanvasView_Previews: PreviewProvider {
                         .init(title: "Title 2", alpha: 25)
                        ])
 
-        DottedCanvasView(dotImageViewModel: DotImageViewModel(),
+        DottedCanvasView(dotImageViewModel: dotImageViewModel,
                          documentsFolderFileViewModel: DocumentsFolderFileViewModel())
     }
 }
