@@ -5,8 +5,6 @@ This app features a canvas and layers.
 The canvas includes sliders to change color, size, and the distance between dots, 
 enabling you to create a single dot-pattern image.
 
-<br />
-
 The layers allow you to combine multiple dot-pattern images created on the canvas into one, 
 enabling you to create a complex dot image by overlaying dots of various colors, sizes, opacities, and offsets.
 
