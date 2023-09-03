@@ -46,7 +46,7 @@ struct DottedCanvasView: View {
                         saveImage()
                     },
                     loadImage: {
-                        loadImage()
+                        showDocumentsFolderView()
                     }
                 )
 
@@ -88,7 +88,11 @@ struct DottedCanvasView: View {
             }
         }
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
-            DocumentsFolderView(fileDataArray: $documentsFolderFileViewModel.fileDataArray)
+            DocumentsFolderView(
+                isViewPresented: $isDocumentsFolderViewPresented,
+                viewModel: documentsFolderFileViewModel) { url in
+                    loadImage(zipFileURL: url)
+                }
         }
     }
 
@@ -152,11 +156,44 @@ struct DottedCanvasView: View {
             }
         }
     }
-    private func loadImage() {
+    private func loadImage(zipFileURL: URL) {
+        let folderURL = URL.documents.appendingPathComponent(tmpFolder)
+        let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
+
+        Task {
+            do {
+                defer {
+                    try? FileManager.default.removeItem(atPath: folderURL.path)
+                }
+
+                try FileManager.createNewDirectory(url: folderURL)
+
+                try unzipFile(from: zipFileURL, to: folderURL)
+
+                if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL) {
+
+                    let newSubImageDataArray: [SubImageData] = data.subImages.map {
+                        SubImageData(codableData: $0, folderURL: folderURL)
+                    }
+
+                    dotImageViewModel.updateName(zipFileURL)
+                    dotImageViewModel.updateSubImageDataArray(newSubImageDataArray)
+                    dotImageViewModel.updateSelectedSubImageData(data.selectedSubImageIndex)
+                }
+
+            } catch {
+                print(error)
+            }
+        }
+    }
+    private func showDocumentsFolderView() {
         isDocumentsFolderViewPresented = true
     }
     private func showAlert(_ error: Error) {
         print(error)
+    }
+    private func unzipFile(from sourceURL: URL, to destinationURL: URL) throws {
+        try Input.unzip(srcZipURL: sourceURL, to: destinationURL)
     }
 }
 

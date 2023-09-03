@@ -8,19 +8,32 @@
 import SwiftUI
 
 struct DocumentsFolderView: View {
-    @Binding var fileDataArray: [DocumentsFolderFileData]
+
+    @Binding var isViewPresented: Bool
+    @ObservedObject var viewModel: DocumentsFolderFileViewModel
+    var completion: ((URL) -> Void)?
 
     var diameter: CGFloat = 44
 
     var body: some View {
         List {
-            ForEach(fileDataArray) { data in
+            ForEach(viewModel.fileDataArray) { data in
                 HStack {
                     Image(uiImage: data.thumbnail ?? UIImage.checkered(with: CGSize(width: diameter, height: diameter)))
                         .resizable()
                         .frame(width: diameter, height: diameter)
                     Text("\(data.title)")
                 }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    completion?(URL.documents.appendingPathComponent(data.title + ".zip"))
+                    isViewPresented = false
+                }
+            }
+        }
+        .onAppear {
+            viewModel.fileDataArray.sort {
+                $0.latestUpdateDate < $1.latestUpdateDate
             }
         }
     }
@@ -28,7 +41,8 @@ struct DocumentsFolderView: View {
 
 struct DocumentsFolderView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var dotImageDataArray: [DocumentsFolderFileData] = []
-        DocumentsFolderView(fileDataArray: $dotImageDataArray)
+        @State var isViewPresented: Bool = true
+        DocumentsFolderView(isViewPresented: $isViewPresented,
+                            viewModel: DocumentsFolderFileViewModel())
     }
 }

@@ -87,13 +87,34 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             .store(in: &cancellables)
     }
 
+    func updateName(_ url: URL) {
+        if let name = url.lastPathComponent.components(separatedBy: ".").first {
+            self.name = name
+        }
+    }
     func updateMainImage() {
         mainImage = flatteningSubImages
         latestUpdateDate = Date()
     }
+
+    func updateSubImageDataArray(_ newSubImageDataArray: [SubImageData]) {
+        subImageDataArray.removeAll()
+        subImageDataArray = newSubImageDataArray
+    }
+    func updateSelectedSubImageData(_ selectedSubImageIndex: Int) {
+        if selectedSubImageIndex < subImageDataArray.count {
+            let data = subImageDataArray[selectedSubImageIndex]
+            selectedSubImageData = data
+            selectedSubImageAlpha = data.alpha
+
+            storedCreationData.apply(data)
+        }
+    }
     func updateSelectedSubImageData(_ data: SubImageData) {
         selectedSubImageData = data
         selectedSubImageAlpha = data.alpha
+
+        storedCreationData.apply(data)
     }
     func updateSubImageData(id: UUID?, isVisible: Bool? = nil, alpha: Int? = nil) {
         guard let id = id, let index = getIndex(from: id) else {

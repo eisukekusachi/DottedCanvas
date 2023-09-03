@@ -32,6 +32,29 @@ struct SubImageData: Identifiable, Hashable {
         id.uuidString
     }
 
+    init(codableData: SubImageCodableData, folderURL: URL) {
+        title = codableData.title
+
+        let url = folderURL.appendingPathComponent(codableData.imagePath)
+
+        if let data = try? Data(contentsOf: url) {
+            image = UIImage(data: data)
+            thumbnail = image?.resize(width: 256, scale: 1)
+        }
+
+        alpha = codableData.alpha
+        isVisible = codableData.isVisible
+
+        red = codableData.red
+        green = codableData.green
+        blue = codableData.blue
+
+        diameter = codableData.diameter
+        spacing = codableData.spacing
+
+        offsetX = codableData.offsetX
+        offsetY = codableData.offsetY
+    }
     init(title: String,
          image: UIImage? = nil,
          isVisible: Bool = true,
