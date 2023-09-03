@@ -20,6 +20,7 @@ struct DottedCanvasView: View {
     @State var isVisibleLoadingView: Bool = false
     @State var isVisibleSnackbar: Bool = false
     @State var isZippingCompleted: Bool = false
+    @State var isNewImageAlertPresented: Bool = false
     @State var isDocumentsFolderViewPresented: Bool = false
 
     @State var message: String = ""
@@ -47,6 +48,9 @@ struct DottedCanvasView: View {
                     },
                     loadImage: {
                         isDocumentsFolderViewPresented = true
+                    },
+                    newImage: {
+                        isNewImageAlertPresented = true
                     }
                 )
 
@@ -93,6 +97,23 @@ struct DottedCanvasView: View {
                 viewModel: documentsFolderFileViewModel) { url in
                     loadDotImageFromDocumentsFolder(zipFileURL: url)
                 }
+        }
+        .alert(isPresented: $isNewImageAlertPresented) {
+            let title = "Confirm"
+            let message = ["If you create a new project, ",
+                           "any existing work will be deleted.",
+                           "\n",
+                           "Are you sure you want to continue?"
+                            ].joined()
+            let action = {
+                dotImageViewModel.reset()
+            }
+
+            return Alert(title: Text(title),
+                  message: Text(message),
+                  primaryButton: .default(Text("OK"),
+                                          action: action),
+                  secondaryButton: .destructive(Text("Cancel")))
         }
     }
 

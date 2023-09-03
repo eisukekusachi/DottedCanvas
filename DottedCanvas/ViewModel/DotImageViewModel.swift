@@ -171,6 +171,18 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         return true
     }
 
+    func reset() {
+        mainImage = nil
+        subImageDataArray = []
+        selectedSubImageData = nil
+        selectedSubImageAlpha = 0
+
+        name = Calendar.currentDate
+
+        storedCreationData = DotImageCreationData()
+        latestUpdateDate = Date()
+    }
+
     func getSelectedSubImageIndex() -> Int? {
         if let selectedSubImageData {
             return getIndex(from: selectedSubImageData.id)

@@ -13,6 +13,7 @@ struct Toolbar: View {
     var removeSubImageData: () -> Void
     var saveImage: () -> Void
     var loadImage: () -> Void
+    var newImage: () -> Void
 
     private let buttonDiameter: CGFloat = 24
 
@@ -57,6 +58,18 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.down")
                         .buttonModifier(diameter: buttonDiameter)
             })
+
+            Divider()
+                .frame(height: 24)
+
+            Button(
+                action: {
+                    newImage()
+            },
+                label: {
+                    Image(systemName: "doc.badge.plus")
+                        .buttonModifier(diameter: buttonDiameter)
+            })
         }
     }
 }
@@ -75,6 +88,9 @@ struct Toolbar_Previews: PreviewProvider {
             },
             loadImage: {
                 print("loadImage")
+            },
+            newImage: {
+                print("newImage")
             }
         )
     }
