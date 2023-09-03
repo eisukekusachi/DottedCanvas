@@ -23,7 +23,7 @@ struct SubImageListView: View {
 extension SubImageListView {
     private var selectedSubImageAlphaSlider: some View {
         VStack(spacing: 0) {
-            Text("Alpha: \(viewModel.selectedSubImageAlpha)")
+            Text("Alpha: \(viewModel.currentSubImageAlpha)")
                 .font(.subheadline)
 
             Spacer()
@@ -41,9 +41,9 @@ extension SubImageListView {
                 Spacer()
                     .frame(width: 12)
 
-                IntSlider(value: $viewModel.selectedSubImageAlpha,
+                IntSlider(value: $viewModel.currentSubImageAlpha,
                           in: range) { value in
-                    viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id,
+                    viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id,
                                                  alpha: value)
                 }
                     .environment(\.sliderStyle, style)
@@ -65,17 +65,17 @@ extension SubImageListView {
     }
 
     private func decreaseAlpha() {
-        let alpha = max(viewModel.selectedSubImageAlpha - 1, range.lowerBound)
-        viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id, alpha: alpha)
+        let alpha = max(viewModel.currentSubImageAlpha - 1, range.lowerBound)
+        viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id, alpha: alpha)
     }
     private func increaseAlpha() {
-        let alpha = min(viewModel.selectedSubImageAlpha + 1, range.upperBound)
-        viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id, alpha: alpha)
+        let alpha = min(viewModel.currentSubImageAlpha + 1, range.upperBound)
+        viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id, alpha: alpha)
     }
     private var subImageList: some View {
         List {
             ForEach(viewModel.subImageDataArray) { subImageData in
-                SubImageListItem(selected: subImageData == viewModel.selectedSubImageData,
+                SubImageListItem(selected: subImageData == viewModel.currentSubImageData,
                                  imageData: subImageData,
                                  onTapVisibleButton: { result in
 
@@ -85,7 +85,7 @@ extension SubImageListView {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         viewModel.storedCreationData.apply(subImageData)
-                        viewModel.updateSelectedSubImageData(subImageData)
+                        viewModel.updateCurrentSubImageData(subImageData)
                     }
             }
             .onMove(perform: moveListItem)

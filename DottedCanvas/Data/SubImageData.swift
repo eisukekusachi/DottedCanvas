@@ -38,7 +38,7 @@ struct SubImageData: Identifiable, Hashable {
 
         if let data = try? Data(contentsOf: url) {
             image = UIImage(data: data)
-            thumbnail = image?.resize(width: 256, scale: 1)
+            thumbnail = image?.resize(sideLength: 256, scale: 1)
         }
 
         alpha = codableData.alpha

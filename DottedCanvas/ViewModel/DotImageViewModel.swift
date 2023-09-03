@@ -15,10 +15,10 @@ protocol DotImageViewModelProtocol {
     var subImageDataArray: [SubImageData] { get }
 
     func updateMainImage()
-    func updateSelectedSubImageData(_ data: SubImageData)
+    func updateCurrentSubImageData(_ data: SubImageData)
 
     func addSubImageData(_ newData: SubImageData)
-    func removeCurrentSelectedSubImageData()
+    func removeCurrentSubImageData()
 }
 
 enum DotImageViewModelError: Error {
@@ -30,8 +30,8 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     @Published var mainImage: UIImage?
     @Published var subImageDataArray: [SubImageData]
 
-    @Published var selectedSubImageData: SubImageData?
-    @Published var selectedSubImageAlpha: Int = 0
+    @Published var currentSubImageData: SubImageData?
+    @Published var currentSubImageAlpha: Int = 0
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -41,9 +41,9 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     var latestUpdateDate: Date = Date()
 
     var dotImageData: DotImageData? {
-        DotImageData(mainImage: mainImage?.resize(width: 256, scale: 1),
+        DotImageData(mainImage: mainImage?.resize(sideLength: 256, scale: 1),
                      subImageDataArray: subImageDataArray,
-                     subImageIndex: getSelectedSubImageIndex() ?? 0,
+                     subImageIndex: getCurrentSubImageIndex() ?? 0,
                      latestUpdateDate: latestUpdateDate)
     }
     var flatteningSubImages: UIImage? {
@@ -65,7 +65,7 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         return image
     }
     var subImageDataArrayIndex: Int {
-        subImageDataArray.firstIndex(where: { $0 == selectedSubImageData }) ?? 0
+        subImageDataArray.firstIndex(where: { $0 == currentSubImageData }) ?? 0
     }
 
     convenience init() {
@@ -75,11 +75,11 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         subImageDataArray = dataArray
 
         if subImageDataArray.count != 0, let data = subImageDataArray.first {
-            selectedSubImageData = data
-            selectedSubImageAlpha = data.alpha
+            currentSubImageData = data
+            currentSubImageAlpha = data.alpha
         }
 
-        $selectedSubImageAlpha
+        $currentSubImageAlpha
             .debounce(for: .milliseconds(50), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.updateMainImage()
@@ -87,7 +87,7 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             .store(in: &cancellables)
     }
 
-    func outputDataAsZipFile(src srcFolder: URL, to zipFileURL: URL) throws {
+    func saveDataAsZipFile(src srcFolder: URL, to zipFileURL: URL) throws {
         try dotImageData?.writeData(to: srcFolder)
         try Output.createZip(folderURL: srcFolder, zipFileURL: zipFileURL)
     }
@@ -101,7 +101,7 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             }
 
             updateSubImageDataArray(newSubImageDataArray)
-            updateSelectedSubImageData(data.selectedSubImageIndex)
+            updateCurrentSubImageData(data.selectedSubImageIndex)
 
         } else {
             throw DotImageViewModelError.failedToLoadJson
@@ -115,13 +115,13 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             insertSubImageData(newData, at: subImageDataArrayIndex + 1)
         }
 
-        updateSelectedSubImageData(newData)
+        updateCurrentSubImageData(newData)
         updateMainImage()
     }
 
     func appendSubImageData(_ data: SubImageData) {
         subImageDataArray.append(data)
-        updateSelectedSubImageData(data)
+        updateCurrentSubImageData(data)
     }
 
     @discardableResult
@@ -133,12 +133,12 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         }
 
         subImageDataArray.insert(data, at: index)
-        updateSelectedSubImageData(data)
+        updateCurrentSubImageData(data)
 
         return true
     }
 
-    func removeCurrentSelectedSubImageData() {
+    func removeCurrentSubImageData() {
         if removeSubImageData(subImageDataArrayIndex) {
             updateMainImage()
         }
@@ -158,11 +158,11 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         subImageDataArray.remove(at: index)
 
         if subImageDataArray.count == 0 {
-            selectedSubImageData = nil
+            currentSubImageData = nil
 
-        } else if selectedSubImageData == tmpCurrentData {
+        } else if currentSubImageData == tmpCurrentData {
             let index = min(max(0, index), subImageDataArray.count - 1)
-            selectedSubImageData = subImageDataArray[index]
+            currentSubImageData = subImageDataArray[index]
         }
 
         return true
@@ -171,8 +171,8 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     func reset() {
         mainImage = nil
         subImageDataArray = []
-        selectedSubImageData = nil
-        selectedSubImageAlpha = 0
+        currentSubImageData = nil
+        currentSubImageAlpha = 0
 
         name = Calendar.currentDate
 
@@ -180,9 +180,15 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         latestUpdateDate = Date()
     }
 
-    func getSelectedSubImageIndex() -> Int? {
-        if let selectedSubImageData {
-            return getIndex(from: selectedSubImageData.id)
+    func getCurrentSubImageIndex() -> Int? {
+        if let currentSubImageData {
+            return getIndex(from: currentSubImageData.id)
+        }
+        return nil
+    }
+    func getIndex(from id: UUID) -> Int? {
+        for (index, elem) in subImageDataArray.enumerated() where elem.id == id {
+            return index
         }
         return nil
     }
@@ -195,25 +201,22 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         latestUpdateDate = Date()
     }
 
-    func updateSubImageDataArray(_ newSubImageDataArray: [SubImageData]) {
-        subImageDataArray.removeAll()
-        subImageDataArray = newSubImageDataArray
-    }
-    func updateSelectedSubImageData(_ selectedSubImageIndex: Int) {
+    func updateCurrentSubImageData(_ selectedSubImageIndex: Int) {
         if selectedSubImageIndex < subImageDataArray.count {
             let data = subImageDataArray[selectedSubImageIndex]
-            selectedSubImageData = data
-            selectedSubImageAlpha = data.alpha
+            currentSubImageData = data
+            currentSubImageAlpha = data.alpha
 
             storedCreationData.apply(data)
         }
     }
-    func updateSelectedSubImageData(_ data: SubImageData) {
-        selectedSubImageData = data
-        selectedSubImageAlpha = data.alpha
+    func updateCurrentSubImageData(_ data: SubImageData) {
+        currentSubImageData = data
+        currentSubImageAlpha = data.alpha
 
         storedCreationData.apply(data)
     }
+
     func updateSubImageData(id: UUID?, isVisible: Bool? = nil, alpha: Int? = nil) {
         guard let id = id, let index = getIndex(from: id) else {
             return
@@ -226,20 +229,17 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         if let alpha = alpha {
             subImageDataArray[index].alpha = alpha
 
-            if selectedSubImageData?.id == id {
-                selectedSubImageAlpha = alpha
+            if currentSubImageData?.id == id {
+                currentSubImageAlpha = alpha
             }
         }
 
-        if selectedSubImageData?.id == id {
-            selectedSubImageData = subImageDataArray[index]
+        if currentSubImageData?.id == id {
+            currentSubImageData = subImageDataArray[index]
         }
     }
-
-    func getIndex(from id: UUID) -> Int? {
-        for (index, elem) in subImageDataArray.enumerated() where elem.id == id {
-            return index
-        }
-        return nil
+    func updateSubImageDataArray(_ newSubImageDataArray: [SubImageData]) {
+        subImageDataArray.removeAll()
+        subImageDataArray = newSubImageDataArray
     }
 }

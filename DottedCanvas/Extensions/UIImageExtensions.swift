@@ -187,8 +187,8 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 
-    func resize(width: CGFloat, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
-        let newSize = CGSize(width: width, height: width * self.size.height / self.size.width)
+    func resize(sideLength: CGFloat, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
+        let newSize = CGSize(width: sideLength, height: sideLength * self.size.height / self.size.width)
 
         UIGraphicsBeginImageContextWithOptions(newSize, false, scale)
         defer { UIGraphicsEndImageContext() }

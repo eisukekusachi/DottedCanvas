@@ -41,7 +41,7 @@ struct DottedCanvasView: View {
                         isCreationViewPresented = true
                     },
                     removeSubImageData: {
-                        dotImageViewModel.removeCurrentSelectedSubImageData()
+                        dotImageViewModel.removeCurrentSubImageData()
                     },
                     saveImage: {
                         saveDotImageToDocumentsFolder()
@@ -121,7 +121,7 @@ struct DottedCanvasView: View {
 
 
     private func updateMainImage() {
-        let title = TimeStampFormatter.currentTimestamp(template: "MMM dd HH mm ss")
+        let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
         let dotImage = dotImageViewModel.storedCreationData.dotImage
         let newData = SubImageData(title: title,
                                    image: dotImage,
@@ -146,8 +146,8 @@ struct DottedCanvasView: View {
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try dotImageViewModel.outputDataAsZipFile(src: folderURL,
-                                                          to: zipFileURL)
+                try dotImageViewModel.saveDataAsZipFile(src: folderURL,
+                                                        to: zipFileURL)
 
                 documentsFolderFileViewModel.upsert(title: dotImageViewModel.name,
                                                     imageData: dotImageViewModel.dotImageData)

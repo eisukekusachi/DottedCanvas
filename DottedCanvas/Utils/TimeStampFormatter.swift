@@ -8,7 +8,7 @@
 import Foundation
 
 enum TimeStampFormatter {
-    static func currentTimestamp(template: String) -> String {
+    static func current(template: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: .current)
         return dateFormatter.string(from: Date())
