@@ -11,7 +11,7 @@ struct DocumentsFolderView: View {
 
     @Binding var isViewPresented: Bool
     @ObservedObject var viewModel: DocumentsFolderFileViewModel
-    var completion: ((URL) -> Void)?
+    var completion: ((String) -> Void)?
 
     var diameter: CGFloat = 44
 
@@ -26,7 +26,7 @@ struct DocumentsFolderView: View {
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    completion?(URL.documents.appendingPathComponent(data.title + ".zip"))
+                    completion?(data.title)
                     isViewPresented = false
                 }
             }

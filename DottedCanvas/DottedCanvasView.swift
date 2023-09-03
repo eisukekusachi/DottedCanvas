@@ -94,8 +94,10 @@ struct DottedCanvasView: View {
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
             DocumentsFolderView(
                 isViewPresented: $isDocumentsFolderViewPresented,
-                viewModel: documentsFolderFileViewModel) { url in
-                    loadDotImageFromDocumentsFolder(zipFileURL: url)
+                viewModel: documentsFolderFileViewModel) { title in
+
+                    let zipFileURL = URL.documents.appendingPathComponent(title + ".zip")
+                    loadDotImageFromDocumentsFolder(zipFileURL: zipFileURL)
                 }
         }
         .alert(isPresented: $isNewImageAlertPresented) {
