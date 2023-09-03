@@ -79,9 +79,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             selectedSubImageAlpha = data.alpha
         }
 
-        commonInit()
-    }
-    private func commonInit() {
         $selectedSubImageAlpha
             .debounce(for: .milliseconds(50), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
@@ -238,9 +235,7 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             selectedSubImageData = subImageDataArray[index]
         }
     }
-}
 
-extension DotImageViewModel {
     func getIndex(from id: UUID) -> Int? {
         for (index, elem) in subImageDataArray.enumerated() where elem.id == id {
             return index

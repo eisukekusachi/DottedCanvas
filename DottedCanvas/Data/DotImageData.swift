@@ -66,29 +66,4 @@ struct DotImageData {
             }
         }
     }
-
-    static func verifyFilesAreCorrect(_ folderURL: URL, jsonFileName: String) throws {
-        let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
-
-        guard FileManager.default.fileExists(atPath: jsonFileURL.path) else {
-            throw DotImageDataError.fileNotFound
-        }
-
-        guard let result: DotImageCodableData = Input.loadJson(url: jsonFileURL) else {
-            throw DotImageDataError.invalidJsonFile
-        }
-
-        try result.subImages.forEach {
-            let imageURL = folderURL.appendingPathComponent($0.imagePath)
-
-            guard FileManager.default.fileExists(atPath: imageURL.path) else {
-                throw DotImageDataError.imageFileNotFound
-            }
-
-            let data = try Data(contentsOf: imageURL)
-            if UIImage(data: data)?.size == .zero {
-                throw DotImageDataError.notImage
-            }
-        }
-    }
 }
