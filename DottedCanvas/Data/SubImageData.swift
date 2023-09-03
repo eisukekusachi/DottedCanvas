@@ -8,7 +8,6 @@
 import UIKit
 
 struct SubImageData: Identifiable, Hashable {
-
     var id = UUID()
     var title: String = ""
 

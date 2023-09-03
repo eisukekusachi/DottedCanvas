@@ -47,7 +47,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
                      latestUpdateDate: latestUpdateDate)
     }
     var flatteningSubImages: UIImage? {
-
         var image: UIImage?
 
         subImageDataArray.forEach { data in
@@ -96,7 +95,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         try Output.createZip(folderURL: srcFolder, zipFileURL: zipFileURL)
     }
     func loadData(from folderURL: URL) throws {
-
         let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
 
         if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL) {
@@ -114,7 +112,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     }
 
     func addSubImageData(_ newData: SubImageData) {
-
         if subImageDataArray.isEmpty {
             appendSubImageData(newData)
         } else {
@@ -124,10 +121,61 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         updateSelectedSubImageData(newData)
         updateMainImage()
     }
+
+    func appendSubImageData(_ data: SubImageData) {
+        subImageDataArray.append(data)
+        updateSelectedSubImageData(data)
+    }
+
+    @discardableResult
+    func insertSubImageData(_ data: SubImageData, at index: Int) -> Bool {
+        guard   index >= 0 &&
+                index <= subImageDataArray.count
+        else {
+            return false
+        }
+
+        subImageDataArray.insert(data, at: index)
+        updateSelectedSubImageData(data)
+
+        return true
+    }
+
     func removeCurrentSelectedSubImageData() {
         if removeSubImageData(subImageDataArrayIndex) {
             updateMainImage()
         }
+    }
+
+    @discardableResult
+    func removeSubImageData(_ index: Int) -> Bool {
+        guard   subImageDataArray.count != 0 &&
+                index >= 0 &&
+                index < subImageDataArray.count
+        else {
+            return false
+        }
+
+        let tmpCurrentData = subImageDataArray[index]
+
+        subImageDataArray.remove(at: index)
+
+        if subImageDataArray.count == 0 {
+            selectedSubImageData = nil
+
+        } else if selectedSubImageData == tmpCurrentData {
+            let index = min(max(0, index), subImageDataArray.count - 1)
+            selectedSubImageData = subImageDataArray[index]
+        }
+
+        return true
+    }
+
+    func getSelectedSubImageIndex() -> Int? {
+        if let selectedSubImageData {
+            return getIndex(from: selectedSubImageData.id)
+        }
+        return nil
     }
 
     func updateName(_ name: String) {
@@ -177,56 +225,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         if selectedSubImageData?.id == id {
             selectedSubImageData = subImageDataArray[index]
         }
-    }
-
-    func appendSubImageData(_ data: SubImageData) {
-        subImageDataArray.append(data)
-        updateSelectedSubImageData(data)
-    }
-
-    @discardableResult
-    func insertSubImageData(_ data: SubImageData, at index: Int) -> Bool {
-        guard   index >= 0 &&
-                index <= subImageDataArray.count
-        else {
-            return false
-        }
-
-        subImageDataArray.insert(data, at: index)
-        updateSelectedSubImageData(data)
-
-        return true
-    }
-
-    @discardableResult
-    func removeSubImageData(_ index: Int) -> Bool {
-        guard   subImageDataArray.count != 0 &&
-                index >= 0 &&
-                index < subImageDataArray.count
-        else {
-            return false
-        }
-
-        let tmpCurrentData = subImageDataArray[index]
-
-        subImageDataArray.remove(at: index)
-
-        if subImageDataArray.count == 0 {
-            selectedSubImageData = nil
-
-        } else if selectedSubImageData == tmpCurrentData {
-            let index = min(max(0, index), subImageDataArray.count - 1)
-            selectedSubImageData = subImageDataArray[index]
-        }
-
-        return true
-    }
-
-    func getSelectedSubImageIndex() -> Int? {
-        if let selectedSubImageData {
-            return getIndex(from: selectedSubImageData.id)
-        }
-        return nil
     }
 }
 

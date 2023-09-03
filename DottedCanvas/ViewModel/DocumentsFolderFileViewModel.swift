@@ -57,17 +57,15 @@ class DocumentsFolderFileViewModel: ObservableObject {
 }
 
 extension DocumentsFolderFileViewModel {
-    private func removeExistingFolder(at url: URL) throws {
-        try? FileManager.default.removeItem(at: url)
+    private func appendFileData(title: String, imageData: DotImageData) {
+        fileDataArray.append(
+            DocumentsFolderFileData(
+                title: title,
+                thumbnail: imageData.mainImage?.resize(to: CGSize(width: 256, height: 256)),
+                latestUpdateDate: imageData.latestUpdateDate
+            )
+        )
     }
-    private func createFolder(at url: URL) throws {
-        try FileManager.createNewDirectory(url: url)
-    }
-
-    private func unzipFile(from sourceURL: URL, to destinationURL: URL) throws {
-        try Input.unzip(srcZipURL: sourceURL, to: destinationURL)
-    }
-
     private func appendDocumentsFileData(in folderURL: URL) throws {
         let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
         let thumbnailURL = folderURL.appendingPathComponent(thumbnailName)
@@ -85,7 +83,9 @@ extension DocumentsFolderFileViewModel {
             }
         }
     }
-
+    private func createFolder(at url: URL) throws {
+        try FileManager.createNewDirectory(url: url)
+    }
     private func updateFileData(index: Int, title: String, imageData: DotImageData) {
         fileDataArray[index] = DocumentsFolderFileData(
             title: title,
@@ -93,14 +93,10 @@ extension DocumentsFolderFileViewModel {
             latestUpdateDate: imageData.latestUpdateDate
         )
     }
-
-    private func appendFileData(title: String, imageData: DotImageData) {
-        fileDataArray.append(
-            DocumentsFolderFileData(
-                title: title,
-                thumbnail: imageData.mainImage?.resize(to: CGSize(width: 256, height: 256)),
-                latestUpdateDate: imageData.latestUpdateDate
-            )
-        )
+    private func unzipFile(from sourceURL: URL, to destinationURL: URL) throws {
+        try Input.unzip(srcZipURL: sourceURL, to: destinationURL)
+    }
+    private func removeExistingFolder(at url: URL) throws {
+        try? FileManager.default.removeItem(at: url)
     }
 }

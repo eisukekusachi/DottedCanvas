@@ -8,7 +8,6 @@
 import UIKit
 
 class DotImageCodableData: Codable {
-
     var subImages: [SubImageCodableData]
     var selectedSubImageIndex: Int = 0
     var latestUpdateDate: Date = Date()
