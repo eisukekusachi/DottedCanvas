@@ -10,7 +10,10 @@ enabling you to create a complex dot image by overlaying dots of various colors,
 
 <br />
 
-<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/412f23d2-a7d5-4530-b132-c6d3d043ddab" width="200px">
-<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/f8fe6501-4121-4a8c-8523-aa1006fd37dd" width="200px">
-<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/f4884b9a-e3e5-4a74-8380-e6fcbfe1f7ae" width="200px">
-<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/9ecbff16-b00d-4af0-9ce9-b94b38aaad48" width="200px">
+<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/85daf4ca-a4b3-49b2-9347-62a987e75cab" width="200px">
+<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/5f982933-da3d-461b-87fc-4f7af784e08b" width="200px">
+<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/df8a6e74-1d40-4f25-8594-616c0b74a78d" width="200px">
+<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/ce55f1dd-c308-460d-b63d-9eb752f2475b" width="200px">
+<img src="https://github.com/eisukekusachi/DottedCanvas/assets/51893896/caed1674-f42a-4e28-81a9-347397cffc9e" width="200px">
+
+
