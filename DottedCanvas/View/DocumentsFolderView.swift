@@ -17,7 +17,7 @@ struct DocumentsFolderView: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.fileDataArray) { data in
+            ForEach(viewModel.fileDataArray.reversed()) { data in
                 HStack {
                     Image(uiImage: data.thumbnail ?? UIImage.checkered(with: CGSize(width: diameter, height: diameter)))
                         .resizable()
