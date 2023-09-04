@@ -74,7 +74,7 @@ extension SubImageListView {
     }
     private var subImageList: some View {
         List {
-            ForEach(viewModel.subImageDataArray) { subImageData in
+            ForEach(viewModel.subImageDataArray.reversed()) { subImageData in
                 SubImageListItem(selected: subImageData == viewModel.currentSubImageData,
                                  imageData: subImageData,
                                  onTapVisibleButton: { result in
@@ -94,7 +94,10 @@ extension SubImageListView {
         .listRowInsets(EdgeInsets())
     }
     private func moveListItem(from source: IndexSet, to destination: Int) {
+        viewModel.subImageDataArray = viewModel.subImageDataArray.reversed()
         viewModel.subImageDataArray.move(fromOffsets: source, toOffset: destination)
+        viewModel.subImageDataArray = viewModel.subImageDataArray.reversed()
+
         viewModel.updateMainImage()
     }
 }
