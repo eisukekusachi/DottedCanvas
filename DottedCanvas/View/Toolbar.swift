@@ -70,7 +70,7 @@ struct Toolbar: View {
                     newImage()
             },
                 label: {
-                    Image(systemName: "trash")
+                    Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
             .modifier(ButtonDisabled(isDisabled: dotImageViewModel.subImageDataArray.isEmpty))
