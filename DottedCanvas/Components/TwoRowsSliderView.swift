@@ -18,9 +18,9 @@ struct TwoRowsSliderView: View {
 
     var body: some View {
         VStack(spacing: 4) {
+            buttons
             IntSlider(value: $value, in: range)
                 .environment(\.sliderStyle, style)
-            buttons
         }
     }
 
