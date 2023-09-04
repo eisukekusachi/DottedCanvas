@@ -38,6 +38,7 @@ struct DottedCanvasView: View {
             VStack {
                 Toolbar(
                     dotImageViewModel: dotImageViewModel,
+                    documentsViewModel: documentsFolderFileViewModel,
                     addSubImageData: {
                         isCreationViewPresented = true
                     },
