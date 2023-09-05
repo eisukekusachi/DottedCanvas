@@ -14,6 +14,8 @@ struct SubImageListView: View {
     private let range = 0 ... 255
     private let buttonDiameter: CGFloat = 16
 
+    private let sliderStyle = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
+
     var body: some View {
         selectedSubImageAlphaSlider
         subImageList
@@ -22,46 +24,14 @@ struct SubImageListView: View {
 
 extension SubImageListView {
     private var selectedSubImageAlphaSlider: some View {
-        VStack(spacing: 0) {
-            Text("Alpha: \(viewModel.currentSubImageAlpha)")
-                .font(.subheadline)
-
-            Spacer()
-                .frame(height: 4)
-
-            HStack {
-                Button(action: {
-                    decreaseAlpha()
-
-                }, label: {
-                    Image(systemName: "minus")
-                        .buttonModifier(diameter: buttonDiameter)
-                })
-
-                Spacer()
-                    .frame(width: 12)
-
-                IntSlider(value: $viewModel.currentSubImageAlpha,
-                          in: range) { value in
-                    viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id,
-                                                 alpha: value)
-                }
-                    .environment(\.sliderStyle, style)
-
-                Spacer()
-                    .frame(width: 12)
-
-                Button(
-                    action: {
-                        increaseAlpha()
-                },
-                    label: {
-                        Image(systemName: "plus")
-                            .buttonModifier(diameter: buttonDiameter)
-                })
-            }
+        TwoRowsSliderView(title: "Alpha",
+                          value: $viewModel.currentSubImageAlpha,
+                          style: sliderStyle,
+                          range: range) { value in
+            viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id,
+                                         alpha: value)
         }
-        .padding()
+                          .padding()
     }
 
     private func decreaseAlpha() {
