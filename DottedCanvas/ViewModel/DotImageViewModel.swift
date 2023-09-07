@@ -162,7 +162,9 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
         } else if currentSubImageData == tmpCurrentData {
             let index = min(max(0, index), subImageDataArray.count - 1)
-            currentSubImageData = subImageDataArray[index]
+            let data = subImageDataArray[index]
+            currentSubImageData = data
+            storedCreationData.apply(data)
         }
 
         return true
