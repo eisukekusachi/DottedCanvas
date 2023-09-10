@@ -135,10 +135,7 @@ struct DottedCanvasView: View {
 
 
     private func updateMainImage() -> SubImageData {
-        let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
-        let newDotImage = dotImageCreationData.dotImage
-        let newData = SubImageData(title: title,
-                                   image: newDotImage,
+        let newData = SubImageData(title: TimeStampFormatter.current(template: "MMM dd HH mm ss"),
                                    data: dotImageCreationData)
 
         dotImageViewModel.addSubImageData(newData)

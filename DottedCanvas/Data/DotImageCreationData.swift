@@ -101,14 +101,6 @@ extension DotImageCreationData {
                 blue: CGFloat(blue) / 255.0,
                 alpha: 1.0)
     }
-    var currentImage: UIImage {
-        UIImage.dotImage(with: imageSize,
-                         dotSize: CGFloat(diameter),
-                         spacing: CGFloat(spacing),
-                         offset: CGPoint(x: CGFloat(offsetX),
-                                         y: CGFloat(offsetY)),
-                         color: currentColor)
-    }
 
     var redStyle: SliderStyle {
         let colors = [Color(uiColor: minRed),

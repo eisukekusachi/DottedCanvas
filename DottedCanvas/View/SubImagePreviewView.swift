@@ -18,7 +18,7 @@ struct SubImagePreviewView: View {
                 .foregroundColor(.white)
                 .frame(width: viewSize, height: viewSize)
 
-            Image(uiImage: data.currentImage)
+            Image(uiImage: data.dotImage)
                 .resizable()
                 .frame(width: viewSize, height: viewSize)
                 .overlay(

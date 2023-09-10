@@ -55,12 +55,11 @@ struct SubImageData: Identifiable, Hashable {
         offsetY = codableData.offsetY
     }
     init(title: String,
-         image: UIImage? = nil,
          isVisible: Bool = true,
          data: DotImageCreationData) {
 
         self.title = title
-        self.image = image
+        self.image = data.dotImage
         self.thumbnail = image?.resize(to: CGSize(width: 256, height: 256))
 
         self.isVisible = isVisible
