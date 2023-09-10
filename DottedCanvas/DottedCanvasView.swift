@@ -146,13 +146,14 @@ struct DottedCanvasView: View {
         return newData
     }
     private func updateDotImageCreationData() {
-        if let subImageData = dotImageViewModel.currentSubImageData {
+        if let subImageData = dotImageViewModel.selectedSubImageData {
             dotImageCreationData.apply(subImageData)
         }
     }
     private func saveDotImageToDocumentsFolder() {
+        let zipFileName = dotImageViewModel.fileName + "." + "\(zipSuffix)"
+        let zipFileURL = URL.documents.appendingPathComponent(zipFileName)
         let folderURL = URL.documents.appendingPathComponent(tmpFolder)
-        let zipFileURL = URL.documents.appendingPathComponent(dotImageViewModel.name + "." + "\(zipSuffix)")
 
         Task {
             do {
@@ -170,7 +171,7 @@ struct DottedCanvasView: View {
                 try dotImageViewModel.saveDataAsZipFile(src: folderURL,
                                                         to: zipFileURL)
 
-                documentsFolderFileViewModel.upsert(title: dotImageViewModel.name,
+                documentsFolderFileViewModel.upsert(title: dotImageViewModel.fileName,
                                                     imageData: dotImageViewModel.dotImageData)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
@@ -200,7 +201,7 @@ struct DottedCanvasView: View {
                 try dotImageViewModel.loadData(from: folderURL)
 
                 if let fileName = zipFileURL.fileName {
-                    dotImageViewModel.updateName(fileName)
+                    dotImageViewModel.fileName = fileName
                 }
                 
             } catch {

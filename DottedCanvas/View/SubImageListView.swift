@@ -32,28 +32,28 @@ extension SubImageListView {
             style: sliderStyle,
             range: range) { value in
 
-            viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id,
+            viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id,
                                          alpha: value)
         }
             .padding()
     }
 
     private func decreaseAlpha() {
-        guard let data = viewModel.currentSubImageData else { return }
+        guard let data = viewModel.selectedSubImageData else { return }
         let alpha = max(data.alpha - 1, range.lowerBound)
-        viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id, alpha: alpha)
+        viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id, alpha: alpha)
     }
     private func increaseAlpha() {
-        guard let data = viewModel.currentSubImageData else { return }
+        guard let data = viewModel.selectedSubImageData else { return }
         let alpha = min(data.alpha + 1, range.upperBound)
-        viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id, alpha: alpha)
+        viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id, alpha: alpha)
     }
     private var subImageList: some View {
         List {
             ForEach(Array(viewModel.subImageDataArray.enumerated().reversed()),
                     id: \.element) { index, subImageData in
 
-                SubImageListItem(selected: subImageData == viewModel.currentSubImageData,
+                SubImageListItem(selected: subImageData == viewModel.selectedSubImageData,
                                  imageData: subImageData,
                                  onTapVisibleButton: { result in
 
@@ -62,7 +62,7 @@ extension SubImageListView {
                 })
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        viewModel.updateCurrentSubImageData(subImageData)
+                        viewModel.selectedSubImageData = subImageData
                         selectedImageAlpha = subImageData.alpha
 
                         didSelectItem?(index)

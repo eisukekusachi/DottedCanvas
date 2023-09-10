@@ -15,7 +15,6 @@ protocol DotImageViewModelProtocol {
     var subImageDataArray: [SubImageData] { get }
 
     func updateMainImage()
-    func updateCurrentSubImageData(_ data: SubImageData)
 
     func addSubImageData(_ newData: SubImageData)
     func removeCurrentSubImageData()
@@ -30,11 +29,11 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     @Published var mainImage: UIImage?
     @Published var subImageDataArray: [SubImageData]
 
-    @Published var currentSubImageData: SubImageData?
+    @Published var selectedSubImageData: SubImageData?
 
     private var cancellables: Set<AnyCancellable> = []
 
-    private (set) var name: String = Calendar.currentDate
+    var fileName: String = Calendar.currentDate
 
     var latestUpdateDate: Date = Date()
 
@@ -63,7 +62,7 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         return image
     }
     var subImageDataArrayIndex: Int {
-        subImageDataArray.firstIndex(where: { $0 == currentSubImageData }) ?? 0
+        subImageDataArray.firstIndex(where: { $0 == selectedSubImageData }) ?? 0
     }
 
     convenience init() {
@@ -73,10 +72,10 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         subImageDataArray = dataArray
 
         if subImageDataArray.count != 0, let data = subImageDataArray.first {
-            currentSubImageData = data
+            selectedSubImageData = data
         }
 
-        $currentSubImageData
+        $selectedSubImageData
             .debounce(for: .milliseconds(50), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.updateMainImage()
@@ -97,8 +96,8 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
                 SubImageData(codableData: $0, folderURL: folderURL)
             }
 
-            updateSubImageDataArray(newSubImageDataArray)
-            updateCurrentSubImageData(data.selectedSubImageIndex)
+            subImageDataArray = newSubImageDataArray
+            updateSubImageData(index: data.selectedSubImageIndex)
 
         } else {
             throw DotImageViewModelError.failedToLoadJson
@@ -112,13 +111,13 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             insertSubImageData(newData, at: subImageDataArrayIndex + 1)
         }
 
-        updateCurrentSubImageData(newData)
+        selectedSubImageData = newData
         updateMainImage()
     }
 
     func appendSubImageData(_ data: SubImageData) {
         subImageDataArray.append(data)
-        updateCurrentSubImageData(data)
+        selectedSubImageData = data
     }
 
     @discardableResult
@@ -130,7 +129,7 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         }
 
         subImageDataArray.insert(data, at: index)
-        updateCurrentSubImageData(data)
+        selectedSubImageData = data
 
         return true
     }
@@ -155,12 +154,12 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         subImageDataArray.remove(at: index)
 
         if subImageDataArray.count == 0 {
-            currentSubImageData = nil
+            selectedSubImageData = nil
 
-        } else if currentSubImageData == tmpCurrentData {
+        } else if selectedSubImageData == tmpCurrentData {
             let index = min(max(0, index), subImageDataArray.count - 1)
             let data = subImageDataArray[index]
-            currentSubImageData = data
+            selectedSubImageData = data
         }
 
         return true
@@ -169,15 +168,15 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     func reset() {
         mainImage = nil
         subImageDataArray = []
-        currentSubImageData = nil
+        selectedSubImageData = nil
 
-        name = Calendar.currentDate
+        fileName = Calendar.currentDate
         latestUpdateDate = Date()
     }
 
     func getCurrentSubImageIndex() -> Int? {
-        if let currentSubImageData {
-            return getIndex(from: currentSubImageData.id)
+        if let selectedSubImageData {
+            return getIndex(from: selectedSubImageData.id)
         }
         return nil
     }
@@ -188,22 +187,16 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         return nil
     }
 
-    func updateName(_ name: String) {
-        self.name = name
-    }
     func updateMainImage() {
         mainImage = flatteningSubImages
         latestUpdateDate = Date()
     }
 
-    func updateCurrentSubImageData(_ selectedSubImageIndex: Int) {
+    func updateSubImageData(index selectedSubImageIndex: Int) {
         if selectedSubImageIndex < subImageDataArray.count {
             let data = subImageDataArray[selectedSubImageIndex]
-            currentSubImageData = data
+            selectedSubImageData = data
         }
-    }
-    func updateCurrentSubImageData(_ data: SubImageData) {
-        currentSubImageData = data
     }
 
     func updateSubImageData(id: UUID?, isVisible: Bool? = nil, alpha: Int? = nil) {
@@ -219,12 +212,8 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             subImageDataArray[index].alpha = alpha
         }
 
-        if currentSubImageData?.id == id {
-            currentSubImageData = subImageDataArray[index]
+        if selectedSubImageData?.id == id {
+            selectedSubImageData = subImageDataArray[index]
         }
-    }
-    func updateSubImageDataArray(_ newSubImageDataArray: [SubImageData]) {
-        subImageDataArray.removeAll()
-        subImageDataArray = newSubImageDataArray
     }
 }
