@@ -31,7 +31,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
     @Published var subImageDataArray: [SubImageData]
 
     @Published var currentSubImageData: SubImageData?
-    @Published var currentSubImageAlpha: Int = 0
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -76,10 +75,9 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
         if subImageDataArray.count != 0, let data = subImageDataArray.first {
             currentSubImageData = data
-            currentSubImageAlpha = data.alpha
         }
 
-        $currentSubImageAlpha
+        $currentSubImageData
             .debounce(for: .milliseconds(50), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.updateMainImage()
@@ -174,7 +172,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         mainImage = nil
         subImageDataArray = []
         currentSubImageData = nil
-        currentSubImageAlpha = 0
 
         name = Calendar.currentDate
 
@@ -207,14 +204,12 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         if selectedSubImageIndex < subImageDataArray.count {
             let data = subImageDataArray[selectedSubImageIndex]
             currentSubImageData = data
-            currentSubImageAlpha = data.alpha
 
             storedCreationData.apply(data)
         }
     }
     func updateCurrentSubImageData(_ data: SubImageData) {
         currentSubImageData = data
-        currentSubImageAlpha = data.alpha
 
         storedCreationData.apply(data)
     }
@@ -230,10 +225,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
         if let alpha = alpha {
             subImageDataArray[index].alpha = alpha
-
-            if currentSubImageData?.id == id {
-                currentSubImageAlpha = alpha
-            }
         }
 
         if currentSubImageData?.id == id {

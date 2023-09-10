@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SubImageListView: View {
     @ObservedObject var viewModel: DotImageViewModel
+    @Binding var selectedImageAlpha: Int
 
     private let style = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
     private let range = 0 ... 255
@@ -24,22 +25,26 @@ struct SubImageListView: View {
 
 extension SubImageListView {
     private var selectedSubImageAlphaSlider: some View {
-        TwoRowsSliderView(title: "Alpha",
-                          value: $viewModel.currentSubImageAlpha,
-                          style: sliderStyle,
-                          range: range) { value in
+        TwoRowsSliderView(
+            title: "Alpha",
+            value: $selectedImageAlpha,
+            style: sliderStyle,
+            range: range) { value in
+
             viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id,
                                          alpha: value)
         }
-                          .padding()
+            .padding()
     }
 
     private func decreaseAlpha() {
-        let alpha = max(viewModel.currentSubImageAlpha - 1, range.lowerBound)
+        guard let data = viewModel.currentSubImageData else { return }
+        let alpha = max(data.alpha - 1, range.lowerBound)
         viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id, alpha: alpha)
     }
     private func increaseAlpha() {
-        let alpha = min(viewModel.currentSubImageAlpha + 1, range.upperBound)
+        guard let data = viewModel.currentSubImageData else { return }
+        let alpha = min(data.alpha + 1, range.upperBound)
         viewModel.updateSubImageData(id: viewModel.currentSubImageData?.id, alpha: alpha)
     }
     private var subImageList: some View {
@@ -56,6 +61,8 @@ extension SubImageListView {
                     .onTapGesture {
                         viewModel.storedCreationData.apply(subImageData)
                         viewModel.updateCurrentSubImageData(subImageData)
+
+                        selectedImageAlpha = subImageData.alpha
                     }
             }
             .onMove(perform: moveListItem)
@@ -76,6 +83,8 @@ struct SubImageListView_Previews: PreviewProvider {
     static var previews: some View {
 
         @StateObject var viewModel = DotImageViewModel()
-        SubImageListView(viewModel: viewModel)
+        @State var selectedImageAlpha: Int = 0
+        SubImageListView(viewModel: viewModel,
+                         selectedImageAlpha: $selectedImageAlpha)
     }
 }
