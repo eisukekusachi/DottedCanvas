@@ -36,7 +36,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
 
     private (set) var name: String = Calendar.currentDate
 
-    var storedCreationData = DotImageCreationData()
     var latestUpdateDate: Date = Date()
 
     var dotImageData: DotImageData? {
@@ -162,7 +161,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
             let index = min(max(0, index), subImageDataArray.count - 1)
             let data = subImageDataArray[index]
             currentSubImageData = data
-            storedCreationData.apply(data)
         }
 
         return true
@@ -174,8 +172,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         currentSubImageData = nil
 
         name = Calendar.currentDate
-
-        storedCreationData = DotImageCreationData()
         latestUpdateDate = Date()
     }
 
@@ -204,14 +200,10 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
         if selectedSubImageIndex < subImageDataArray.count {
             let data = subImageDataArray[selectedSubImageIndex]
             currentSubImageData = data
-
-            storedCreationData.apply(data)
         }
     }
     func updateCurrentSubImageData(_ data: SubImageData) {
         currentSubImageData = data
-
-        storedCreationData.apply(data)
     }
 
     func updateSubImageData(id: UUID?, isVisible: Bool? = nil, alpha: Int? = nil) {

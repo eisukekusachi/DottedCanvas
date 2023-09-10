@@ -10,6 +10,7 @@ import SwiftUI
 struct SubImageListView: View {
     @ObservedObject var viewModel: DotImageViewModel
     @Binding var selectedImageAlpha: Int
+    var didSelectItem: ((Int) -> Void)?
 
     private let style = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
     private let range = 0 ... 255
@@ -49,7 +50,9 @@ extension SubImageListView {
     }
     private var subImageList: some View {
         List {
-            ForEach(viewModel.subImageDataArray.reversed()) { subImageData in
+            ForEach(Array(viewModel.subImageDataArray.enumerated().reversed()),
+                    id: \.element) { index, subImageData in
+
                 SubImageListItem(selected: subImageData == viewModel.currentSubImageData,
                                  imageData: subImageData,
                                  onTapVisibleButton: { result in
@@ -59,10 +62,10 @@ extension SubImageListView {
                 })
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        viewModel.storedCreationData.apply(subImageData)
                         viewModel.updateCurrentSubImageData(subImageData)
-
                         selectedImageAlpha = subImageData.alpha
+
+                        didSelectItem?(index)
                     }
             }
             .onMove(perform: moveListItem)

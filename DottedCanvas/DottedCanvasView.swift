@@ -23,6 +23,7 @@ struct DottedCanvasView: View {
     @State var isNewImageAlertPresented: Bool = false
     @State var isDocumentsFolderViewPresented: Bool = false
 
+    @State var dotImageCreationData = DotImageCreationData()
     @State var selectedImageAlpha: Int = 255
 
     @State var message: String = ""
@@ -43,9 +44,11 @@ struct DottedCanvasView: View {
                     documentsViewModel: documentsFolderFileViewModel,
                     addSubImageData: {
                         isCreationViewPresented = true
+                        updateDotImageCreationData()
                     },
                     removeSubImageData: {
                         dotImageViewModel.removeCurrentSubImageData()
+                        updateDotImageCreationData()
                     },
                     saveImage: {
                         saveDotImageToDocumentsFolder()
@@ -70,8 +73,12 @@ struct DottedCanvasView: View {
                     Spacer()
 
                 } else {
-                    SubImageListView(viewModel: dotImageViewModel,
-                                     selectedImageAlpha: $selectedImageAlpha)
+                    SubImageListView(
+                        viewModel: dotImageViewModel,
+                        selectedImageAlpha: $selectedImageAlpha,
+                        didSelectItem: { _ in
+                            updateDotImageCreationData()
+                    })
                 }
             }
             .padding()
@@ -92,7 +99,7 @@ struct DottedCanvasView: View {
         }
         .sheet(isPresented: $isCreationViewPresented) {
             DotImageCreationView(isViewPresented: $isCreationViewPresented,
-                                 creationData: dotImageViewModel.storedCreationData) {
+                                 creationData: dotImageCreationData) {
                 let newData = updateMainImage()
                 selectedImageAlpha = newData.alpha
             }
@@ -115,6 +122,7 @@ struct DottedCanvasView: View {
                             ].joined()
             let action = {
                 dotImageViewModel.reset()
+                dotImageCreationData.reset()
             }
 
             return Alert(title: Text(title),
@@ -128,14 +136,19 @@ struct DottedCanvasView: View {
 
     private func updateMainImage() -> SubImageData {
         let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
-        let newDotImage = dotImageViewModel.storedCreationData.dotImage
+        let newDotImage = dotImageCreationData.dotImage
         let newData = SubImageData(title: title,
                                    image: newDotImage,
-                                   data: dotImageViewModel.storedCreationData)
+                                   data: dotImageCreationData)
 
         dotImageViewModel.addSubImageData(newData)
 
         return newData
+    }
+    private func updateDotImageCreationData() {
+        if let subImageData = dotImageViewModel.currentSubImageData {
+            dotImageCreationData.apply(subImageData)
+        }
     }
     private func saveDotImageToDocumentsFolder() {
         let folderURL = URL.documents.appendingPathComponent(tmpFolder)
