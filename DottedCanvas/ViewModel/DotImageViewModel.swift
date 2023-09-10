@@ -17,11 +17,7 @@ protocol DotImageViewModelProtocol {
     func updateMainImage()
 
     func addSubImageData(_ newData: SubImageData)
-    func removeCurrentSubImageData()
-}
-
-enum DotImageViewModelError: Error {
-    case failedToLoadJson
+    func removeSubImageData(_ index: Int) -> Bool
 }
 
 class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
@@ -81,27 +77,6 @@ class DotImageViewModel: ObservableObject, DotImageViewModelProtocol {
                 self?.updateMainImage()
             })
             .store(in: &cancellables)
-    }
-
-    func saveDataAsZipFile(src srcFolder: URL, to zipFileURL: URL) throws {
-        try dotImageData?.writeData(to: srcFolder)
-        try Output.createZip(folderURL: srcFolder, zipFileURL: zipFileURL)
-    }
-    func loadData(from folderURL: URL) throws {
-        let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
-
-        if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL) {
-
-            let newSubImageDataArray: [SubImageData] = data.subImages.map {
-                SubImageData(codableData: $0, folderURL: folderURL)
-            }
-
-            subImageDataArray = newSubImageDataArray
-            updateSubImageData(index: data.selectedSubImageIndex)
-
-        } else {
-            throw DotImageViewModelError.failedToLoadJson
-        }
     }
 
     func addSubImageData(_ newData: SubImageData) {

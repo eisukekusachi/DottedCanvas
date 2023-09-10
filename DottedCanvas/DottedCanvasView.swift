@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum IOError: Error {
+    case failedToLoadJson
+}
+
 struct DottedCanvasView: View {
 
     @ObservedObject var dotImageViewModel: DotImageViewModel
@@ -165,8 +169,8 @@ struct DottedCanvasView: View {
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try dotImageViewModel.saveDataAsZipFile(src: folderURL,
-                                                        to: zipFileURL)
+                try dotImageViewModel.dotImageData?.writeData(to: folderURL)
+                try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
 
                 documentsFolderFileViewModel.upsert(title: dotImageViewModel.fileName,
                                                     imageData: dotImageViewModel.dotImageData)
@@ -195,7 +199,21 @@ struct DottedCanvasView: View {
 
                 try FileManager.createNewDirectory(url: folderURL)
                 try Input.unzip(srcZipURL: zipFileURL, to: folderURL)
-                try dotImageViewModel.loadData(from: folderURL)
+
+                let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
+
+                if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL) {
+
+                    let newSubImageDataArray: [SubImageData] = data.subImages.map {
+                        SubImageData(codableData: $0, folderURL: folderURL)
+                    }
+
+                    dotImageViewModel.subImageDataArray = newSubImageDataArray
+                    dotImageViewModel.updateSubImageData(index: data.selectedSubImageIndex)
+
+                } else {
+                    throw IOError.failedToLoadJson
+                }
 
                 if let fileName = zipFileURL.fileName {
                     dotImageViewModel.fileName = fileName
