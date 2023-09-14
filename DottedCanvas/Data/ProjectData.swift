@@ -1,5 +1,5 @@
 //
-//  DotImageData.swift
+//  ProjectData.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/26.
@@ -10,7 +10,7 @@ import UIKit
 let jsonFileName: String = "data.dat"
 let thumbnailName: String = "thumbnail.png"
 
-enum DotImageDataError: Error {
+enum ProjectDataError: Error {
     case fileNotFound
     case invalidData
     case invalidJsonFile
@@ -18,10 +18,10 @@ enum DotImageDataError: Error {
     case notImage
 }
 
-struct DotImageData {
-    var mainImage: UIImage?
-    var subImageDataArray: [SubImageData]
-    var subImageIndex: Int
+struct ProjectData {
+    var thumbnail: UIImage?
+    var layers: [SubImageData]
+    var index: Int
     var latestUpdateDate: Date
 
     func writeData(to folder: URL) throws {
@@ -29,8 +29,8 @@ struct DotImageData {
 
         // Create codable data
         let codableData = DotImageCodableData(
-            subImageDataArray: subImageDataArray,
-            selectedIndex: subImageIndex
+            subImageDataArray: layers,
+            selectedIndex: index
         )
 
         do {
@@ -51,16 +51,16 @@ struct DotImageData {
         do {
             // Write mainImage thumbnail
             let imageURL = folder.appendingPathComponent(thumbnailName)
-            try mainImage?.pngData()?.write(to: imageURL)
+            try thumbnail?.pngData()?.write(to: imageURL)
         } catch {
             throw error
         }
 
         // Write subImage
-        for i in 0..<subImageDataArray.count {
+        for i in 0..<layers.count {
             do {
-                let imageURL = folder.appendingPathComponent(subImageDataArray[i].imagePath)
-                try subImageDataArray[i].image?.pngData()?.write(to: imageURL)
+                let imageURL = folder.appendingPathComponent(layers[i].imagePath)
+                try layers[i].image?.pngData()?.write(to: imageURL)
             } catch {
                 throw error
             }

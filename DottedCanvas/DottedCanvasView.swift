@@ -169,11 +169,11 @@ struct DottedCanvasView: View {
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try dotImageViewModel.imageData?.writeData(to: folderURL)
+                try dotImageViewModel.projectData?.writeData(to: folderURL)
                 try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
 
                 documentsFolderFileViewModel.upsert(title: dotImageViewModel.projectName,
-                                                    imageData: dotImageViewModel.imageData)
+                                                    projectData: dotImageViewModel.projectData)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {

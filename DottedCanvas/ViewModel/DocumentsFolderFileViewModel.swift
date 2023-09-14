@@ -40,29 +40,32 @@ class DocumentsFolderFileViewModel: ObservableObject {
         }
     }
 
-    func upsert(title: String, imageData: DotImageData?) {
-        guard let imageData = imageData else { return }
+    func upsert(title: String, projectData: ProjectData?) {
+        guard let projectData = projectData else { return }
 
         var fileExists: Bool = false
 
         for (index, data) in fileDataArray.enumerated().reversed() where data.title == title {
-            updateFileData(index: index, title: title, imageData: imageData)
+            updateFileData(index: index,
+                           title: title,
+                           projectData: projectData)
             fileExists = true
         }
 
         if !fileExists {
-            appendFileData(title: title, imageData: imageData)
+            appendFileData(title: title,
+                           projectData: projectData)
         }
     }
 }
 
 extension DocumentsFolderFileViewModel {
-    private func appendFileData(title: String, imageData: DotImageData) {
+    private func appendFileData(title: String, projectData: ProjectData) {
         fileDataArray.append(
             DocumentsFolderFileData(
                 title: title,
-                thumbnail: imageData.mainImage?.resize(to: CGSize(width: 256, height: 256)),
-                latestUpdateDate: imageData.latestUpdateDate
+                thumbnail: projectData.thumbnail,
+                latestUpdateDate: projectData.latestUpdateDate
             )
         )
     }
@@ -86,11 +89,11 @@ extension DocumentsFolderFileViewModel {
     private func createFolder(at url: URL) throws {
         try FileManager.createNewDirectory(url: url)
     }
-    private func updateFileData(index: Int, title: String, imageData: DotImageData) {
+    private func updateFileData(index: Int, title: String, projectData: ProjectData) {
         fileDataArray[index] = DocumentsFolderFileData(
             title: title,
-            thumbnail: imageData.mainImage?.resize(to: CGSize(width: 256, height: 256)),
-            latestUpdateDate: imageData.latestUpdateDate
+            thumbnail: projectData.thumbnail,
+            latestUpdateDate: projectData.latestUpdateDate
         )
     }
     private func unzipFile(from sourceURL: URL, to destinationURL: URL) throws {
