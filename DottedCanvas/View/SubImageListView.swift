@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SubImageListView: View {
-    @ObservedObject var viewModel: DotImageViewModel
+    @ObservedObject var viewModel: DotImageLayerViewModel
     @Binding var selectedImageAlpha: Int
     var didSelectItem: ((Int) -> Void)?
 
@@ -32,38 +32,38 @@ extension SubImageListView {
             style: sliderStyle,
             range: range) { value in
 
-            viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id,
-                                         alpha: value)
+            viewModel.updateLayer(id: viewModel.selectedLayer?.id,
+                                  alpha: value)
         }
             .padding()
     }
 
     private func decreaseAlpha() {
-        guard let data = viewModel.selectedSubImageData else { return }
+        guard let data = viewModel.selectedLayer else { return }
         let alpha = max(data.alpha - 1, range.lowerBound)
-        viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id, alpha: alpha)
+        viewModel.updateLayer(id: viewModel.selectedLayer?.id, alpha: alpha)
     }
     private func increaseAlpha() {
-        guard let data = viewModel.selectedSubImageData else { return }
+        guard let data = viewModel.selectedLayer else { return }
         let alpha = min(data.alpha + 1, range.upperBound)
-        viewModel.updateSubImageData(id: viewModel.selectedSubImageData?.id, alpha: alpha)
+        viewModel.updateLayer(id: viewModel.selectedLayer?.id, alpha: alpha)
     }
     private var subImageList: some View {
         List {
-            ForEach(Array(viewModel.subImageDataArray.enumerated().reversed()),
-                    id: \.element) { index, subImageData in
+            ForEach(Array(viewModel.layers.enumerated().reversed()),
+                    id: \.element) { index, layer in
 
-                SubImageListItem(selected: subImageData == viewModel.selectedSubImageData,
-                                 imageData: subImageData,
+                SubImageListItem(selected: layer == viewModel.selectedLayer,
+                                 imageData: layer,
                                  onTapVisibleButton: { result in
 
-                    viewModel.updateSubImageData(id: result.id, isVisible: !result.isVisible)
-                    viewModel.updateMainImage()
+                    viewModel.updateLayer(id: result.id, isVisible: !result.isVisible)
+                    viewModel.updateMergedLayers()
                 })
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        viewModel.selectedSubImageData = subImageData
-                        selectedImageAlpha = subImageData.alpha
+                        viewModel.selectedLayer = layer
+                        selectedImageAlpha = layer.alpha
 
                         didSelectItem?(index)
                     }
@@ -74,18 +74,18 @@ extension SubImageListView {
         .listRowInsets(EdgeInsets())
     }
     private func moveListItem(from source: IndexSet, to destination: Int) {
-        viewModel.subImageDataArray = viewModel.subImageDataArray.reversed()
-        viewModel.subImageDataArray.move(fromOffsets: source, toOffset: destination)
-        viewModel.subImageDataArray = viewModel.subImageDataArray.reversed()
+        viewModel.layers = viewModel.layers.reversed()
+        viewModel.layers.move(fromOffsets: source, toOffset: destination)
+        viewModel.layers = viewModel.layers.reversed()
 
-        viewModel.updateMainImage()
+        viewModel.updateMergedLayers()
     }
 }
 
 struct SubImageListView_Previews: PreviewProvider {
     static var previews: some View {
 
-        @StateObject var viewModel = DotImageViewModel()
+        @StateObject var viewModel = DotImageLayerViewModel()
         @State var selectedImageAlpha: Int = 0
         SubImageListView(viewModel: viewModel,
                          selectedImageAlpha: $selectedImageAlpha)

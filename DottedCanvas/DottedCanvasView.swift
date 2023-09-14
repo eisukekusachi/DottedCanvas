@@ -13,7 +13,7 @@ enum IOError: Error {
 
 struct DottedCanvasView: View {
 
-    @ObservedObject var dotImageViewModel: DotImageViewModel
+    @ObservedObject var dotImageViewModel: DotImageLayerViewModel
     @ObservedObject var documentsFolderFileViewModel: DocumentsFolderFileViewModel
 
     private let previewImageDiamter: CGFloat
@@ -32,7 +32,7 @@ struct DottedCanvasView: View {
 
     @State var message: String = ""
 
-    init(dotImageViewModel: DotImageViewModel,
+    init(dotImageViewModel: DotImageLayerViewModel,
          documentsFolderFileViewModel: DocumentsFolderFileViewModel) {
 
         self.dotImageViewModel = dotImageViewModel
@@ -51,7 +51,7 @@ struct DottedCanvasView: View {
                         updateDotImageCreationData()
                     },
                     removeSubImageData: {
-                        dotImageViewModel.removeCurrentSubImageData()
+                        dotImageViewModel.removeSelectedSubImageData()
                         updateDotImageCreationData()
                     },
                     saveImage: {
@@ -68,10 +68,10 @@ struct DottedCanvasView: View {
                 Spacer()
                     .frame(height: 12)
 
-                MainImagePreviewView(mainImage: $dotImageViewModel.mainImage,
+                MainImagePreviewView(mainImage: $dotImageViewModel.mergedLayers,
                                      diameter: previewImageDiamter)
 
-                if dotImageViewModel.subImageDataArray.isEmpty {
+                if dotImageViewModel.layers.isEmpty {
                     Spacer()
                     Text("Tap the + button to create a new image.")
                     Spacer()
@@ -142,17 +142,17 @@ struct DottedCanvasView: View {
         let newData = SubImageData(title: TimeStampFormatter.current(template: "MMM dd HH mm ss"),
                                    data: dotImageCreationData)
 
-        dotImageViewModel.addSubImageData(newData)
+        dotImageViewModel.addLayer(newData)
 
         return newData
     }
     private func updateDotImageCreationData() {
-        if let subImageData = dotImageViewModel.selectedSubImageData {
+        if let subImageData = dotImageViewModel.selectedLayer {
             dotImageCreationData.apply(subImageData)
         }
     }
     private func saveDotImageToDocumentsFolder() {
-        let zipFileName = dotImageViewModel.fileName + "." + "\(zipSuffix)"
+        let zipFileName = dotImageViewModel.projectName + "." + "\(zipSuffix)"
         let zipFileURL = URL.documents.appendingPathComponent(zipFileName)
         let folderURL = URL.documents.appendingPathComponent(tmpFolder)
 
@@ -169,11 +169,11 @@ struct DottedCanvasView: View {
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try dotImageViewModel.dotImageData?.writeData(to: folderURL)
+                try dotImageViewModel.imageData?.writeData(to: folderURL)
                 try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
 
-                documentsFolderFileViewModel.upsert(title: dotImageViewModel.fileName,
-                                                    imageData: dotImageViewModel.dotImageData)
+                documentsFolderFileViewModel.upsert(title: dotImageViewModel.projectName,
+                                                    imageData: dotImageViewModel.imageData)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {
@@ -208,15 +208,15 @@ struct DottedCanvasView: View {
                         SubImageData(codableData: $0, folderURL: folderURL)
                     }
 
-                    dotImageViewModel.subImageDataArray = newSubImageDataArray
-                    dotImageViewModel.updateSubImageData(index: data.selectedSubImageIndex)
+                    dotImageViewModel.layers = newSubImageDataArray
+                    dotImageViewModel.updateSelectedLayer(index: data.selectedSubImageIndex)
 
                 } else {
                     throw IOError.failedToLoadJson
                 }
 
                 if let fileName = zipFileURL.fileName {
-                    dotImageViewModel.fileName = fileName
+                    dotImageViewModel.projectName = fileName
                 }
                 
             } catch {
@@ -231,13 +231,13 @@ struct DottedCanvasView: View {
 
 struct DottedCanvasView_Previews: PreviewProvider {
     static var previews: some View {
-        @StateObject var dotImageViewModel = DotImageViewModel(
-            dataArray: [.init(title: "Title 0", alpha: 125),
-                        .init(title: "Title 1", alpha: 225, isVisible: false),
-                        .init(title: "Title 2", alpha: 25)
-                       ])
+        @StateObject var viewModel = DotImageLayerViewModel(
+            initialLayers: [.init(title: "Title 0", alpha: 125),
+                            .init(title: "Title 1", alpha: 225, isVisible: false),
+                            .init(title: "Title 2", alpha: 25)
+            ])
 
-        DottedCanvasView(dotImageViewModel: dotImageViewModel,
+        DottedCanvasView(dotImageViewModel: viewModel,
                          documentsFolderFileViewModel: DocumentsFolderFileViewModel())
     }
 }

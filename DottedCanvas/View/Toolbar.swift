@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Toolbar: View {
-    @ObservedObject var dotImageViewModel: DotImageViewModel
+    @ObservedObject var dotImageViewModel: DotImageLayerViewModel
     @ObservedObject var documentsViewModel: DocumentsFolderFileViewModel
 
     var addSubImageData: () -> Void
@@ -39,7 +39,7 @@ struct Toolbar: View {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.subImageDataArray.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.layers.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -52,7 +52,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.up")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.subImageDataArray.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.layers.isEmpty))
 
             Button(
                 action: {
@@ -75,7 +75,7 @@ struct Toolbar: View {
                     Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.subImageDataArray.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.layers.isEmpty))
         }
     }
 }
@@ -83,7 +83,7 @@ struct Toolbar: View {
 struct Toolbar_Previews: PreviewProvider {
     static var previews: some View {
         Toolbar(
-            dotImageViewModel: DotImageViewModel(),
+            dotImageViewModel: DotImageLayerViewModel(),
             documentsViewModel: DocumentsFolderFileViewModel(),
             addSubImageData: {
                 print("add")
