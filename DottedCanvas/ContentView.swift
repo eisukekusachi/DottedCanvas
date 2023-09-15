@@ -9,15 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var dotImageLayerViewModel = DotImageLayerViewModel()
-    @StateObject var documentsFolderFileViewModel = DocumentsFolderFileViewModel()
+    @StateObject var projectFileListViewModel = ProjectFileListViewModel()
 
     var body: some View {
-        DottedCanvasView(dotImageViewModel: dotImageLayerViewModel,
-                         documentsFolderFileViewModel: documentsFolderFileViewModel)
+        DottedCanvasView(dotImageLayerViewModel: dotImageLayerViewModel,
+                         projectFileListViewModel: projectFileListViewModel)
         .onAppear {
             Task {
                 do {
-                    try await documentsFolderFileViewModel.appendDocumentsFolderFile()
+                    try await projectFileListViewModel.appendDocumentsFolderFile()
 
                 } catch {
                     print(error)

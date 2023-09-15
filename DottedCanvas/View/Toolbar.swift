@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct Toolbar: View {
-    @ObservedObject var dotImageViewModel: DotImageLayerViewModel
-    @ObservedObject var documentsViewModel: DocumentsFolderFileViewModel
+    @ObservedObject var dotImageLayerViewModel: DotImageLayerViewModel
+    @ObservedObject var projectFileListViewModel: ProjectFileListViewModel
 
     var addSubImageData: () -> Void
     var removeSubImageData: () -> Void
@@ -39,7 +39,7 @@ struct Toolbar: View {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.layers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dotImageLayerViewModel.layers.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -52,7 +52,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.up")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.layers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dotImageLayerViewModel.layers.isEmpty))
 
             Button(
                 action: {
@@ -62,7 +62,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.down")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: documentsViewModel.fileDataArray.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: projectFileListViewModel.fileDataArray.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -75,7 +75,7 @@ struct Toolbar: View {
                     Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageViewModel.layers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dotImageLayerViewModel.layers.isEmpty))
         }
     }
 }
@@ -83,8 +83,8 @@ struct Toolbar: View {
 struct Toolbar_Previews: PreviewProvider {
     static var previews: some View {
         Toolbar(
-            dotImageViewModel: DotImageLayerViewModel(),
-            documentsViewModel: DocumentsFolderFileViewModel(),
+            dotImageLayerViewModel: DotImageLayerViewModel(),
+            projectFileListViewModel: ProjectFileListViewModel(),
             addSubImageData: {
                 print("add")
             },

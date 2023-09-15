@@ -1,5 +1,5 @@
 //
-//  DocumentsFolderFileViewModel.swift
+//  ProjectFileListViewModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/09/02.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DocumentsFolderFileViewModel: ObservableObject {
+class ProjectFileListViewModel: ObservableObject {
 
     @Published var fileDataArray: [DocumentsFolderFileData]
 
@@ -59,7 +59,7 @@ class DocumentsFolderFileViewModel: ObservableObject {
     }
 }
 
-extension DocumentsFolderFileViewModel {
+extension ProjectFileListViewModel {
     private func appendFileData(title: String, projectData: ProjectData) {
         fileDataArray.append(
             DocumentsFolderFileData(
