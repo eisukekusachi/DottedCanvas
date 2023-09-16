@@ -114,8 +114,8 @@ struct DottedCanvasView: View {
                 projectFileList: projectFileListViewModel,
                 didSelectItem: { index in
 
-                    let title = projectFileListViewModel.fileDataArray[index].title
-                    let zipFileURL = URL.documents.appendingPathComponent(title + ".zip")
+                    let projectName = projectFileListViewModel.projects[index].projectName
+                    let zipFileURL = URL.documents.appendingPathComponent(projectName + ".zip")
                     loadDotImageFromDocumentsFolder(zipFileURL: zipFileURL)
                 })
         }
@@ -174,8 +174,8 @@ struct DottedCanvasView: View {
                 try dotImageLayerViewModel.projectData?.writeData(to: folderURL)
                 try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
 
-                projectFileListViewModel.upsert(title: dotImageLayerViewModel.projectName,
-                                                projectData: dotImageLayerViewModel.projectData)
+                projectFileListViewModel.upsertProjectData(dotImageLayerViewModel.projectData,
+                                                           projectName: dotImageLayerViewModel.projectName)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {

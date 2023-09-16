@@ -17,14 +17,14 @@ struct DocumentsFolderView: View {
 
     var body: some View {
         List {
-            ForEach(Array(projectFileList.fileDataArray.enumerated().reversed()),
+            ForEach(Array(projectFileList.projects.enumerated().reversed()),
                     id: \.element) { index, data in
                 HStack {
                     let checkerdImage = UIImage.checkered(with: CGSize(width: diameter, height: diameter))
                     Image(uiImage: data.thumbnail ?? checkerdImage)
                         .resizable()
                         .frame(width: diameter, height: diameter)
-                    Text("\(data.title)")
+                    Text("\(data.projectName)")
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -34,7 +34,7 @@ struct DocumentsFolderView: View {
             }
         }
         .onAppear {
-            projectFileList.fileDataArray.sort {
+            projectFileList.projects.sort {
                 $0.latestUpdateDate < $1.latestUpdateDate
             }
         }

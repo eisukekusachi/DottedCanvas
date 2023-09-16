@@ -17,7 +17,7 @@ struct ContentView: View {
         .onAppear {
             Task {
                 do {
-                    try await projectFileListViewModel.appendDocumentsFolderFile()
+                    try await projectFileListViewModel.loadAllProjectData(allURLs: URL.documents.allURLs)
 
                 } catch {
                     print(error)

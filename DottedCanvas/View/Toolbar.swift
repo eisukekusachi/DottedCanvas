@@ -62,7 +62,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.down")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: projectFileListViewModel.fileDataArray.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: projectFileListViewModel.projects.isEmpty))
 
             Divider()
                 .frame(height: 24)

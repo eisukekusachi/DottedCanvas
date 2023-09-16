@@ -9,97 +9,78 @@ import UIKit
 
 class ProjectFileListViewModel: ObservableObject {
 
-    @Published var fileDataArray: [DocumentsFolderFileData]
+    @Published var projects: [DocumentsProjectData]
 
     convenience init() {
-        self.init(dataArray: [])
+        self.init(projects: [])
     }
-    init(dataArray: [DocumentsFolderFileData]) {
-        fileDataArray = dataArray
+    init(projects: [DocumentsProjectData]) {
+        self.projects = projects
     }
 
-    func appendDocumentsFolderFile() async throws {
+    func loadAllProjectData(allURLs: [URL]) async throws {
         let folderURL = URL.documents.appendingPathComponent("unzipFolder")
         defer {
-            try? removeExistingFolder(at: folderURL)
+            try? FileManager.default.removeItem(at: folderURL)
         }
-        try createFolder(at: folderURL)
+        try FileManager.createNewDirectory(url: folderURL)
 
-        await withThrowingTaskGroup(of: Void.self) { group in
-            for zipURL in URL.documents.allURLs where zipURL.hasSuffix("zip") {
-                group.addTask { [weak self] in
-                    let unzippedFileURL = folderURL.appendingPathComponent(zipURL.lastPathComponent)
-                    defer {
-                        try? self?.removeExistingFolder(at: unzippedFileURL)
+        Task {
+            await withThrowingTaskGroup(of: Void.self) { group in
+                for zipURL in allURLs where zipURL.hasSuffix("zip") {
+                    group.addTask { [weak self] in
+                        let unzippedFileURL = folderURL.appendingPathComponent(zipURL.lastPathComponent)
+                        defer {
+                            try? FileManager.default.removeItem(at: unzippedFileURL)
+                        }
+                        try FileManager.createNewDirectory(url: unzippedFileURL)
+                        try Input.unzip(srcZipURL: zipURL, to: unzippedFileURL)
+                        try self?.appendProjectData(in: unzippedFileURL)
                     }
-                    try self?.createFolder(at: unzippedFileURL)
-                    try self?.unzipFile(from: zipURL, to: unzippedFileURL)
-                    try self?.appendDocumentsFileData(in: unzippedFileURL)
                 }
             }
         }
     }
 
-    func upsert(title: String, projectData: ProjectData?) {
-        guard let projectData = projectData else { return }
+    func upsertProjectData(_ newProjectData: ProjectData?, projectName: String) {
+        guard let newProjectData = newProjectData else { return }
 
-        var fileExists: Bool = false
+        let result = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })
 
-        for (index, data) in fileDataArray.enumerated().reversed() where data.title == title {
-            updateFileData(index: index,
-                           title: title,
-                           projectData: projectData)
-            fileExists = true
-        }
+        if let result {
+            let project = DocumentsProjectData(
+                projectName: projectName,
+                thumbnail: newProjectData.thumbnail,
+                latestUpdateDate: newProjectData.latestUpdateDate)
 
-        if !fileExists {
-            appendFileData(title: title,
-                           projectData: projectData)
+            projects[result.offset] = project
+
+        } else {
+            let project = DocumentsProjectData(
+                projectName: projectName,
+                thumbnail: newProjectData.thumbnail,
+                latestUpdateDate: newProjectData.latestUpdateDate)
+
+            projects.append(project)
         }
     }
-}
 
-extension ProjectFileListViewModel {
-    private func appendFileData(title: String, projectData: ProjectData) {
-        fileDataArray.append(
-            DocumentsFolderFileData(
-                title: title,
-                thumbnail: projectData.thumbnail,
-                latestUpdateDate: projectData.latestUpdateDate
-            )
-        )
-    }
-    private func appendDocumentsFileData(in folderURL: URL) throws {
+    private func appendProjectData(in folderURL: URL) throws {
         let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
         let thumbnailURL = folderURL.appendingPathComponent(thumbnailName)
 
         if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL),
            let imageData = try? Data(contentsOf: thumbnailURL),
-           let fileName = folderURL.lastPathComponent.components(separatedBy: ".").first {
-
-            let fileData = DocumentsFolderFileData(title: fileName,
-                                                   thumbnail: UIImage(data: imageData),
-                                                   latestUpdateDate: data.latestUpdateDate)
+           let projectName = folderURL.lastPathComponent.components(separatedBy: ".").first {
 
             DispatchQueue.main.async { [weak self] in
-                self?.fileDataArray.append(fileData)
+                let project = DocumentsProjectData(
+                    projectName: projectName,
+                    thumbnail: UIImage(data: imageData),
+                    latestUpdateDate: data.latestUpdateDate)
+
+                self?.projects.append(project)
             }
         }
-    }
-    private func createFolder(at url: URL) throws {
-        try FileManager.createNewDirectory(url: url)
-    }
-    private func updateFileData(index: Int, title: String, projectData: ProjectData) {
-        fileDataArray[index] = DocumentsFolderFileData(
-            title: title,
-            thumbnail: projectData.thumbnail,
-            latestUpdateDate: projectData.latestUpdateDate
-        )
-    }
-    private func unzipFile(from sourceURL: URL, to destinationURL: URL) throws {
-        try Input.unzip(srcZipURL: sourceURL, to: destinationURL)
-    }
-    private func removeExistingFolder(at url: URL) throws {
-        try? FileManager.default.removeItem(at: url)
     }
 }
