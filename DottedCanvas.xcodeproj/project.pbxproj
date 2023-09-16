@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D41DF7302A98C0E10063202F /* Snackbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41DF72F2A98C0E10063202F /* Snackbar.swift */; };
-		D4A5A4D42AB32977006B1D2A /* DotImageLayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5A4D32AB32977006B1D2A /* DotImageLayerViewModel.swift */; };
+		D4A5A4D42AB32977006B1D2A /* MainImageLayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */; };
 		D4A91A062A9CBD3600CE13A0 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A91A052A9CBD3600CE13A0 /* Input.swift */; };
 		D4B0C3902AA2CEF80005CF50 /* DocumentsFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C38F2AA2CEF80005CF50 /* DocumentsFolderView.swift */; };
 		D4B0C3982AA2D5CE0005CF50 /* DocumentsProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C3972AA2D5CE0005CF50 /* DocumentsProjectData.swift */; };
@@ -70,7 +70,7 @@
 
 /* Begin PBXFileReference section */
 		D41DF72F2A98C0E10063202F /* Snackbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snackbar.swift; sourceTree = "<group>"; };
-		D4A5A4D32AB32977006B1D2A /* DotImageLayerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotImageLayerViewModel.swift; sourceTree = "<group>"; };
+		D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageLayerViewModel.swift; sourceTree = "<group>"; };
 		D4A91A052A9CBD3600CE13A0 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		D4B0C38F2AA2CEF80005CF50 /* DocumentsFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsFolderView.swift; sourceTree = "<group>"; };
 		D4B0C3972AA2D5CE0005CF50 /* DocumentsProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsProjectData.swift; sourceTree = "<group>"; };
@@ -291,7 +291,7 @@
 		D4CF60F12A97B0FF009FCEE3 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D4A5A4D32AB32977006B1D2A /* DotImageLayerViewModel.swift */,
+				D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */,
 				D4B0C3992AA2D6540005CF50 /* ProjectListViewModel.swift */,
 			);
 			path = ViewModel;
@@ -465,7 +465,7 @@
 				D4CF61132A97B524009FCEE3 /* TwoRowsSliderView.swift in Sources */,
 				D4CF611B2A98BD43009FCEE3 /* LoadingDialog.swift in Sources */,
 				D4B0C39A2AA2D6540005CF50 /* ProjectListViewModel.swift in Sources */,
-				D4A5A4D42AB32977006B1D2A /* DotImageLayerViewModel.swift in Sources */,
+				D4A5A4D42AB32977006B1D2A /* MainImageLayerViewModel.swift in Sources */,
 				D4CF61072A97B158009FCEE3 /* SubImageItem.swift in Sources */,
 				D4CF61172A97B5EF009FCEE3 /* DotImageCreationView.swift in Sources */,
 				D4CF60FF2A97B13D009FCEE3 /* SubImageData.swift in Sources */,

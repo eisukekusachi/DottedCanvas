@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Toolbar: View {
-    @ObservedObject var dotImageLayerViewModel: DotImageLayerViewModel
+    @ObservedObject var mainImageLayerViewModel: MainImageLayerViewModel
     @ObservedObject var projectListViewModel: ProjectListViewModel
 
     var addSubImageData: () -> Void
@@ -39,7 +39,7 @@ struct Toolbar: View {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageLayerViewModel.layers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainImageLayerViewModel.subLayers.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -52,7 +52,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.up")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageLayerViewModel.layers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainImageLayerViewModel.subLayers.isEmpty))
 
             Button(
                 action: {
@@ -75,7 +75,7 @@ struct Toolbar: View {
                     Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dotImageLayerViewModel.layers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainImageLayerViewModel.subLayers.isEmpty))
         }
     }
 }
@@ -83,7 +83,7 @@ struct Toolbar: View {
 struct Toolbar_Previews: PreviewProvider {
     static var previews: some View {
         Toolbar(
-            dotImageLayerViewModel: DotImageLayerViewModel(),
+            mainImageLayerViewModel: MainImageLayerViewModel(),
             projectListViewModel: ProjectListViewModel(),
             addSubImageData: {
                 print("add")

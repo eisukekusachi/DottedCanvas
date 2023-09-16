@@ -33,8 +33,8 @@ struct MainImagePreviewView: View {
 struct MainImagePreviewView_Previews: PreviewProvider {
     static var previews: some View {
 
-        @ObservedObject var viewModel = DotImageLayerViewModel()
-        MainImagePreviewView(mainImage: $viewModel.mergedLayers,
+        @ObservedObject var viewModel = MainImageLayerViewModel()
+        MainImagePreviewView(mainImage: $viewModel.mergedSubLayers,
                              diameter: 200)
     }
 }
