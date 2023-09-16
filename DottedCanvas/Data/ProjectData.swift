@@ -21,7 +21,7 @@ struct ProjectData {
 
         // Create codable data
         let codableData = MainImageCodableData(
-            subImageDataArray: subImageLayers,
+            subImageCodableDataArray: subImageLayers.map { SubImageCodableData(data: $0) },
             selectedIndex: subImageLayerIndex
         )
 

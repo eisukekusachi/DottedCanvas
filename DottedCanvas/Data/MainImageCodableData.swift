@@ -12,13 +12,8 @@ class MainImageCodableData: Codable {
     var selectedSubImageIndex: Int = 0
     var latestUpdateDate: Date = Date()
 
-    init(subImageDataArray: [SubImageData], selectedIndex: Int) {
-        self.subImages = []
+    init(subImageCodableDataArray: [SubImageCodableData], selectedIndex: Int) {
+        self.subImages = subImageCodableDataArray
         self.selectedSubImageIndex = selectedIndex
-
-        subImageDataArray.forEach { data in
-            let codableData = SubImageCodableData(data: data)
-            self.subImages.append(codableData)
-        }
     }
 }
