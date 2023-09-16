@@ -19,13 +19,13 @@ struct SubImageListView: View {
     private let sliderStyle = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
 
     var body: some View {
-        selectedSubImageAlphaSlider
-        subImageList
+        selectedImageAlphaSlider
+        imageList
     }
 }
 
 extension SubImageListView {
-    private var selectedSubImageAlphaSlider: some View {
+    private var selectedImageAlphaSlider: some View {
         TwoRowsSliderView(
             title: "Alpha",
             value: $selectedImageAlpha,
@@ -37,23 +37,12 @@ extension SubImageListView {
         }
             .padding()
     }
-
-    private func decreaseAlpha() {
-        guard let data = dotImageLayerViewModel.selectedLayer else { return }
-        let alpha = max(data.alpha - 1, range.lowerBound)
-        dotImageLayerViewModel.updateLayer(id: dotImageLayerViewModel.selectedLayer?.id, alpha: alpha)
-    }
-    private func increaseAlpha() {
-        guard let data = dotImageLayerViewModel.selectedLayer else { return }
-        let alpha = min(data.alpha + 1, range.upperBound)
-        dotImageLayerViewModel.updateLayer(id: dotImageLayerViewModel.selectedLayer?.id, alpha: alpha)
-    }
-    private var subImageList: some View {
+    private var imageList: some View {
         List {
             ForEach(Array(dotImageLayerViewModel.layers.enumerated().reversed()),
                     id: \.element) { index, layer in
 
-                ImageItem(
+                SubImageItem(
                     imageItem: layer,
                     selected: layer == dotImageLayerViewModel.selectedLayer,
                     didTapVisibleButton: { result in
@@ -69,12 +58,12 @@ extension SubImageListView {
                         didSelectItem?(index)
                     }
             }
-            .onMove(perform: moveListItem)
+            .onMove(perform: moveItem)
         }
         .listStyle(PlainListStyle())
         .listRowInsets(EdgeInsets())
     }
-    private func moveListItem(from source: IndexSet, to destination: Int) {
+    private func moveItem(from source: IndexSet, to destination: Int) {
         dotImageLayerViewModel.layers = dotImageLayerViewModel.layers.reversed()
         dotImageLayerViewModel.layers.move(fromOffsets: source, toOffset: destination)
         dotImageLayerViewModel.layers = dotImageLayerViewModel.layers.reversed()
@@ -88,7 +77,8 @@ struct SubImageListView_Previews: PreviewProvider {
 
         @StateObject var viewModel = DotImageLayerViewModel()
         @State var selectedImageAlpha: Int = 0
-        SubImageListView(dotImageLayerViewModel: viewModel,
-                         selectedImageAlpha: $selectedImageAlpha)
+        SubImageListView(
+            dotImageLayerViewModel: viewModel,
+            selectedImageAlpha: $selectedImageAlpha)
     }
 }

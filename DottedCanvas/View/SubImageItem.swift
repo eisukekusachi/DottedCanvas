@@ -1,5 +1,5 @@
 //
-//  ImageItem.swift
+//  SubImageItem.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ImageItem: View {
+struct SubImageItem: View {
     @Environment(\.colorScheme) var colorScheme
 
     var imageItem: SubImageData
@@ -50,7 +50,7 @@ struct ImageItem: View {
 }
 
 // Colors
-extension ImageItem {
+extension SubImageItem {
     private var backgroundColor: UIColor {
         if !selected {
             return .clear
@@ -98,16 +98,16 @@ extension ImageItem {
     }
 }
 
-struct ImageItem_Previews: PreviewProvider {
+struct SubImageItem_Previews: PreviewProvider {
     static var previews: some View {
 
-        ImageItem(
+        SubImageItem(
             imageItem: .init(title: "Test0"),
             selected: true,
             didTapVisibleButton: { _ in
                 print("Code button actions")
         })
-        ImageItem(
+        SubImageItem(
             imageItem: .init(title: "Test1"),
             selected: false,
             didTapVisibleButton: { _ in
