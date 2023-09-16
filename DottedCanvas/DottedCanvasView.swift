@@ -55,7 +55,7 @@ struct DottedCanvasView: View {
                         updateSubImageCreationData()
                     },
                     saveImage: {
-                        saveDotImageToDocumentsFolder()
+                        saveProject()
                     },
                     loadImage: {
                         isDocumentsFolderViewPresented = true
@@ -116,7 +116,7 @@ struct DottedCanvasView: View {
 
                     let projectName = projectListViewModel.projects[index].projectName
                     let zipFileURL = URL.documents.appendingPathComponent(projectName + ".zip")
-                    loadDotImageFromDocumentsFolder(zipFileURL: zipFileURL)
+                    loadProject(zipFileURL: zipFileURL)
                 })
         }
         .alert(isPresented: $isNewImageAlertPresented) {
@@ -152,7 +152,7 @@ struct DottedCanvasView: View {
             subImageCreationData.apply(subLayer)
         }
     }
-    private func saveDotImageToDocumentsFolder() {
+    private func saveProject() {
         let zipFileName = mainImageLayerViewModel.projectName + "." + "\(zipSuffix)"
         let zipFileURL = URL.documents.appendingPathComponent(zipFileName)
         let folderURL = URL.documents.appendingPathComponent(tmpFolder)
@@ -189,7 +189,7 @@ struct DottedCanvasView: View {
             }
         }
     }
-    private func loadDotImageFromDocumentsFolder(zipFileURL: URL) {
+    private func loadProject(zipFileURL: URL) {
         let folderURL = URL.documents.appendingPathComponent(tmpFolder)
 
         Task {
