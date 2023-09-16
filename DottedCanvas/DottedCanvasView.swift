@@ -204,7 +204,7 @@ struct DottedCanvasView: View {
 
                 let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
 
-                if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL) {
+                if let data: MainImageCodableData = Input.loadJson(url: jsonFileURL) {
 
                     dotImageLayerViewModel.layers = data.subImages.map {
                         SubImageData(codableData: $0, folderURL: folderURL)

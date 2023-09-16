@@ -69,7 +69,7 @@ class ProjectFileListViewModel: ObservableObject {
         let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
         let thumbnailURL = folderURL.appendingPathComponent(thumbnailName)
 
-        if let data: DotImageCodableData = Input.loadJson(url: jsonFileURL),
+        if let data: MainImageCodableData = Input.loadJson(url: jsonFileURL),
            let imageData = try? Data(contentsOf: thumbnailURL),
            let projectName = folderURL.lastPathComponent.components(separatedBy: ".").first {
 

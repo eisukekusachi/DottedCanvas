@@ -1,5 +1,5 @@
 //
-//  DotImageCodableData.swift
+//  MainImageCodableData.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/26.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DotImageCodableData: Codable {
+class MainImageCodableData: Codable {
     var subImages: [SubImageCodableData]
     var selectedSubImageIndex: Int = 0
     var latestUpdateDate: Date = Date()

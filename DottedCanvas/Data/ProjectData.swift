@@ -28,7 +28,7 @@ struct ProjectData {
         try FileManager.createNewDirectory(url: folder)
 
         // Create codable data
-        let codableData = DotImageCodableData(
+        let codableData = MainImageCodableData(
             subImageDataArray: layers,
             selectedIndex: index
         )
