@@ -245,7 +245,9 @@
 			isa = PBXGroup;
 			children = (
 				D4CF60FA2A97B12D009FCEE3 /* IntSlider.swift */,
+				D4CF611A2A98BD43009FCEE3 /* LoadingDialog.swift */,
 				D4CF60FB2A97B12D009FCEE3 /* SliderStyle.swift */,
+				D41DF72F2A98C0E10063202F /* Snackbar.swift */,
 				D4CF61122A97B524009FCEE3 /* TwoRowsSliderView.swift */,
 			);
 			path = Components;
@@ -276,13 +278,11 @@
 			isa = PBXGroup;
 			children = (
 				D4B0C38F2AA2CEF80005CF50 /* DocumentsProjectView.swift */,
+				D4CF61022A97B157009FCEE3 /* MainImagePreviewView.swift */,
 				D4CF61162A97B5EF009FCEE3 /* SubImageCreationView.swift */,
 				D4CF61032A97B157009FCEE3 /* SubImageItem.swift */,
 				D4CF61042A97B158009FCEE3 /* SubImageListView.swift */,
 				D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */,
-				D4CF611A2A98BD43009FCEE3 /* LoadingDialog.swift */,
-				D4CF61022A97B157009FCEE3 /* MainImagePreviewView.swift */,
-				D41DF72F2A98C0E10063202F /* Snackbar.swift */,
 				D4CF61052A97B158009FCEE3 /* Toolbar.swift */,
 			);
 			path = View;
