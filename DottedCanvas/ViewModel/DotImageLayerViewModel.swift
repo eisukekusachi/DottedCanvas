@@ -26,9 +26,9 @@ class DotImageLayerViewModel: ObservableObject, ImageLayerManager {
     @Published var selectedLayer: SubImageData?
 
     var projectData: ProjectData? {
-        ProjectData(thumbnail: mergedLayers?.resize(sideLength: 256, scale: 1),
-                    layers: layers,
-                    index: getSelectedLayerIndex() ?? 0,
+        ProjectData(mainImageThumbnail: mergedLayers?.resize(sideLength: 256, scale: 1),
+                    subImageLayers: layers,
+                    subImageLayerIndex: getSelectedLayerIndex() ?? 0,
                     latestUpdateDate: latestUpdateDate)
     }
 

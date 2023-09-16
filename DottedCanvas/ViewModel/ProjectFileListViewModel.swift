@@ -50,7 +50,7 @@ class ProjectFileListViewModel: ObservableObject {
         if let result {
             let project = DocumentsProjectData(
                 projectName: projectName,
-                thumbnail: newProjectData.thumbnail,
+                thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: newProjectData.latestUpdateDate)
 
             projects[result.offset] = project
@@ -58,7 +58,7 @@ class ProjectFileListViewModel: ObservableObject {
         } else {
             let project = DocumentsProjectData(
                 projectName: projectName,
-                thumbnail: newProjectData.thumbnail,
+                thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: newProjectData.latestUpdateDate)
 
             projects.append(project)

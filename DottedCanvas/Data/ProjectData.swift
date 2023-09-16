@@ -19,9 +19,9 @@ enum ProjectDataError: Error {
 }
 
 struct ProjectData {
-    var thumbnail: UIImage?
-    var layers: [SubImageData]
-    var index: Int
+    var mainImageThumbnail: UIImage?
+    var subImageLayers: [SubImageData]
+    var subImageLayerIndex: Int
     var latestUpdateDate: Date
 
     func writeData(to folder: URL) throws {
@@ -29,8 +29,8 @@ struct ProjectData {
 
         // Create codable data
         let codableData = MainImageCodableData(
-            subImageDataArray: layers,
-            selectedIndex: index
+            subImageDataArray: subImageLayers,
+            selectedIndex: subImageLayerIndex
         )
 
         do {
@@ -51,16 +51,16 @@ struct ProjectData {
         do {
             // Write mainImage thumbnail
             let imageURL = folder.appendingPathComponent(thumbnailName)
-            try thumbnail?.pngData()?.write(to: imageURL)
+            try mainImageThumbnail?.pngData()?.write(to: imageURL)
         } catch {
             throw error
         }
 
         // Write subImage
-        for i in 0..<layers.count {
+        for i in 0..<subImageLayers.count {
             do {
-                let imageURL = folder.appendingPathComponent(layers[i].imagePath)
-                try layers[i].image?.pngData()?.write(to: imageURL)
+                let imageURL = folder.appendingPathComponent(subImageLayers[i].imagePath)
+                try subImageLayers[i].image?.pngData()?.write(to: imageURL)
             } catch {
                 throw error
             }
