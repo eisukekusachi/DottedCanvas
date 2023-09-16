@@ -1,5 +1,5 @@
 //
-//  SubImageListItem.swift
+//  ImageItem.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct SubImageListItem: View {
+struct ImageItem: View {
     @Environment(\.colorScheme) var colorScheme
 
+    var imageItem: SubImageData
     var selected: Bool
-    var imageData: SubImageData
-    let onTapVisibleButton: ((SubImageData) -> Void)
+    let didTapVisibleButton: ((Bool) -> Void)
 
     var body: some View {
         ZStack {
@@ -23,23 +23,23 @@ struct SubImageListItem: View {
                 Spacer()
                     .frame(width: 8)
 
-                Text(imageData.title)
+                Text(imageItem.title)
                     .font(.headline)
                     .foregroundColor(Color(textColor))
 
                 Spacer()
 
-                Text("Alpha: \(imageData.alpha)")
+                Text("Alpha: \(imageItem.alpha)")
                     .font(.subheadline)
                     .foregroundColor(Color(textColor))
 
                 Spacer()
 
-                Image(systemName: imageData.isVisible ? "eye" : "eye.slash.fill")
+                Image(systemName: imageItem.isVisible ? "eye" : "eye.slash.fill")
                     .frame(width: 32, height: 32)
                     .foregroundColor(iconColor)
                     .onTapGesture {
-                        onTapVisibleButton(imageData)
+                        didTapVisibleButton(!imageItem.isVisible)
                     }
 
                 Spacer()
@@ -50,7 +50,7 @@ struct SubImageListItem: View {
 }
 
 // Colors
-extension SubImageListItem {
+extension ImageItem {
     private var backgroundColor: UIColor {
         if !selected {
             return .clear
@@ -68,13 +68,13 @@ extension SubImageListItem {
     private var iconColor: Color {
         if !selected {
             if colorScheme == .light {
-                if imageData.isVisible {
+                if imageItem.isVisible {
                     return Color(uiColor: .black)
                 } else {
                     return Color(uiColor: .darkGray)
                 }
             } else {
-                if imageData.isVisible {
+                if imageItem.isVisible {
                     return Color(uiColor: .white)
                 } else {
                     return Color(uiColor: .lightGray)
@@ -82,13 +82,13 @@ extension SubImageListItem {
             }
         } else {
             if colorScheme == .light {
-                if imageData.isVisible {
+                if imageItem.isVisible {
                     return Color(uiColor: .white)
                 } else {
                     return Color(uiColor: .lightGray)
                 }
             } else {
-                if imageData.isVisible {
+                if imageItem.isVisible {
                     return Color(uiColor: .black)
                 } else {
                     return Color(uiColor: .darkGray)
@@ -98,18 +98,20 @@ extension SubImageListItem {
     }
 }
 
-struct SubImageListItem_Previews: PreviewProvider {
+struct ImageItem_Previews: PreviewProvider {
     static var previews: some View {
 
-        SubImageListItem(selected: true,
-                         imageData: .init(title: "Test0"),
-                         onTapVisibleButton: { value in
-            print(value)
+        ImageItem(
+            imageItem: .init(title: "Test0"),
+            selected: true,
+            didTapVisibleButton: { _ in
+                print("Code button actions")
         })
-        SubImageListItem(selected: false,
-                         imageData: .init(title: "Test1"),
-                         onTapVisibleButton: { value in
-            print(value)
+        ImageItem(
+            imageItem: .init(title: "Test1"),
+            selected: false,
+            didTapVisibleButton: { _ in
+                print("Code button actions")
         })
     }
 }

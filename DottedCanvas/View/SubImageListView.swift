@@ -53,11 +53,12 @@ extension SubImageListView {
             ForEach(Array(dotImageLayerViewModel.layers.enumerated().reversed()),
                     id: \.element) { index, layer in
 
-                SubImageListItem(selected: layer == dotImageLayerViewModel.selectedLayer,
-                                 imageData: layer,
-                                 onTapVisibleButton: { result in
+                ImageItem(
+                    imageItem: layer,
+                    selected: layer == dotImageLayerViewModel.selectedLayer,
+                    didTapVisibleButton: { result in
 
-                    dotImageLayerViewModel.updateLayer(id: result.id, isVisible: !result.isVisible)
+                    dotImageLayerViewModel.updateLayer(id: layer.id, isVisible: result)
                     dotImageLayerViewModel.updateMergedLayers()
                 })
                     .contentShape(Rectangle())
