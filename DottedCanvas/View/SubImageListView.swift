@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SubImageListView: View {
     @ObservedObject var mainImageLayerViewModel: MainImageLayerViewModel
-    @Binding var selectedImageAlpha: Int
+    @Binding var selectedSubImageAlpha: Int
     var didSelectItem: ((Int) -> Void)?
 
     private let style = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
@@ -28,7 +28,7 @@ extension SubImageListView {
     private var selectedImageAlphaSlider: some View {
         TwoRowsSliderView(
             title: "Alpha",
-            value: $selectedImageAlpha,
+            value: $selectedSubImageAlpha,
             style: sliderStyle,
             range: range) { value in
 
@@ -53,7 +53,7 @@ extension SubImageListView {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         mainImageLayerViewModel.selectedSubLayer = layer
-                        selectedImageAlpha = layer.alpha
+                        selectedSubImageAlpha = layer.alpha
 
                         didSelectItem?(index)
                     }
@@ -76,9 +76,9 @@ struct SubImageListView_Previews: PreviewProvider {
     static var previews: some View {
 
         @StateObject var viewModel = MainImageLayerViewModel()
-        @State var selectedImageAlpha: Int = 0
+        @State var selectedSubImageAlpha: Int = 0
         SubImageListView(
             mainImageLayerViewModel: viewModel,
-            selectedImageAlpha: $selectedImageAlpha)
+            selectedSubImageAlpha: $selectedSubImageAlpha)
     }
 }

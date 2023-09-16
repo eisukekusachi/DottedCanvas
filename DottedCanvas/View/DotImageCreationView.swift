@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct DotImageCreationView: View {
+struct SubImageCreationView: View {
     @Binding var isViewPresented: Bool
-    @ObservedObject var creationData: DotImageCreationData
+    @ObservedObject var creationData: SubImageCreationData
     var completion: (() -> Void)?
 
     private let previewViewSize: CGFloat = min(500, UIScreen.main.bounds.width * 0.6)
@@ -106,12 +106,12 @@ struct DotImageCreationView: View {
     }
 }
 
-struct DotImageCreationView_Previews: PreviewProvider {
+struct SubImageCreationView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
-        let creationData = DotImageCreationData()
+        let creationData = SubImageCreationData()
 
-        DotImageCreationView(isViewPresented: $isViewPresented, creationData: creationData) {
+        SubImageCreationView(isViewPresented: $isViewPresented, creationData: creationData) {
             print("Image creation completed")
         }
     }

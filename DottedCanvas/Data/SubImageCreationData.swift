@@ -13,7 +13,7 @@ struct DefaultDotValue {
     static let spacing = 24
 }
 
-class DotImageCreationData: ObservableObject, Identifiable {
+class SubImageCreationData: ObservableObject, Identifiable {
 
     var id = UUID()
     var title: String = ""
@@ -94,7 +94,7 @@ class DotImageCreationData: ObservableObject, Identifiable {
     }
 }
 
-extension DotImageCreationData {
+extension SubImageCreationData {
     var currentColor: UIColor {
         UIColor(red: CGFloat(red) / 255.0,
                 green: CGFloat(green) / 255.0,

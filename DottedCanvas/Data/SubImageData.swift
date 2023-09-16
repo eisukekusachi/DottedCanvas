@@ -56,7 +56,7 @@ struct SubImageData: Identifiable, Hashable {
     }
     init(title: String,
          isVisible: Bool = true,
-         data: DotImageCreationData) {
+         data: SubImageCreationData) {
 
         self.title = title
         self.image = data.dotImage

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SubImagePreviewView: View {
 
-    @EnvironmentObject var data: DotImageCreationData
+    @EnvironmentObject var data: SubImageCreationData
     let viewSize: CGFloat
 
     var body: some View {
@@ -32,7 +32,7 @@ struct SubImagePreviewView: View {
 
 struct SubImagePreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var data = DotImageCreationData()
+        @State var data = SubImageCreationData()
 
         SubImagePreviewView(viewSize: 300.0)
             .environmentObject(data)
