@@ -54,13 +54,13 @@ struct DottedCanvasView: View {
                         mainImageLayerViewModel.removeSelectedSubLayer()
                         updateSubImageCreationData()
                     },
-                    saveImage: {
+                    saveProject: {
                         saveProject()
                     },
-                    loadImage: {
+                    loadProject: {
                         isDocumentsFolderViewPresented = true
                     },
-                    newImage: {
+                    newProject: {
                         isNewImageAlertPresented = true
                     }
                 )
