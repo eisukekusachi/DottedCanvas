@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct DocumentsFolderFileData: Identifiable {
+struct DocumentsFolderFileData: Identifiable, Hashable {
     var id: UUID = UUID()
     var title: String
     var thumbnail: UIImage?

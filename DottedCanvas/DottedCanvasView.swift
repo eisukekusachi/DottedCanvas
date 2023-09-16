@@ -112,7 +112,9 @@ struct DottedCanvasView: View {
             DocumentsFolderView(
                 isViewPresented: $isDocumentsFolderViewPresented,
                 projectFileList: projectFileListViewModel,
-                didSelectItem: { title in
+                didSelectItem: { index in
+
+                    let title = projectFileListViewModel.fileDataArray[index].title
                     let zipFileURL = URL.documents.appendingPathComponent(title + ".zip")
                     loadDotImageFromDocumentsFolder(zipFileURL: zipFileURL)
                 })

@@ -11,13 +11,14 @@ struct DocumentsFolderView: View {
 
     @Binding var isViewPresented: Bool
     @ObservedObject var projectFileList: ProjectFileListViewModel
-    var didSelectItem: ((String) -> Void)?
+    var didSelectItem: ((Int) -> Void)?
 
     var diameter: CGFloat = 44
 
     var body: some View {
         List {
-            ForEach(projectFileList.fileDataArray.reversed()) { data in
+            ForEach(Array(projectFileList.fileDataArray.enumerated().reversed()),
+                    id: \.element) { index, data in
                 HStack {
                     let checkerdImage = UIImage.checkered(with: CGSize(width: diameter, height: diameter))
                     Image(uiImage: data.thumbnail ?? checkerdImage)
@@ -27,7 +28,7 @@ struct DocumentsFolderView: View {
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    didSelectItem?(data.title)
+                    didSelectItem?(index)
                     isViewPresented = false
                 }
             }
