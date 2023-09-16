@@ -1,5 +1,5 @@
 //
-//  DocumentsFolderView.swift
+//  DocumentsProjectView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/09/02.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct DocumentsFolderView: View {
+struct DocumentsProjectView: View {
 
     @Binding var isViewPresented: Bool
-    @ObservedObject var projectFileList: ProjectFileListViewModel
+    @ObservedObject var projectList: ProjectListViewModel
     var didSelectItem: ((Int) -> Void)?
 
     var diameter: CGFloat = 44
 
     var body: some View {
         List {
-            ForEach(Array(projectFileList.projects.enumerated().reversed()),
+            ForEach(Array(projectList.projects.enumerated().reversed()),
                     id: \.element) { index, data in
                 HStack {
                     let checkerdImage = UIImage.checkered(with: CGSize(width: diameter, height: diameter))
@@ -34,17 +34,17 @@ struct DocumentsFolderView: View {
             }
         }
         .onAppear {
-            projectFileList.projects.sort {
+            projectList.projects.sort {
                 $0.latestUpdateDate < $1.latestUpdateDate
             }
         }
     }
 }
 
-struct DocumentsFolderView_Previews: PreviewProvider {
+struct DocumentsProjectView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
-        DocumentsFolderView(isViewPresented: $isViewPresented,
-                            projectFileList: ProjectFileListViewModel())
+        DocumentsProjectView(isViewPresented: $isViewPresented,
+                             projectList: ProjectListViewModel())
     }
 }

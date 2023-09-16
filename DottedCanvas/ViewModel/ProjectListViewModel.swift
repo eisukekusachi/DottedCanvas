@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProjectFileListViewModel: ObservableObject {
+class ProjectListViewModel: ObservableObject {
 
     @Published var projects: [DocumentsProjectData]
 

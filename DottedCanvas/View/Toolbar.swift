@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Toolbar: View {
     @ObservedObject var dotImageLayerViewModel: DotImageLayerViewModel
-    @ObservedObject var projectFileListViewModel: ProjectFileListViewModel
+    @ObservedObject var projectListViewModel: ProjectListViewModel
 
     var addSubImageData: () -> Void
     var removeSubImageData: () -> Void
@@ -62,7 +62,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.down")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: projectFileListViewModel.projects.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: projectListViewModel.projects.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -84,7 +84,7 @@ struct Toolbar_Previews: PreviewProvider {
     static var previews: some View {
         Toolbar(
             dotImageLayerViewModel: DotImageLayerViewModel(),
-            projectFileListViewModel: ProjectFileListViewModel(),
+            projectListViewModel: ProjectListViewModel(),
             addSubImageData: {
                 print("add")
             },

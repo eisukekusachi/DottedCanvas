@@ -14,7 +14,7 @@ enum IOError: Error {
 struct DottedCanvasView: View {
 
     @ObservedObject var dotImageLayerViewModel: DotImageLayerViewModel
-    @ObservedObject var projectFileListViewModel: ProjectFileListViewModel
+    @ObservedObject var projectListViewModel: ProjectListViewModel
 
     private let previewImageDiamter: CGFloat
 
@@ -33,10 +33,10 @@ struct DottedCanvasView: View {
     @State var message: String = ""
 
     init(dotImageLayerViewModel: DotImageLayerViewModel,
-         projectFileListViewModel: ProjectFileListViewModel) {
+         projectListViewModel: ProjectListViewModel) {
 
         self.dotImageLayerViewModel = dotImageLayerViewModel
-        self.projectFileListViewModel = projectFileListViewModel
+        self.projectListViewModel = projectListViewModel
 
         previewImageDiamter = min(UIScreen.main.bounds.size.width * 0.8, 500)
     }
@@ -45,7 +45,7 @@ struct DottedCanvasView: View {
             VStack {
                 Toolbar(
                     dotImageLayerViewModel: dotImageLayerViewModel,
-                    projectFileListViewModel: projectFileListViewModel,
+                    projectListViewModel: projectListViewModel,
                     addSubImageData: {
                         isCreationViewPresented = true
                         updateDotImageCreationData()
@@ -109,12 +109,12 @@ struct DottedCanvasView: View {
             }
         }
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
-            DocumentsFolderView(
+            DocumentsProjectView(
                 isViewPresented: $isDocumentsFolderViewPresented,
-                projectFileList: projectFileListViewModel,
+                projectList: projectListViewModel,
                 didSelectItem: { index in
 
-                    let projectName = projectFileListViewModel.projects[index].projectName
+                    let projectName = projectListViewModel.projects[index].projectName
                     let zipFileURL = URL.documents.appendingPathComponent(projectName + ".zip")
                     loadDotImageFromDocumentsFolder(zipFileURL: zipFileURL)
                 })
@@ -174,8 +174,8 @@ struct DottedCanvasView: View {
                 try dotImageLayerViewModel.projectData?.writeData(to: folderURL)
                 try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
 
-                projectFileListViewModel.upsertProjectData(dotImageLayerViewModel.projectData,
-                                                           projectName: dotImageLayerViewModel.projectName)
+                projectListViewModel.upsertProjectData(dotImageLayerViewModel.projectData,
+                                                       projectName: dotImageLayerViewModel.projectName)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {
@@ -238,6 +238,6 @@ struct DottedCanvasView_Previews: PreviewProvider {
             ])
 
         DottedCanvasView(dotImageLayerViewModel: viewModel,
-                         projectFileListViewModel: ProjectFileListViewModel())
+                         projectListViewModel: ProjectListViewModel())
     }
 }

@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var dotImageLayerViewModel = DotImageLayerViewModel()
-    @StateObject var projectFileListViewModel = ProjectFileListViewModel()
+    @StateObject var projectFileListViewModel = ProjectListViewModel()
 
     var body: some View {
         DottedCanvasView(dotImageLayerViewModel: dotImageLayerViewModel,
-                         projectFileListViewModel: projectFileListViewModel)
+                         projectListViewModel: projectFileListViewModel)
         .onAppear {
             Task {
                 do {
