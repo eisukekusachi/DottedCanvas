@@ -209,6 +209,7 @@ struct DottedCanvasView: View {
                         SubImageData(codableData: $0, folderURL: folderURL)
                     }
                     mainImageLayerViewModel.updateSelectedSubLayer(index: data.selectedSubImageIndex)
+                    selectedSubImageAlpha = mainImageLayerViewModel.selectedSubLayer?.alpha ?? 255
 
                 } else {
                     throw IOError.failedToLoadJson
