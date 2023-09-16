@@ -10,14 +10,6 @@ import UIKit
 let jsonFileName: String = "data.dat"
 let thumbnailName: String = "thumbnail.png"
 
-enum ProjectDataError: Error {
-    case fileNotFound
-    case invalidData
-    case invalidJsonFile
-    case imageFileNotFound
-    case notImage
-}
-
 struct ProjectData {
     var mainImageThumbnail: UIImage?
     var subImageLayers: [SubImageData]

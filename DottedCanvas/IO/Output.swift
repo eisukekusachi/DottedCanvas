@@ -9,11 +9,7 @@ import Foundation
 import ZipArchive
 
 enum OutputError: Error {
-    case invalidData
-    case couldNotFindFile
-    case failedToCreateImage
     case failedToZip
-    case unknownReason(debugInfo: String)
 }
 
 enum Output {
