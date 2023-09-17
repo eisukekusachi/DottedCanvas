@@ -17,10 +17,20 @@ struct ContentView: View {
         .onAppear {
             Task {
                 do {
-                    try await projectFileListViewModel.loadAllProjectData(allURLs: URL.documents.allURLs)
+                    let urls = URL.documents.allURLs
+                    let loadedProjects = try await projectFileListViewModel.getProjectDataArray(from: urls)
+
+                    DispatchQueue.main.async {
+                        var projects = loadedProjects
+                        projects.sort {
+                            $0.latestUpdateDate < $1.latestUpdateDate
+                        }
+
+                        self.projectFileListViewModel.projects = projects
+                    }
 
                 } catch {
-                    print(error)
+                    throw error
                 }
             }
         }

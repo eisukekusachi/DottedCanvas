@@ -33,11 +33,6 @@ struct DocumentsProjectView: View {
                 }
             }
         }
-        .onAppear {
-            projectList.projects.sort {
-                $0.latestUpdateDate < $1.latestUpdateDate
-            }
-        }
     }
 }
 

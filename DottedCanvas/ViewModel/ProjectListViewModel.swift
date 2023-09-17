@@ -18,69 +18,80 @@ class ProjectListViewModel: ObservableObject {
         self.projects = projects
     }
 
-    func loadAllProjectData(allURLs: [URL]) async throws {
-        let folderURL = URL.documents.appendingPathComponent("unzipFolder")
-        defer {
-            try? FileManager.default.removeItem(at: folderURL)
-        }
-        try FileManager.createNewDirectory(url: folderURL)
+    func getProjectDataArray(from allURLs: [URL]) async throws -> [DocumentsProjectData] {
+        return try await withThrowingTaskGroup(of: DocumentsProjectData?.self) { group in
+            var dataArray: [DocumentsProjectData] = []
+            let folderURL = URL.documents.appendingPathComponent("unzipFolder")
 
-        Task {
-            await withThrowingTaskGroup(of: Void.self) { group in
-                for zipURL in allURLs where zipURL.hasSuffix("zip") {
-                    group.addTask { [weak self] in
-                        let unzippedFileURL = folderURL.appendingPathComponent(zipURL.lastPathComponent)
-                        defer {
-                            try? FileManager.default.removeItem(at: unzippedFileURL)
-                        }
-                        try FileManager.createNewDirectory(url: unzippedFileURL)
-                        try Input.unzip(srcZipURL: zipURL, to: unzippedFileURL)
-                        try self?.appendProjectData(in: unzippedFileURL)
-                    }
+            // Clean up the temporary folder when done
+            defer {
+                try? FileManager.default.removeItem(at: folderURL)
+            }
+
+            // Add tasks to unzip and load data for each ZIP file
+            for zipURL in allURLs where zipURL.hasSuffix("zip") {
+                group.addTask { [weak self] in
+                    return try await self?.loadProjectData(srcZipURL: zipURL, dstFolderURL: folderURL)
                 }
             }
+
+            // Collect the results of the tasks
+            for try await data in group {
+                if let data {
+                    dataArray.append(data)
+                }
+            }
+
+            return dataArray
         }
     }
 
     func upsertProjectData(_ newProjectData: ProjectData?, projectName: String) {
         guard let newProjectData = newProjectData else { return }
 
-        let result = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })
-
-        if let result {
+        // Find an existing project by name or create a new one
+        if let existingIndex = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })?.offset {
             let project = DocumentsProjectData(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: newProjectData.latestUpdateDate)
-
-            projects[result.offset] = project
+            projects[existingIndex] = project
 
         } else {
             let project = DocumentsProjectData(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: newProjectData.latestUpdateDate)
-
             projects.append(project)
         }
     }
 
-    private func appendProjectData(in folderURL: URL) throws {
-        let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
-        let thumbnailURL = folderURL.appendingPathComponent(thumbnailName)
+    private func loadProjectData(srcZipURL: URL, dstFolderURL: URL) async throws -> DocumentsProjectData? {
+        guard let projectName = srcZipURL.lastPathComponent.components(separatedBy: ".").first else { return nil }
+
+        let tmpFolderURL = dstFolderURL.appendingPathComponent(projectName)
+
+        // Clean up the temporary folder when done
+        defer {
+            try? FileManager.default.removeItem(at: tmpFolderURL)
+        }
+
+        // Unzip the contents of the ZIP file
+        try FileManager.createNewDirectory(url: tmpFolderURL)
+        try Input.unzip(srcZipURL: srcZipURL, to: tmpFolderURL)
+
+        // Load data from JSON and thumbnail files
+        let jsonFileURL = tmpFolderURL.appendingPathComponent(jsonFileName)
+        let thumbnailURL = tmpFolderURL.appendingPathComponent(thumbnailName)
 
         if let data: MainImageCodableData = Input.loadJson(url: jsonFileURL),
-           let imageData = try? Data(contentsOf: thumbnailURL),
-           let projectName = folderURL.lastPathComponent.components(separatedBy: ".").first {
+           let imageData = try? Data(contentsOf: thumbnailURL) {
 
-            DispatchQueue.main.async { [weak self] in
-                let project = DocumentsProjectData(
-                    projectName: projectName,
-                    thumbnail: UIImage(data: imageData),
-                    latestUpdateDate: data.latestUpdateDate)
-
-                self?.projects.append(project)
-            }
+            return DocumentsProjectData(
+                projectName: projectName,
+                thumbnail: UIImage(data: imageData),
+                latestUpdateDate: data.latestUpdateDate)
         }
+        return nil
     }
 }
