@@ -1,5 +1,5 @@
 //
-//  DocumentsProjectData.swift
+//  ProjectDataInList.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/09/02.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct DocumentsProjectData: Identifiable, Hashable {
+struct ProjectDataInList: Identifiable, Hashable {
     var id: UUID = UUID()
     var projectName: String
     var thumbnail: UIImage?

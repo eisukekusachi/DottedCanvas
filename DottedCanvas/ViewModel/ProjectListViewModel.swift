@@ -9,18 +9,18 @@ import UIKit
 
 class ProjectListViewModel: ObservableObject {
 
-    @Published var projects: [DocumentsProjectData]
+    @Published var projects: [ProjectDataInList]
 
     convenience init() {
         self.init(projects: [])
     }
-    init(projects: [DocumentsProjectData]) {
+    init(projects: [ProjectDataInList]) {
         self.projects = projects
     }
 
-    func getProjectDataArray(from allURLs: [URL]) async throws -> [DocumentsProjectData] {
-        return try await withThrowingTaskGroup(of: DocumentsProjectData?.self) { group in
-            var dataArray: [DocumentsProjectData] = []
+    func getProjectDataArray(from allURLs: [URL]) async throws -> [ProjectDataInList] {
+        return try await withThrowingTaskGroup(of: ProjectDataInList?.self) { group in
+            var dataArray: [ProjectDataInList] = []
             let folderURL = URL.documents.appendingPathComponent("unzipFolder")
 
             // Clean up the temporary folder when done
@@ -46,19 +46,19 @@ class ProjectListViewModel: ObservableObject {
         }
     }
 
-    func upsertProjectData(_ newProjectData: ProjectData?, projectName: String) {
+    func upsertProjectDataInList(_ newProjectData: ProjectData?, projectName: String) {
         guard let newProjectData = newProjectData else { return }
 
         // Find an existing project by name or create a new one
         if let existingIndex = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })?.offset {
-            let project = DocumentsProjectData(
+            let project = ProjectDataInList(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: newProjectData.latestUpdateDate)
             projects[existingIndex] = project
 
         } else {
-            let project = DocumentsProjectData(
+            let project = ProjectDataInList(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: newProjectData.latestUpdateDate)
@@ -66,7 +66,7 @@ class ProjectListViewModel: ObservableObject {
         }
     }
 
-    private func loadProjectData(srcZipURL: URL, dstFolderURL: URL) async throws -> DocumentsProjectData? {
+    private func loadProjectData(srcZipURL: URL, dstFolderURL: URL) async throws -> ProjectDataInList? {
         guard let projectName = srcZipURL.lastPathComponent.components(separatedBy: ".").first else { return nil }
 
         let tmpFolderURL = dstFolderURL.appendingPathComponent(projectName)
@@ -87,7 +87,7 @@ class ProjectListViewModel: ObservableObject {
         if let data: MainImageCodableData = Input.loadJson(url: jsonFileURL),
            let imageData = try? Data(contentsOf: thumbnailURL) {
 
-            return DocumentsProjectData(
+            return ProjectDataInList(
                 projectName: projectName,
                 thumbnail: UIImage(data: imageData),
                 latestUpdateDate: data.latestUpdateDate)

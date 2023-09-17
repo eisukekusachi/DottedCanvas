@@ -173,8 +173,8 @@ struct DottedCanvasView: View {
                 try mainImageLayerViewModel.projectData?.writeData(to: folderURL)
                 try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
 
-                projectListViewModel.upsertProjectData(mainImageLayerViewModel.projectData,
-                                                       projectName: mainImageLayerViewModel.projectName)
+                projectListViewModel.upsertProjectDataInList(mainImageLayerViewModel.projectData,
+                                                             projectName: mainImageLayerViewModel.projectName)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {
