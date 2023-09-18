@@ -1,5 +1,5 @@
 //
-//  DocumentsProjectView.swift
+//  ProjectListView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/09/02.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DocumentsProjectView: View {
+struct ProjectListView: View {
 
     @Binding var isViewPresented: Bool
     @ObservedObject var projectList: ProjectListViewModel
@@ -36,10 +36,10 @@ struct DocumentsProjectView: View {
     }
 }
 
-struct DocumentsProjectView_Previews: PreviewProvider {
+struct ProjectListView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
-        DocumentsProjectView(isViewPresented: $isViewPresented,
-                             projectList: ProjectListViewModel())
+        ProjectListView(isViewPresented: $isViewPresented,
+                        projectList: ProjectListViewModel())
     }
 }

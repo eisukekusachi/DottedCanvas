@@ -106,7 +106,7 @@ struct DottedCanvasView: View {
             }
         }
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
-            DocumentsProjectView(
+            ProjectListView(
                 isViewPresented: $isDocumentsFolderViewPresented,
                 projectList: projectListViewModel,
                 didSelectItem: { index in
