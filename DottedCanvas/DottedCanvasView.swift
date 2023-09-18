@@ -155,6 +155,7 @@ struct DottedCanvasView: View {
         Task {
             do {
                 let startDate = Date()
+                let projectName = zipFileURL.fileName!
                 let tmpFolderURL = URL.documents.appendingPathComponent(tmpFolder)
 
                 message = "Saving..."
@@ -165,6 +166,9 @@ struct DottedCanvasView: View {
                 try projectListViewModel.saveProject(projectData: projectData,
                                                      tmpFolderURL: tmpFolderURL,
                                                      zipFileURL: zipFileURL)
+
+                projectListViewModel.upsertProjectDataInList(projectData,
+                                                             projectName: projectName)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {

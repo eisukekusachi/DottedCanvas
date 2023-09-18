@@ -22,10 +22,6 @@ struct ContentView: View {
 
                     DispatchQueue.main.async {
                         var projects = projects
-                        projects.sort {
-                            $0.latestUpdateDate < $1.latestUpdateDate
-                        }
-
                         self.projectFileListViewModel.projects = projects
                     }
 

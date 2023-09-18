@@ -29,7 +29,7 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         ProjectData(mainImageThumbnail: mergedSubLayers?.resize(sideLength: 256, scale: 1),
                     subImageLayers: subLayers,
                     subImageLayerIndex: getSelectedSubLayerIndex() ?? 0,
-                    latestUpdateDate: latestUpdateDate)
+                    latestUpdateDate: Date())
     }
 
     var selectedLayerIndex: Int {
@@ -37,7 +37,6 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     }
 
     var projectName: String = Calendar.currentDate
-    var latestUpdateDate: Date = Date()
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -72,7 +71,6 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         selectedSubLayer = nil
 
         projectName = Calendar.currentDate
-        latestUpdateDate = Date()
     }
 
     func getSelectedSubLayerIndex() -> Int? {
@@ -189,6 +187,5 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         }
 
         mergedSubLayers = image
-        latestUpdateDate = Date()
     }
 }

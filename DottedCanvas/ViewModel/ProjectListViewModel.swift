@@ -47,14 +47,14 @@ class ProjectListViewModel: ObservableObject {
             let project = ProjectDataInList(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
-                latestUpdateDate: newProjectData.latestUpdateDate)
+                latestUpdateDate: Date())
             projects[existingIndex] = project
 
         } else {
             let project = ProjectDataInList(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
-                latestUpdateDate: newProjectData.latestUpdateDate)
+                latestUpdateDate: Date())
             projects.append(project)
         }
     }
