@@ -12,8 +12,12 @@ enum OutputError: Error {
     case failedToZip
 }
 
-enum Output {
-    static func createZip(folderURL: URL, zipFileURL: URL) throws {
+protocol OutputProtocol: AnyObject {
+    func zip(folderURL: URL, zipFileURL: URL) throws
+}
+
+class Output: OutputProtocol {
+    func zip(folderURL: URL, zipFileURL: URL) throws {
         let success = SSZipArchive.createZipFile(atPath: zipFileURL.path,
                                                   withContentsOfDirectory: folderURL.path)
         if !success {

@@ -18,10 +18,10 @@ struct ContentView: View {
             Task {
                 do {
                     let urls = URL.documents.allURLs
-                    let loadedProjects = try await projectFileListViewModel.getProjectDataArray(from: urls)
+                    let projects = try await loadListProjectDataArray(from: urls)
 
                     DispatchQueue.main.async {
-                        var projects = loadedProjects
+                        var projects = projects
                         projects.sort {
                             $0.latestUpdateDate < $1.latestUpdateDate
                         }
@@ -33,6 +33,31 @@ struct ContentView: View {
                     throw error
                 }
             }
+        }
+    }
+
+    private func loadListProjectDataArray(from allURLs: [URL]) async throws -> [ProjectDataInList] {
+        return try await withThrowingTaskGroup(of: ProjectDataInList?.self) { group in
+            var dataArray: [ProjectDataInList] = []
+
+            // Add tasks to unzip and load data for each ZIP file
+            for zipURL in allURLs where zipURL.hasSuffix("zip") {
+                group.addTask {
+                    let fileName = zipURL.fileName!
+                    let tmpFolderURL = URL.documents.appendingPathComponent(tmpFolder + fileName)
+                    return try await projectFileListViewModel.loadListProjectData(zipFileURL: zipURL,
+                                                                                  tmpFolderURL: tmpFolderURL)
+                }
+            }
+
+            // Collect the results of the tasks
+            for try await data in group {
+                if let data {
+                    dataArray.append(data)
+                }
+            }
+
+            return dataArray
         }
     }
 }

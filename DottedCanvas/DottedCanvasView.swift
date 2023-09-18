@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-enum IOError: Error {
-    case failedToLoadJson
-}
-
 struct DottedCanvasView: View {
 
     @ObservedObject var mainImageLayerViewModel: MainImageLayerViewModel
@@ -55,7 +51,8 @@ struct DottedCanvasView: View {
                         updateSubImageCreationData()
                     },
                     saveProject: {
-                        saveProject()
+                        let zipFileName = mainImageLayerViewModel.projectName + "." + "\(zipSuffix)"
+                        saveProject(zipFileURL: URL.documents.appendingPathComponent(zipFileName))
                     },
                     loadProject: {
                         isDocumentsFolderViewPresented = true
@@ -152,29 +149,22 @@ struct DottedCanvasView: View {
             subImageCreationData.apply(subLayer)
         }
     }
-    private func saveProject() {
-        let zipFileName = mainImageLayerViewModel.projectName + "." + "\(zipSuffix)"
-        let zipFileURL = URL.documents.appendingPathComponent(zipFileName)
-        let folderURL = URL.documents.appendingPathComponent(tmpFolder)
 
+    private func saveProject(zipFileURL: URL) {
+        guard let projectData = mainImageLayerViewModel.projectData else { return }
         Task {
             do {
-                defer {
-                    try? FileManager.default.removeItem(atPath: folderURL.path)
-                }
-
                 let startDate = Date()
+                let tmpFolderURL = URL.documents.appendingPathComponent(tmpFolder)
 
                 message = "Saving..."
                 isVisibleLoadingView = true
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try mainImageLayerViewModel.projectData?.writeData(to: folderURL)
-                try Output.createZip(folderURL: folderURL, zipFileURL: zipFileURL)
-
-                projectListViewModel.upsertProjectDataInList(mainImageLayerViewModel.projectData,
-                                                             projectName: mainImageLayerViewModel.projectName)
+                try projectListViewModel.saveProject(projectData: projectData,
+                                                     tmpFolderURL: tmpFolderURL,
+                                                     zipFileURL: zipFileURL)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {
@@ -190,40 +180,23 @@ struct DottedCanvasView: View {
         }
     }
     private func loadProject(zipFileURL: URL) {
-        let folderURL = URL.documents.appendingPathComponent(tmpFolder)
+        do {
+            let tmpFolderURL = URL.documents.appendingPathComponent(tmpFolder)
+            let projectData = try projectListViewModel.loadProjectData(zipFileURL: zipFileURL,
+                                                                       tmpFolderURL: tmpFolderURL)
 
-        Task {
-            do {
-                defer {
-                    try? FileManager.default.removeItem(atPath: folderURL.path)
-                }
+            mainImageLayerViewModel.update(projectData)
+            selectedSubImageAlpha = mainImageLayerViewModel.selectedSubLayer?.alpha ?? 255
 
-                try FileManager.createNewDirectory(url: folderURL)
-                try Input.unzip(srcZipURL: zipFileURL, to: folderURL)
-
-                let jsonFileURL = folderURL.appendingPathComponent(jsonFileName)
-
-                if let data: MainImageCodableData = Input.loadJson(url: jsonFileURL) {
-
-                    mainImageLayerViewModel.subLayers = data.subImages.map {
-                        SubImageData(codableData: $0, folderURL: folderURL)
-                    }
-                    mainImageLayerViewModel.updateSelectedSubLayer(index: data.selectedSubImageIndex)
-                    selectedSubImageAlpha = mainImageLayerViewModel.selectedSubLayer?.alpha ?? 255
-
-                } else {
-                    throw IOError.failedToLoadJson
-                }
-
-                if let fileName = zipFileURL.fileName {
-                    mainImageLayerViewModel.projectName = fileName
-                }
-                
-            } catch {
-                print(error)
+            if let fileName = zipFileURL.fileName {
+                mainImageLayerViewModel.projectName = fileName
             }
+
+        } catch {
+            showAlert(error)
         }
     }
+
     private func showAlert(_ error: Error) {
         print(error)
     }

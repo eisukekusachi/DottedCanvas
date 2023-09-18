@@ -31,6 +31,7 @@ struct SubImageData: Identifiable, Hashable {
         id.uuidString
     }
 
+    init() {}
     init(codableData: SubImageCodableData, folderURL: URL) {
         title = codableData.title
 

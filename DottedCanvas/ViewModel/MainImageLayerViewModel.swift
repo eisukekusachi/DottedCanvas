@@ -143,6 +143,10 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         return true
     }
 
+    func update(_ projectData: ProjectData) {
+        subLayers = projectData.subImageLayers
+        updateSelectedSubLayer(index: projectData.subImageLayerIndex)
+    }
     func updateSelectedSubLayer(index: Int) {
         if index < subLayers.count {
             selectedSubLayer = subLayers[index]

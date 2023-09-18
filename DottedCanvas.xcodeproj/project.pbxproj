@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D41DF7302A98C0E10063202F /* Snackbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41DF72F2A98C0E10063202F /* Snackbar.swift */; };
 		D423B5282AB6CEFA0014BDD6 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = D423B5272AB6CEF90014BDD6 /* ZipArchive */; };
+		D42988122AB76060003AD47E /* ProjectListViewModelUpsertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42988112AB7605F003AD47E /* ProjectListViewModelUpsertTests.swift */; };
 		D4A5A4D42AB32977006B1D2A /* MainImageLayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */; };
 		D4A91A062A9CBD3600CE13A0 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A91A052A9CBD3600CE13A0 /* Input.swift */; };
 		D4B0C3902AA2CEF80005CF50 /* DocumentsProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C38F2AA2CEF80005CF50 /* DocumentsProjectView.swift */; };
@@ -16,7 +17,7 @@
 		D4B0C39A2AA2D6540005CF50 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C3992AA2D6540005CF50 /* ProjectListViewModel.swift */; };
 		D4B498712AA49B82002133E4 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B498702AA49B82002133E4 /* ViewModifiers.swift */; };
 		D4BDAC802A99DC9400A765CA /* SubImageCodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */; };
-		D4BDAC822A99DF1200A765CA /* MainImageCodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC812A99DF1200A765CA /* MainImageCodableData.swift */; };
+		D4BDAC822A99DF1200A765CA /* ProjectCodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC812A99DF1200A765CA /* ProjectCodableData.swift */; };
 		D4BDAC852A99E27900A765CA /* Output.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC842A99E27900A765CA /* Output.swift */; };
 		D4BDAC872A99E39700A765CA /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC862A99E39700A765CA /* FileManagerExtensions.swift */; };
 		D4BDAC892A99E4FA00A765CA /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC882A99E4FA00A765CA /* URLExtensions.swift */; };
@@ -71,6 +72,7 @@
 
 /* Begin PBXFileReference section */
 		D41DF72F2A98C0E10063202F /* Snackbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snackbar.swift; sourceTree = "<group>"; };
+		D42988112AB7605F003AD47E /* ProjectListViewModelUpsertTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelUpsertTests.swift; sourceTree = "<group>"; };
 		D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageLayerViewModel.swift; sourceTree = "<group>"; };
 		D4A91A052A9CBD3600CE13A0 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		D4B0C38F2AA2CEF80005CF50 /* DocumentsProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsProjectView.swift; sourceTree = "<group>"; };
@@ -78,7 +80,7 @@
 		D4B0C3992AA2D6540005CF50 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		D4B498702AA49B82002133E4 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageCodableData.swift; sourceTree = "<group>"; };
-		D4BDAC812A99DF1200A765CA /* MainImageCodableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainImageCodableData.swift; sourceTree = "<group>"; };
+		D4BDAC812A99DF1200A765CA /* ProjectCodableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCodableData.swift; sourceTree = "<group>"; };
 		D4BDAC842A99E27900A765CA /* Output.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Output.swift; sourceTree = "<group>"; };
 		D4BDAC862A99E39700A765CA /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
 		D4BDAC882A99E4FA00A765CA /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				D4CF60D22A97ACA1009FCEE3 /* DottedCanvasTests.swift */,
+				D42988112AB7605F003AD47E /* ProjectListViewModelUpsertTests.swift */,
 			);
 			path = DottedCanvasTests;
 			sourceTree = "<group>";
@@ -266,8 +269,8 @@
 		D4CF60EE2A97B0E5009FCEE3 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				D4BDAC812A99DF1200A765CA /* MainImageCodableData.swift */,
 				D4BDAE5A2A9A04A100A765CA /* ProjectData.swift */,
+				D4BDAC812A99DF1200A765CA /* ProjectCodableData.swift */,
 				D4B0C3972AA2D5CE0005CF50 /* ProjectDataInList.swift */,
 				D4CF60FE2A97B13D009FCEE3 /* SubImageData.swift */,
 				D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */,
@@ -482,7 +485,7 @@
 				D4CF61072A97B158009FCEE3 /* SubImageItem.swift in Sources */,
 				D4CF61172A97B5EF009FCEE3 /* SubImageCreationView.swift in Sources */,
 				D4CF60FF2A97B13D009FCEE3 /* SubImageData.swift in Sources */,
-				D4BDAC822A99DF1200A765CA /* MainImageCodableData.swift in Sources */,
+				D4BDAC822A99DF1200A765CA /* ProjectCodableData.swift in Sources */,
 				D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */,
 				D4B0C3982AA2D5CE0005CF50 /* ProjectDataInList.swift in Sources */,
 				D4CF61192A97B64A009FCEE3 /* SubImagePreviewView.swift in Sources */,
@@ -512,6 +515,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D42988122AB76060003AD47E /* ProjectListViewModelUpsertTests.swift in Sources */,
 				D4CF60D32A97ACA1009FCEE3 /* DottedCanvasTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

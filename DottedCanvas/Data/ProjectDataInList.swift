@@ -21,4 +21,16 @@ struct ProjectDataInList: Identifiable, Hashable {
         self.thumbnail = thumbnail
         self.latestUpdateDate = latestUpdateDate
     }
+
+    init(projectName: String,
+         folderURL: URL,
+         latestUpdateDate: Date) {
+
+        self.projectName = projectName
+        self.latestUpdateDate = latestUpdateDate
+
+        if let imageData = try? Data(contentsOf: folderURL.appendingPathComponent(thumbnailName)) {
+            self.thumbnail = UIImage(data: imageData)
+        }
+    }
 }
