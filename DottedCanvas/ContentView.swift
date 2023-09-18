@@ -21,7 +21,6 @@ struct ContentView: View {
                     let projects = try await loadListProjectDataArray(from: urls)
 
                     DispatchQueue.main.async {
-                        var projects = projects
                         self.projectFileListViewModel.projects = projects
                     }
 
