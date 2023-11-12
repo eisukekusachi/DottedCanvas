@@ -11,16 +11,11 @@ class ProjectListViewModel: ObservableObject {
 
     @Published var projects: [ProjectDataInList]
 
-    let input: InputProtocol
-    let output: OutputProtocol
-
     convenience init() {
-        self.init(projects: [], input: Input(), output: Output())
+        self.init(projects: [])
     }
-    init(projects: [ProjectDataInList], input: InputProtocol, output: OutputProtocol) {
+    init(projects: [ProjectDataInList]) {
         self.projects = projects
-        self.input = input
-        self.output = output
     }
 
     func loadListProjectData(zipFileURL: URL, tmpFolderURL: URL) async throws -> ProjectDataInList {
@@ -68,7 +63,7 @@ class ProjectListViewModel: ObservableObject {
 
         try FileManager.createNewDirectory(url: tmpFolderURL)
         try write(projectData: projectData, to: tmpFolderURL)
-        try output.zip(folderURL: tmpFolderURL, zipFileURL: zipFileURL)
+        try Output.zipFolder(from: tmpFolderURL, to: zipFileURL)
     }
 
     private func loadProjectData<T>(zipFileURL: URL, tmpFolderURL: URL, projectDataBuilder: (ProjectCodableData, URL) -> T?) throws -> T {
@@ -80,9 +75,9 @@ class ProjectListViewModel: ObservableObject {
 
         // Unzip the contents of the ZIP file
         try FileManager.createNewDirectory(url: tmpFolderURL)
-        try input.unzip(srcZipURL: zipFileURL, to: tmpFolderURL)
+        try Input.unzipFile(from: zipFileURL, to: tmpFolderURL)
 
-        if let data: ProjectCodableData = input.loadJson(url: tmpFolderURL.appendingPathComponent(jsonFileName)) {
+        if let data: ProjectCodableData = Input.loadJson(url: tmpFolderURL.appendingPathComponent(jsonFileName)) {
             if let projectData = projectDataBuilder(data, tmpFolderURL) {
                 return projectData
             }
