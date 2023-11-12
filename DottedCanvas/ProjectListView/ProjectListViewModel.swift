@@ -18,21 +18,68 @@ class ProjectListViewModel: ObservableObject {
         self.projects = projects
     }
 
-    func loadListProjectData(zipFileURL: URL, tmpFolderURL: URL) async throws -> ProjectListModel {
-        return try loadProjectData(zipFileURL: zipFileURL, tmpFolderURL: tmpFolderURL) { (data, folderURL) in
+    func load(fromZipFileURL zipFileURL: URL) throws -> ProjectListModel {
+
+        let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
+
+        // Clean up the temporary folder when done
+        defer {
+            try? FileManager.default.removeItem(at: uniqueFolderURL)
+        }
+
+        // Unzip the contents of the ZIP file
+        try FileManager.createNewDirectory(url: uniqueFolderURL)
+        try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
+
+        let jsonUrl = uniqueFolderURL.appendingPathComponent(Output.jsonFileName)
+        if let data: ProjectCodableData = Input.loadJson(url: jsonUrl) {
             return ProjectListModel(
                 projectName: zipFileURL.fileName!,
-                folderURL: folderURL,
+                folderURL: uniqueFolderURL,
                 latestUpdateDate: data.latestUpdateDate
             )
+
+        } else {
+            throw InputError.failedToLoadJson
         }
     }
+
+    /*
+    func loadProject(fromZipFileURL zipFileURL: URL) throws -> ProjectListModel {
+        let fileName = zipFileURL.fileName!
+
+        let uniqueFolderURL = URL.tmp.appendingPathComponent(fileName)
+        let jsonUrl = uniqueFolderURL.appendingPathComponent(ProjectData.jsonFileName)
+
+        // Clean up the temporary folder when done
+        defer {
+            try? FileManager.default.removeItem(at: uniqueFolderURL)
+        }
+
+        // Unzip the contents of the ZIP file
+        try FileManager.createNewDirectory(url: uniqueFolderURL)
+        try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
+
+        if let data: ProjectCodableData = Input.loadJson(url: jsonUrl) {
+            return ProjectListModel(
+                projectName: zipFileURL.fileName!,
+                folderURL: uniqueFolderURL,
+                latestUpdateDate: data.latestUpdateDate
+            )
+
+        } else {
+            throw InputError.failedToLoadJson
+        }
+    }
+*/
+
     func loadProjectData(zipFileURL: URL, tmpFolderURL: URL) throws -> ProjectData {
         return try loadProjectData(zipFileURL: zipFileURL, tmpFolderURL: tmpFolderURL) { (data, folderURL) in
             return ProjectData(codableData: data,
                                folderURL: folderURL)
         }
     }
+
 
     func upsertProjectDataInList(_ newProjectData: ProjectData?, projectName: String) {
         guard let newProjectData = newProjectData else { return }
@@ -77,7 +124,7 @@ class ProjectListViewModel: ObservableObject {
         try FileManager.createNewDirectory(url: tmpFolderURL)
         try Input.unzipFile(from: zipFileURL, to: tmpFolderURL)
 
-        if let data: ProjectCodableData = Input.loadJson(url: tmpFolderURL.appendingPathComponent(ProjectData.jsonFileName)) {
+        if let data: ProjectCodableData = Input.loadJson(url: tmpFolderURL.appendingPathComponent(Output.jsonFileName)) {
             if let projectData = projectDataBuilder(data, tmpFolderURL) {
                 return projectData
             }
@@ -101,7 +148,7 @@ class ProjectListViewModel: ObservableObject {
 
             // Write JSON to file
             try jsonstr.write(
-                to: folder.appendingPathComponent(ProjectData.jsonFileName),
+                to: folder.appendingPathComponent(Output.jsonFileName),
                 atomically: true,
                 encoding: .utf8
             )
@@ -111,7 +158,7 @@ class ProjectListViewModel: ObservableObject {
 
         do {
             // Write mainImage thumbnail
-            let imageURL = folder.appendingPathComponent(ProjectData.thumbnailName)
+            let imageURL = folder.appendingPathComponent(Output.thumbnailName)
             try projectData.mainImageThumbnail?.pngData()?.write(to: imageURL)
         } catch {
             throw error

@@ -35,7 +35,7 @@ struct ProjectListView: View {
         }
         .onAppear {
             projectList.projects = projectList.projects.sorted(by: {
-                    $0.latestUpdateDate < $1.latestUpdateDate
+                $0.latestUpdateDate < $1.latestUpdateDate
             })
         }
     }

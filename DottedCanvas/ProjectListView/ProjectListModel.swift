@@ -31,7 +31,7 @@ struct ProjectListModel: Identifiable, Hashable {
         self.id = UUID()
         self.projectName = projectName
 
-        if let imageData = try? Data(contentsOf: folderURL.appendingPathComponent(ProjectData.thumbnailName)) {
+        if let imageData = try? Data(contentsOf: folderURL.appendingPathComponent(Output.thumbnailName)) {
             self.thumbnail = UIImage(data: imageData)
         } else {
             self.thumbnail = nil

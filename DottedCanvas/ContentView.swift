@@ -38,10 +38,7 @@ struct ContentView: View {
             // Add tasks to unzip and load data for each ZIP file
             for zipURL in allURLs where zipURL.hasSuffix("zip") {
                 group.addTask {
-                    let fileName = zipURL.fileName!
-                    let tmpFolderURL = URL.documents.appendingPathComponent(ProjectData.tmpFolder + fileName)
-                    return try await projectListViewModel.loadListProjectData(zipFileURL: zipURL,
-                                                                              tmpFolderURL: tmpFolderURL)
+                    return try await projectListViewModel.load(fromZipFileURL: zipURL)
                 }
             }
 

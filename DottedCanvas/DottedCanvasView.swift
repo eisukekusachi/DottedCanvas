@@ -51,7 +51,7 @@ struct DottedCanvasView: View {
                         updateSubImageCreationData()
                     },
                     saveProject: {
-                        let zipFileName = mainImageLayerViewModel.projectName + "." + "\(ProjectData.zipSuffix)"
+                        let zipFileName = mainImageLayerViewModel.projectName + "." + "\(Output.zipSuffix)"
                         saveProject(zipFileURL: URL.documents.appendingPathComponent(zipFileName))
                     },
                     loadProject: {
@@ -156,7 +156,7 @@ struct DottedCanvasView: View {
             do {
                 let startDate = Date()
                 let projectName = zipFileURL.fileName!
-                let tmpFolderURL = URL.documents.appendingPathComponent(ProjectData.tmpFolder)
+                let tmpFolderURL = URL.documents.appendingPathComponent(Output.tmpFolder)
 
                 message = "Saving..."
                 isVisibleLoadingView = true
@@ -185,7 +185,7 @@ struct DottedCanvasView: View {
     }
     private func loadProject(zipFileURL: URL) {
         do {
-            let tmpFolderURL = URL.documents.appendingPathComponent(ProjectData.tmpFolder)
+            let tmpFolderURL = URL.documents.appendingPathComponent(Output.tmpFolder)
             let projectData = try projectListViewModel.loadProjectData(zipFileURL: zipFileURL,
                                                                        tmpFolderURL: tmpFolderURL)
 
