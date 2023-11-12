@@ -7,10 +7,14 @@
 
 import UIKit
 
-let jsonFileName: String = "data.dat"
-let thumbnailName: String = "thumbnail.png"
 
 struct ProjectData {
+
+    static let zipSuffix: String = "zip"
+    static let jsonFileName: String = "data.dat"
+    static let thumbnailName: String = "thumbnail.png"
+    static let tmpFolder: String = "tmpFolder"
+
     var mainImageThumbnail: UIImage?
     var subImageLayers: [SubImageData]
     var subImageLayerIndex: Int

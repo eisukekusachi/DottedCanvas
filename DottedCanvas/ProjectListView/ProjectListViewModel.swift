@@ -9,18 +9,18 @@ import UIKit
 
 class ProjectListViewModel: ObservableObject {
 
-    @Published var projects: [ProjectDataInList]
+    @Published var projects: [ProjectListModel]
 
     convenience init() {
         self.init(projects: [])
     }
-    init(projects: [ProjectDataInList]) {
+    init(projects: [ProjectListModel]) {
         self.projects = projects
     }
 
-    func loadListProjectData(zipFileURL: URL, tmpFolderURL: URL) async throws -> ProjectDataInList {
+    func loadListProjectData(zipFileURL: URL, tmpFolderURL: URL) async throws -> ProjectListModel {
         return try loadProjectData(zipFileURL: zipFileURL, tmpFolderURL: tmpFolderURL) { (data, folderURL) in
-            return ProjectDataInList(
+            return ProjectListModel(
                 projectName: zipFileURL.fileName!,
                 folderURL: folderURL,
                 latestUpdateDate: data.latestUpdateDate
@@ -39,14 +39,14 @@ class ProjectListViewModel: ObservableObject {
 
         // Find an existing project by name or create a new one
         if let existingIndex = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })?.offset {
-            let project = ProjectDataInList(
+            let project = ProjectListModel(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: Date())
             projects[existingIndex] = project
 
         } else {
-            let project = ProjectDataInList(
+            let project = ProjectListModel(
                 projectName: projectName,
                 thumbnail: newProjectData.mainImageThumbnail,
                 latestUpdateDate: Date())
@@ -77,7 +77,7 @@ class ProjectListViewModel: ObservableObject {
         try FileManager.createNewDirectory(url: tmpFolderURL)
         try Input.unzipFile(from: zipFileURL, to: tmpFolderURL)
 
-        if let data: ProjectCodableData = Input.loadJson(url: tmpFolderURL.appendingPathComponent(jsonFileName)) {
+        if let data: ProjectCodableData = Input.loadJson(url: tmpFolderURL.appendingPathComponent(ProjectData.jsonFileName)) {
             if let projectData = projectDataBuilder(data, tmpFolderURL) {
                 return projectData
             }
@@ -101,7 +101,7 @@ class ProjectListViewModel: ObservableObject {
 
             // Write JSON to file
             try jsonstr.write(
-                to: folder.appendingPathComponent(jsonFileName),
+                to: folder.appendingPathComponent(ProjectData.jsonFileName),
                 atomically: true,
                 encoding: .utf8
             )
@@ -111,7 +111,7 @@ class ProjectListViewModel: ObservableObject {
 
         do {
             // Write mainImage thumbnail
-            let imageURL = folder.appendingPathComponent(thumbnailName)
+            let imageURL = folder.appendingPathComponent(ProjectData.thumbnailName)
             try projectData.mainImageThumbnail?.pngData()?.write(to: imageURL)
         } catch {
             throw error
