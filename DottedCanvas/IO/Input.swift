@@ -13,18 +13,13 @@ enum InputError: Error {
     case failedToLoadJson
 }
 
-protocol InputProtocol: AnyObject {
-    func unzip(srcZipURL: URL, to dstFolderURL: URL) throws
-    func loadJson<T: Decodable>(url: URL) -> T?
-}
-class Input: InputProtocol {
-    func unzip(srcZipURL: URL, to dstFolderURL: URL) throws {
-        if !SSZipArchive.unzipFile(atPath: srcZipURL.path, toDestination: dstFolderURL.path) {
+enum Input {
+    static func unzipFile(from zipFileURL: URL, to dstFolderURL: URL) throws {
+        if !SSZipArchive.unzipFile(atPath: zipFileURL.path, toDestination: dstFolderURL.path) {
             throw InputError.failedToUnzipFile
         }
     }
-
-    func loadJson<T: Decodable>(url: URL) -> T? {
+    static func loadJson<T: Decodable>(url: URL) -> T? {
         guard let stringJson: String = try? String(contentsOf: url, encoding: .utf8),
               let dataJson: Data = stringJson.data(using: .utf8)
         else { return nil }
