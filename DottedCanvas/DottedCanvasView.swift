@@ -186,8 +186,7 @@ struct DottedCanvasView: View {
     private func loadProject(zipFileURL: URL) {
         do {
             let tmpFolderURL = URL.documents.appendingPathComponent(Output.tmpFolder)
-            let projectData = try projectListViewModel.loadProjectData(zipFileURL: zipFileURL,
-                                                                       tmpFolderURL: tmpFolderURL)
+            let projectData = try mainImageLayerViewModel.loadData(fromZipFileURL: zipFileURL)
 
             mainImageLayerViewModel.update(projectData)
             selectedSubImageAlpha = mainImageLayerViewModel.selectedSubLayer?.alpha ?? 255

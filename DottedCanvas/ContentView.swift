@@ -38,7 +38,7 @@ struct ContentView: View {
             // Add tasks to unzip and load data for each ZIP file
             for zipURL in allURLs where zipURL.hasSuffix("zip") {
                 group.addTask {
-                    return try await projectListViewModel.load(fromZipFileURL: zipURL)
+                    return try await projectListViewModel.loadData(fromZipFileURL: zipURL)
                 }
             }
 

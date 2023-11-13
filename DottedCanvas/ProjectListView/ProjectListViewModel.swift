@@ -18,7 +18,7 @@ class ProjectListViewModel: ObservableObject {
         self.projects = projects
     }
 
-    func load(fromZipFileURL zipFileURL: URL) throws -> ProjectListModel {
+    func loadData(fromZipFileURL zipFileURL: URL) throws -> ProjectListModel {
 
         let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
 
@@ -43,43 +43,6 @@ class ProjectListViewModel: ObservableObject {
             throw InputError.failedToLoadJson
         }
     }
-
-    /*
-    func loadProject(fromZipFileURL zipFileURL: URL) throws -> ProjectListModel {
-        let fileName = zipFileURL.fileName!
-
-        let uniqueFolderURL = URL.tmp.appendingPathComponent(fileName)
-        let jsonUrl = uniqueFolderURL.appendingPathComponent(ProjectData.jsonFileName)
-
-        // Clean up the temporary folder when done
-        defer {
-            try? FileManager.default.removeItem(at: uniqueFolderURL)
-        }
-
-        // Unzip the contents of the ZIP file
-        try FileManager.createNewDirectory(url: uniqueFolderURL)
-        try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
-
-        if let data: ProjectCodableData = Input.loadJson(url: jsonUrl) {
-            return ProjectListModel(
-                projectName: zipFileURL.fileName!,
-                folderURL: uniqueFolderURL,
-                latestUpdateDate: data.latestUpdateDate
-            )
-
-        } else {
-            throw InputError.failedToLoadJson
-        }
-    }
-*/
-
-    func loadProjectData(zipFileURL: URL, tmpFolderURL: URL) throws -> ProjectData {
-        return try loadProjectData(zipFileURL: zipFileURL, tmpFolderURL: tmpFolderURL) { (data, folderURL) in
-            return ProjectData(codableData: data,
-                               folderURL: folderURL)
-        }
-    }
-
 
     func upsertProjectDataInList(_ newProjectData: ProjectData?, projectName: String) {
         guard let newProjectData = newProjectData else { return }
