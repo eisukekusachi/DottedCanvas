@@ -10,14 +10,14 @@ import SwiftUI
 struct ProjectListView: View {
 
     @Binding var isViewPresented: Bool
-    @ObservedObject var projectList: ProjectListViewModel
+    @ObservedObject var viewModel: ProjectListViewModel
     var didSelectItem: ((Int) -> Void)?
 
     var diameter: CGFloat = 44
 
     var body: some View {
         List {
-            ForEach(Array(projectList.projects.enumerated().reversed()),
+            ForEach(Array(viewModel.projects.enumerated().reversed()),
                     id: \.element) { index, data in
                 HStack {
                     let checkerdImage = UIImage.checkered(with: CGSize(width: diameter, height: diameter))
@@ -34,7 +34,7 @@ struct ProjectListView: View {
             }
         }
         .onAppear {
-            projectList.projects = projectList.projects.sorted(by: {
+            viewModel.projects = viewModel.projects.sorted(by: {
                 $0.latestUpdateDate < $1.latestUpdateDate
             })
         }
@@ -45,6 +45,6 @@ struct ProjectListView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
         ProjectListView(isViewPresented: $isViewPresented,
-                        projectList: ProjectListViewModel())
+                        viewModel: ProjectListViewModel())
     }
 }
