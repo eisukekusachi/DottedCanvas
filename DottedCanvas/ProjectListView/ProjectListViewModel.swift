@@ -18,6 +18,21 @@ class ProjectListViewModel: ObservableObject {
         self.projects = projects
     }
 
+    func upsertData(projectName: String, newThumbnail: UIImage?) {
+        // If the project data is found in the array, update it. if not found, add it to the array.
+        let projectData = ProjectListModel(
+            projectName: projectName,
+            thumbnail: newThumbnail,
+            latestUpdateDate: Date())
+
+        if let existingIndex = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })?.offset {
+            projects[existingIndex] = projectData
+
+        } else {
+            projects.append(projectData)
+        }
+    }
+
     func loadData(fromZipFileURL zipFileURL: URL) throws -> ProjectListModel {
 
         let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
@@ -42,41 +57,6 @@ class ProjectListViewModel: ObservableObject {
         } else {
             throw InputError.failedToLoadJson
         }
-    }
-
-    func upsertData(projectName: String, newThumbnail: UIImage?) {
-        // If the project data is found in the array, update it. if not found, add it to the array.
-        let projectData = ProjectListModel(
-            projectName: projectName,
-            thumbnail: newThumbnail,
-            latestUpdateDate: Date())
-
-        if let existingIndex = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })?.offset {
-            projects[existingIndex] = projectData
-
-        } else {
-            projects.append(projectData)
-        }
-    }
-
-    private func loadProjectData<T>(zipFileURL: URL, tmpFolderURL: URL, projectDataBuilder: (ProjectCodableData, URL) -> T?) throws -> T {
-
-        // Clean up the temporary folder when done
-        defer {
-            try? FileManager.default.removeItem(at: tmpFolderURL)
-        }
-
-        // Unzip the contents of the ZIP file
-        try FileManager.createNewDirectory(url: tmpFolderURL)
-        try Input.unzipFile(from: zipFileURL, to: tmpFolderURL)
-
-        if let data: ProjectCodableData = Input.loadJson(url: tmpFolderURL.appendingPathComponent(Output.jsonFileName)) {
-            if let projectData = projectDataBuilder(data, tmpFolderURL) {
-                return projectData
-            }
-        }
-
-        throw InputError.failedToLoadJson
     }
 
     func saveData(projectData: ProjectData, zipFileURL: URL) throws {
