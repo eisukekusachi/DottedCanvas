@@ -64,18 +64,6 @@ class ProjectListViewModel: ObservableObject {
         }
     }
 
-    func saveProject(projectData: ProjectData, tmpFolderURL: URL, zipFileURL: URL) throws {
-
-        // Clean up the temporary folder when done
-        defer {
-            try? FileManager.default.removeItem(atPath: tmpFolderURL.path)
-        }
-
-        try FileManager.createNewDirectory(url: tmpFolderURL)
-        try write(projectData: projectData, to: tmpFolderURL)
-        try Output.zipFolder(from: tmpFolderURL, to: zipFileURL)
-    }
-
     private func loadProjectData<T>(zipFileURL: URL, tmpFolderURL: URL, projectDataBuilder: (ProjectCodableData, URL) -> T?) throws -> T {
 
         // Clean up the temporary folder when done
@@ -96,7 +84,17 @@ class ProjectListViewModel: ObservableObject {
         throw InputError.failedToLoadJson
     }
 
-    private func write(projectData: ProjectData, to folder: URL) throws {
+    func saveData(projectData: ProjectData, zipFileURL: URL) throws {
+
+        let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
+
+        // Clean up the temporary folder when done
+        defer {
+            try? FileManager.default.removeItem(atPath: uniqueFolderURL.path)
+        }
+
+        try FileManager.createNewDirectory(url: uniqueFolderURL)
+
 
         // Create codable data
         let codableData = ProjectCodableData(
@@ -111,7 +109,7 @@ class ProjectListViewModel: ObservableObject {
 
             // Write JSON to file
             try jsonstr.write(
-                to: folder.appendingPathComponent(Output.jsonFileName),
+                to: uniqueFolderURL.appendingPathComponent(Output.jsonFileName),
                 atomically: true,
                 encoding: .utf8
             )
@@ -121,7 +119,7 @@ class ProjectListViewModel: ObservableObject {
 
         do {
             // Write mainImage thumbnail
-            let imageURL = folder.appendingPathComponent(Output.thumbnailName)
+            let imageURL = uniqueFolderURL.appendingPathComponent(Output.thumbnailName)
             try projectData.mainImageThumbnail?.pngData()?.write(to: imageURL)
         } catch {
             throw error
@@ -130,11 +128,13 @@ class ProjectListViewModel: ObservableObject {
         // Write subImage
         for i in 0..<projectData.subImageLayers.count {
             do {
-                let imageURL = folder.appendingPathComponent(projectData.subImageLayers[i].imagePath)
+                let imageURL = uniqueFolderURL.appendingPathComponent(projectData.subImageLayers[i].imagePath)
                 try projectData.subImageLayers[i].image?.pngData()?.write(to: imageURL)
             } catch {
                 throw error
             }
         }
+
+        try Output.zipFolder(from: uniqueFolderURL, to: zipFileURL)
     }
 }

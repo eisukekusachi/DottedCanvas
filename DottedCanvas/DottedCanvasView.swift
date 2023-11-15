@@ -156,16 +156,14 @@ struct DottedCanvasView: View {
             do {
                 let startDate = Date()
                 let projectName = zipFileURL.fileName!
-                let tmpFolderURL = URL.documents.appendingPathComponent(Output.tmpFolder)
 
                 message = "Saving..."
                 isVisibleLoadingView = true
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try projectListViewModel.saveProject(projectData: projectData,
-                                                     tmpFolderURL: tmpFolderURL,
-                                                     zipFileURL: zipFileURL)
+                try projectListViewModel.saveData(projectData: projectData,
+                                                  zipFileURL: zipFileURL)
 
                 projectListViewModel.upsertProjectDataInList(projectData,
                                                              projectName: projectName)
