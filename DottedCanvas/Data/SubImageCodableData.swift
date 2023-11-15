@@ -7,9 +7,6 @@
 
 import Foundation
 
-let zipSuffix: String = "zip"
-let tmpFolder: String = "tmpFolder"
-
 class SubImageCodableData: Codable {
     var title: String
 

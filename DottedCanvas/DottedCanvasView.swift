@@ -51,7 +51,7 @@ struct DottedCanvasView: View {
                         updateSubImageCreationData()
                     },
                     saveProject: {
-                        let zipFileName = mainImageLayerViewModel.projectName + "." + "\(zipSuffix)"
+                        let zipFileName = mainImageLayerViewModel.projectName + "." + "\(Output.zipSuffix)"
                         saveProject(zipFileURL: URL.documents.appendingPathComponent(zipFileName))
                     },
                     loadProject: {
@@ -108,7 +108,7 @@ struct DottedCanvasView: View {
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
             ProjectListView(
                 isViewPresented: $isDocumentsFolderViewPresented,
-                projectList: projectListViewModel,
+                viewModel: projectListViewModel,
                 didSelectItem: { index in
 
                     let projectName = projectListViewModel.projects[index].projectName
@@ -156,19 +156,17 @@ struct DottedCanvasView: View {
             do {
                 let startDate = Date()
                 let projectName = zipFileURL.fileName!
-                let tmpFolderURL = URL.documents.appendingPathComponent(tmpFolder)
 
                 message = "Saving..."
                 isVisibleLoadingView = true
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try projectListViewModel.saveProject(projectData: projectData,
-                                                     tmpFolderURL: tmpFolderURL,
-                                                     zipFileURL: zipFileURL)
+                try projectListViewModel.saveData(projectData: projectData,
+                                                  zipFileURL: zipFileURL)
 
-                projectListViewModel.upsertProjectDataInList(projectData,
-                                                             projectName: projectName)
+                projectListViewModel.upsertData(projectName: projectName,
+                                                newThumbnail: projectData.mainImageThumbnail)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {
@@ -185,9 +183,8 @@ struct DottedCanvasView: View {
     }
     private func loadProject(zipFileURL: URL) {
         do {
-            let tmpFolderURL = URL.documents.appendingPathComponent(tmpFolder)
-            let projectData = try projectListViewModel.loadProjectData(zipFileURL: zipFileURL,
-                                                                       tmpFolderURL: tmpFolderURL)
+            let tmpFolderURL = URL.documents.appendingPathComponent(Output.tmpFolder)
+            let projectData = try mainImageLayerViewModel.loadData(fromZipFileURL: zipFileURL)
 
             mainImageLayerViewModel.update(projectData)
             selectedSubImageAlpha = mainImageLayerViewModel.selectedSubLayer?.alpha ?? 255

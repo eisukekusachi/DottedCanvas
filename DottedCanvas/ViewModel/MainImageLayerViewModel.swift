@@ -85,6 +85,29 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         }
     }
 
+    func loadData(fromZipFileURL zipFileURL: URL) throws -> ProjectData {
+
+        let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
+
+        // Clean up the temporary folder when done
+        defer {
+            try? FileManager.default.removeItem(at: uniqueFolderURL)
+        }
+
+        // Unzip the contents of the ZIP file
+        try FileManager.createNewDirectory(url: uniqueFolderURL)
+        try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
+
+        let jsonUrl = uniqueFolderURL.appendingPathComponent(Output.jsonFileName)
+        if let data: ProjectCodableData = Input.loadJson(url: jsonUrl) {
+            return ProjectData(codableData: data,
+                               folderURL: uniqueFolderURL)
+
+        } else {
+            throw InputError.failedToLoadJson
+        }
+    }
+
     // MARK: Add, Remove, Update
     func addSubLayer(_ newData: SubImageData) {
         if subLayers.isEmpty {

@@ -7,10 +7,8 @@
 
 import UIKit
 
-let jsonFileName: String = "data.dat"
-let thumbnailName: String = "thumbnail.png"
-
 struct ProjectData {
+
     var mainImageThumbnail: UIImage?
     var subImageLayers: [SubImageData]
     var subImageLayerIndex: Int

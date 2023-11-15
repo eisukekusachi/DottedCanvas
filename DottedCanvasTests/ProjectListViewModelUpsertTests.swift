@@ -10,8 +10,6 @@ import XCTest
 
 final class ProjectListViewModelUpsertTests: XCTestCase {
 
-    var viewModel: ProjectListViewModel!
-
     var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = .current
@@ -20,18 +18,16 @@ final class ProjectListViewModelUpsertTests: XCTestCase {
         return formatter
     }()
 
-    let projectName = "TestProject0"
-    let mainImageThumbnail: UIImage? = UIImage(systemName: "pencil")
-    let latestUpdateDate: Date = Date()
-
-    override func setUpWithError() throws {
-        let initialProjects = [ProjectDataInList(projectName: projectName,
-                                                 thumbnail: mainImageThumbnail,
-                                                 latestUpdateDate: latestUpdateDate)]
-        viewModel = ProjectListViewModel(projects: initialProjects)
-    }
+    let firstProjectName = "TestProject0"
+    let firstMainImageThumbnail: UIImage? = UIImage(systemName: "eraser")
+    let firstLatestUpdateDate: Date = Date()
 
     func testAddingNewProjectData() {
+        let initialProjects = [ProjectListModel(projectName: firstProjectName,
+                                                thumbnail: firstMainImageThumbnail,
+                                                latestUpdateDate: firstLatestUpdateDate)]
+        let viewModel = ProjectListViewModel(projects: initialProjects)
+
         // Initial count should be 1
         XCTAssertEqual(viewModel.projects.count, 1)
 
@@ -45,21 +41,30 @@ final class ProjectListViewModelUpsertTests: XCTestCase {
                                          latestUpdateDate: newLatestUpdateDate)
 
         // Add new data
-        viewModel.upsertProjectDataInList(newProjectData, projectName: newProjectName)
+        viewModel.upsertData(projectName: newProjectName,
+                             newThumbnail: newProjectData.mainImageThumbnail)
 
         // After adding, count should be 2
         XCTAssertEqual(viewModel.projects.count, 2)
 
         // Verify the new data
-        XCTAssertEqual(viewModel.projects[1].projectName, 
-                       newProjectName)
-        XCTAssertEqual(viewModel.projects[1].thumbnail, 
-                       newMainImageThumbnail)
+        XCTAssertEqual(viewModel.projects[0].projectName, firstProjectName)
+        XCTAssertEqual(viewModel.projects[0].thumbnail, firstMainImageThumbnail)
+        XCTAssertEqual(formatter.string(from: viewModel.projects[0].latestUpdateDate),
+                       formatter.string(from: firstLatestUpdateDate))
+
+        XCTAssertEqual(viewModel.projects[1].projectName, newProjectName)
+        XCTAssertEqual(viewModel.projects[1].thumbnail, newMainImageThumbnail)
         XCTAssertEqual(formatter.string(from: viewModel.projects[1].latestUpdateDate),
                        formatter.string(from: newLatestUpdateDate))
     }
 
     func testUpdatingExistingProjectData() {
+        let initialProjects = [ProjectListModel(projectName: firstProjectName,
+                                                thumbnail: firstMainImageThumbnail,
+                                                latestUpdateDate: firstLatestUpdateDate)]
+        let viewModel = ProjectListViewModel(projects: initialProjects)
+
         // Initial count should be 1
         XCTAssertEqual(viewModel.projects.count, 1)
 
@@ -72,16 +77,15 @@ final class ProjectListViewModelUpsertTests: XCTestCase {
                                          latestUpdateDate: newLatestUpdateDate)
 
         // Update existing data
-        viewModel.upsertProjectDataInList(newProjectData, projectName: projectName)
+        viewModel.upsertData(projectName: firstProjectName,
+                             newThumbnail: newProjectData.mainImageThumbnail)
 
         // Count should remain 1
         XCTAssertEqual(viewModel.projects.count, 1)
 
         // Verify that the data has been updated
-        XCTAssertEqual(viewModel.projects[0].projectName, 
-                       projectName)
-        XCTAssertEqual(viewModel.projects[0].thumbnail,
-                       newMainImageThumbnail)
+        XCTAssertEqual(viewModel.projects[0].projectName, firstProjectName)
+        XCTAssertEqual(viewModel.projects[0].thumbnail, newMainImageThumbnail)
         XCTAssertEqual(formatter.string(from: viewModel.projects[0].latestUpdateDate),
                        formatter.string(from: newLatestUpdateDate))
     }

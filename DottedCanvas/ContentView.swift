@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var mainImageLayerViewModel = MainImageLayerViewModel()
-    @StateObject var projectFileListViewModel = ProjectListViewModel()
+    @StateObject var projectListViewModel = ProjectListViewModel()
 
     var body: some View {
         DottedCanvasView(mainImageLayerViewModel: mainImageLayerViewModel,
-                         projectListViewModel: projectFileListViewModel)
+                         projectListViewModel: projectListViewModel)
         .onAppear {
             Task {
                 do {
@@ -21,7 +21,7 @@ struct ContentView: View {
                     let projects = try await loadListProjectDataArray(from: urls)
 
                     DispatchQueue.main.async {
-                        self.projectFileListViewModel.projects = projects
+                        self.projectListViewModel.projects = projects
                     }
 
                 } catch {
@@ -31,17 +31,14 @@ struct ContentView: View {
         }
     }
 
-    private func loadListProjectDataArray(from allURLs: [URL]) async throws -> [ProjectDataInList] {
-        return try await withThrowingTaskGroup(of: ProjectDataInList?.self) { group in
-            var dataArray: [ProjectDataInList] = []
+    private func loadListProjectDataArray(from allURLs: [URL]) async throws -> [ProjectListModel] {
+        return try await withThrowingTaskGroup(of: ProjectListModel?.self) { group in
+            var dataArray: [ProjectListModel] = []
 
             // Add tasks to unzip and load data for each ZIP file
             for zipURL in allURLs where zipURL.hasSuffix("zip") {
                 group.addTask {
-                    let fileName = zipURL.fileName!
-                    let tmpFolderURL = URL.documents.appendingPathComponent(tmpFolder + fileName)
-                    return try await projectFileListViewModel.loadListProjectData(zipFileURL: zipURL,
-                                                                                  tmpFolderURL: tmpFolderURL)
+                    return try await projectListViewModel.loadData(fromZipFileURL: zipURL)
                 }
             }
 
