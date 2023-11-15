@@ -165,8 +165,8 @@ struct DottedCanvasView: View {
                 try projectListViewModel.saveData(projectData: projectData,
                                                   zipFileURL: zipFileURL)
 
-                projectListViewModel.upsertProjectDataInList(projectData,
-                                                             projectName: projectName)
+                projectListViewModel.upsertData(projectName: projectName,
+                                                newThumbnail: projectData.mainImageThumbnail)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {

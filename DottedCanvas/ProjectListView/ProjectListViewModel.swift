@@ -44,23 +44,18 @@ class ProjectListViewModel: ObservableObject {
         }
     }
 
-    func upsertProjectDataInList(_ newProjectData: ProjectData?, projectName: String) {
-        guard let newProjectData = newProjectData else { return }
+    func upsertData(projectName: String, newThumbnail: UIImage?) {
+        // If the project data is found in the array, update it. if not found, add it to the array.
+        let projectData = ProjectListModel(
+            projectName: projectName,
+            thumbnail: newThumbnail,
+            latestUpdateDate: Date())
 
-        // Find an existing project by name or create a new one
         if let existingIndex = projects.enumerated().reversed().first(where: { $0.element.projectName == projectName })?.offset {
-            let project = ProjectListModel(
-                projectName: projectName,
-                thumbnail: newProjectData.mainImageThumbnail,
-                latestUpdateDate: Date())
-            projects[existingIndex] = project
+            projects[existingIndex] = projectData
 
         } else {
-            let project = ProjectListModel(
-                projectName: projectName,
-                thumbnail: newProjectData.mainImageThumbnail,
-                latestUpdateDate: Date())
-            projects.append(project)
+            projects.append(projectData)
         }
     }
 
