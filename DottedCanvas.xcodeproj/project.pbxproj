@@ -47,8 +47,8 @@
 		D4CF610F2A97B1FE009FCEE3 /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF610E2A97B1FE009FCEE3 /* GlobalData.swift */; };
 		D4CF61112A97B205009FCEE3 /* DottedCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */; };
 		D4CF61132A97B524009FCEE3 /* TwoRowsSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61122A97B524009FCEE3 /* TwoRowsSliderView.swift */; };
-		D4CF61152A97B54A009FCEE3 /* SubImageCreationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61142A97B54A009FCEE3 /* SubImageCreationData.swift */; };
-		D4CF61172A97B5EF009FCEE3 /* SubImageCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61162A97B5EF009FCEE3 /* SubImageCreationView.swift */; };
+		D4CF61152A97B54A009FCEE3 /* SubImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61142A97B54A009FCEE3 /* SubImageModel.swift */; };
+		D4CF61172A97B5EF009FCEE3 /* SubImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61162A97B5EF009FCEE3 /* SubImageView.swift */; };
 		D4CF61192A97B64A009FCEE3 /* SubImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */; };
 		D4CF611B2A98BD43009FCEE3 /* LoadingDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF611A2A98BD43009FCEE3 /* LoadingDialog.swift */; };
 /* End PBXBuildFile section */
@@ -113,8 +113,8 @@
 		D4CF610E2A97B1FE009FCEE3 /* GlobalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
 		D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasView.swift; sourceTree = "<group>"; };
 		D4CF61122A97B524009FCEE3 /* TwoRowsSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoRowsSliderView.swift; sourceTree = "<group>"; };
-		D4CF61142A97B54A009FCEE3 /* SubImageCreationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageCreationData.swift; sourceTree = "<group>"; };
-		D4CF61162A97B5EF009FCEE3 /* SubImageCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageCreationView.swift; sourceTree = "<group>"; };
+		D4CF61142A97B54A009FCEE3 /* SubImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageModel.swift; sourceTree = "<group>"; };
+		D4CF61162A97B5EF009FCEE3 /* SubImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageView.swift; sourceTree = "<group>"; };
 		D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImagePreviewView.swift; sourceTree = "<group>"; };
 		D4CF611A2A98BD43009FCEE3 /* LoadingDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDialog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +151,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D48D97E42B077FF20017B7B2 /* SubImageView */ = {
+			isa = PBXGroup;
+			children = (
+				D4CF61142A97B54A009FCEE3 /* SubImageModel.swift */,
+				D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */,
+				D4CF61162A97B5EF009FCEE3 /* SubImageView.swift */,
+			);
+			path = SubImageView;
 			sourceTree = "<group>";
 		};
 		D4B4986F2AA49B62002133E4 /* ViewModifiers */ = {
@@ -210,6 +220,7 @@
 				D4CF60EC2A97AE1C009FCEE3 /* Extensions */,
 				D4BDAC832A99E26F00A765CA /* IO */,
 				D4BB410B2B00722F004DABB4 /* ProjectListView */,
+				D48D97E42B077FF20017B7B2 /* SubImageView */,
 				D4CF60EF2A97B0EE009FCEE3 /* Utils */,
 				D4CF60F02A97B0F7009FCEE3 /* View */,
 				D4CF60F12A97B0FF009FCEE3 /* ViewModel */,
@@ -284,7 +295,6 @@
 				D4BDAC812A99DF1200A765CA /* ProjectCodableData.swift */,
 				D4CF60FE2A97B13D009FCEE3 /* SubImageData.swift */,
 				D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */,
-				D4CF61142A97B54A009FCEE3 /* SubImageCreationData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -301,10 +311,8 @@
 			isa = PBXGroup;
 			children = (
 				D4CF61022A97B157009FCEE3 /* MainImagePreviewView.swift */,
-				D4CF61162A97B5EF009FCEE3 /* SubImageCreationView.swift */,
 				D4CF61032A97B157009FCEE3 /* SubImageItem.swift */,
 				D4CF61042A97B158009FCEE3 /* SubImageListView.swift */,
-				D4CF61182A97B64A009FCEE3 /* SubImagePreviewView.swift */,
 				D4CF61052A97B158009FCEE3 /* Toolbar.swift */,
 			);
 			path = View;
@@ -491,7 +499,7 @@
 				D4B0C39A2AA2D6540005CF50 /* ProjectListViewModel.swift in Sources */,
 				D4A5A4D42AB32977006B1D2A /* MainImageLayerViewModel.swift in Sources */,
 				D4CF61072A97B158009FCEE3 /* SubImageItem.swift in Sources */,
-				D4CF61172A97B5EF009FCEE3 /* SubImageCreationView.swift in Sources */,
+				D4CF61172A97B5EF009FCEE3 /* SubImageView.swift in Sources */,
 				D4CF60FF2A97B13D009FCEE3 /* SubImageData.swift in Sources */,
 				D4BDAC822A99DF1200A765CA /* ProjectCodableData.swift in Sources */,
 				D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */,
@@ -504,7 +512,7 @@
 				D4BDAE5B2A9A04A100A765CA /* ProjectData.swift in Sources */,
 				D4CF61112A97B205009FCEE3 /* DottedCanvasView.swift in Sources */,
 				D4CF61062A97B158009FCEE3 /* MainImagePreviewView.swift in Sources */,
-				D4CF61152A97B54A009FCEE3 /* SubImageCreationData.swift in Sources */,
+				D4CF61152A97B54A009FCEE3 /* SubImageModel.swift in Sources */,
 				D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */,
 				D4A91A062A9CBD3600CE13A0 /* Input.swift in Sources */,
 				D4CF61092A97B158009FCEE3 /* Toolbar.swift in Sources */,

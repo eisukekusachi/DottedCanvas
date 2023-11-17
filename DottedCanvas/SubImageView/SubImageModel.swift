@@ -1,5 +1,5 @@
 //
-//  DotImageCreationData.swift
+//  SubImageModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/25.
@@ -13,7 +13,7 @@ struct DefaultDotValue {
     static let spacing = 24
 }
 
-class SubImageCreationData: ObservableObject, Identifiable {
+class SubImageModel: ObservableObject, Identifiable {
 
     var id = UUID()
     var title: String = ""
@@ -94,7 +94,7 @@ class SubImageCreationData: ObservableObject, Identifiable {
     }
 }
 
-extension SubImageCreationData {
+extension SubImageModel {
     var currentColor: UIColor {
         UIColor(red: CGFloat(red) / 255.0,
                 green: CGFloat(green) / 255.0,

@@ -1,5 +1,5 @@
 //
-//  DotImageCreationView.swift
+//  SubImageView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SubImageCreationView: View {
+struct SubImageView: View {
     @Binding var isViewPresented: Bool
-    @ObservedObject var creationData: SubImageCreationData
+    @ObservedObject var creationData: SubImageModel
     var completion: (() -> Void)?
 
     private let previewViewSize: CGFloat = min(500, UIScreen.main.bounds.width * 0.6)
@@ -106,12 +106,12 @@ struct SubImageCreationView: View {
     }
 }
 
-struct SubImageCreationView_Previews: PreviewProvider {
+struct SubImageView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
-        let creationData = SubImageCreationData()
 
-        SubImageCreationView(isViewPresented: $isViewPresented, creationData: creationData) {
+        SubImageView(isViewPresented: $isViewPresented,
+                     creationData: SubImageModel()) {
             print("Image creation completed")
         }
     }
