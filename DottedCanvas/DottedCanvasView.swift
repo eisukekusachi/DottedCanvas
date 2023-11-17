@@ -23,7 +23,7 @@ struct DottedCanvasView: View {
     @State var isNewImageAlertPresented: Bool = false
     @State var isDocumentsFolderViewPresented: Bool = false
 
-    @State var subImageCreationData = SubImageCreationData()
+    @State var selectedSubImageData = SubImageModel()
     @State var selectedSubImageAlpha: Int = 255
 
     @State var message: String = ""
@@ -99,10 +99,12 @@ struct DottedCanvasView: View {
             }
         }
         .sheet(isPresented: $isCreationViewPresented) {
-            SubImageCreationView(isViewPresented: $isCreationViewPresented,
-                                 creationData: subImageCreationData) {
-                let newData = updateMainImage()
-                selectedSubImageAlpha = newData.alpha
+            SubImageView(isViewPresented: $isCreationViewPresented,
+                         data: selectedSubImageData) { data, image in
+
+                updateMainImage(newSubImageData: data,
+                                dotImage: image)
+                selectedSubImageAlpha = data.alpha
             }
         }
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
@@ -125,7 +127,7 @@ struct DottedCanvasView: View {
                             ].joined()
             let action = {
                 mainImageLayerViewModel.reset()
-                subImageCreationData.reset()
+                selectedSubImageData = SubImageModel()
             }
 
             return Alert(title: Text(title),
@@ -136,17 +138,17 @@ struct DottedCanvasView: View {
         }
     }
 
-    private func updateMainImage() -> SubImageData {
+    private func updateMainImage(newSubImageData: SubImageModel,
+                                 dotImage: UIImage?) {
         let newData = SubImageData(title: TimeStampFormatter.current(template: "MMM dd HH mm ss"),
-                                   data: subImageCreationData)
+                                   image: dotImage,
+                                   data: newSubImageData)
 
         mainImageLayerViewModel.addSubLayer(newData)
-
-        return newData
     }
     private func updateSubImageCreationData() {
-        if let subLayer = mainImageLayerViewModel.selectedSubLayer {
-            subImageCreationData.apply(subLayer)
+        if let subImageData = mainImageLayerViewModel.selectedSubImageData {
+            selectedSubImageData = SubImageModel(subImageData)
         }
     }
 
@@ -187,7 +189,7 @@ struct DottedCanvasView: View {
             let projectData = try mainImageLayerViewModel.loadData(fromZipFileURL: zipFileURL)
 
             mainImageLayerViewModel.update(projectData)
-            selectedSubImageAlpha = mainImageLayerViewModel.selectedSubLayer?.alpha ?? 255
+            selectedSubImageAlpha = mainImageLayerViewModel.selectedSubImageData?.alpha ?? 255
 
             if let fileName = zipFileURL.fileName {
                 mainImageLayerViewModel.projectName = fileName

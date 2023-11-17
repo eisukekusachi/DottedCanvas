@@ -23,7 +23,7 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     @Published var mergedSubLayers: UIImage?
     @Published var subLayers: [SubImageData]
 
-    @Published var selectedSubLayer: SubImageData?
+    @Published var selectedSubImageData: SubImageData?
 
     var projectData: ProjectData? {
         ProjectData(mainImageThumbnail: mergedSubLayers?.resize(sideLength: 256, scale: 1),
@@ -33,7 +33,7 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     }
 
     var selectedLayerIndex: Int {
-        subLayers.firstIndex(where: { $0 == selectedSubLayer }) ?? 0
+        subLayers.firstIndex(where: { $0 == selectedSubImageData }) ?? 0
     }
 
     var projectName: String = Calendar.currentDate
@@ -47,10 +47,10 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         subLayers = initialSubLayers
 
         if subLayers.count != 0, let data = subLayers.first {
-            selectedSubLayer = data
+            selectedSubImageData = data
         }
 
-        $selectedSubLayer
+        $selectedSubImageData
             .debounce(for: .milliseconds(50), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.updateMergedSubLayers()
@@ -68,14 +68,14 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     func reset() {
         mergedSubLayers = nil
         subLayers = []
-        selectedSubLayer = nil
+        selectedSubImageData = nil
 
         projectName = Calendar.currentDate
     }
 
     func getSelectedSubLayerIndex() -> Int? {
-        if let selectedSubLayer {
-            return getSubLayerIndex(from: selectedSubLayer.id)
+        if let selectedSubImageData {
+            return getSubLayerIndex(from: selectedSubImageData.id)
         }
         return nil
     }
@@ -116,13 +116,13 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
             insertSubImageData(newData, at: selectedLayerIndex + 1)
         }
 
-        selectedSubLayer = newData
+        selectedSubImageData = newData
         updateMergedSubLayers()
     }
 
     func appendSubImageData(_ newData: SubImageData) {
         subLayers.append(newData)
-        selectedSubLayer = newData
+        selectedSubImageData = newData
     }
 
     @discardableResult
@@ -134,7 +134,7 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         }
 
         subLayers.insert(newData, at: index)
-        selectedSubLayer = newData
+        selectedSubImageData = newData
 
         return true
     }
@@ -153,12 +153,12 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         subLayers.remove(at: index)
 
         if subLayers.count == 0 {
-            selectedSubLayer = nil
+            selectedSubImageData = nil
 
-        } else if selectedSubLayer == tmpCurrentData {
+        } else if selectedSubImageData == tmpCurrentData {
             let index = min(max(0, index), subLayers.count - 1)
             let data = subLayers[index]
-            selectedSubLayer = data
+            selectedSubImageData = data
         }
 
         return true
@@ -170,7 +170,7 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     }
     func updateSelectedSubLayer(index: Int) {
         if index < subLayers.count {
-            selectedSubLayer = subLayers[index]
+            selectedSubImageData = subLayers[index]
         }
     }
 
@@ -187,8 +187,8 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
             subLayers[index].alpha = alpha
         }
 
-        if selectedSubLayer?.id == id {
-            selectedSubLayer = subLayers[index]
+        if selectedSubImageData?.id == id {
+            selectedSubImageData = subLayers[index]
         }
     }
 

@@ -1,5 +1,5 @@
 //
-//  DotImageCreationData.swift
+//  SubImageModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/25.
@@ -13,38 +13,24 @@ struct DefaultDotValue {
     static let spacing = 24
 }
 
-class SubImageCreationData: ObservableObject, Identifiable {
+struct SubImageModel {
 
-    var id = UUID()
-    var title: String = ""
+    var alpha: Int
+    var isVisible: Bool
 
-    @Published var alpha: Int = 255
-    @Published var isVisible: Bool = true
+    var red: Int
+    var green: Int
+    var blue: Int
 
-    @Published var red: Int = 0
-    @Published var green: Int = 0
-    @Published var blue: Int = 0
+    var diameter: Int
+    var spacing: Int
 
-    @Published var diameter: Int = 0
-    @Published var spacing: Int = 0
+    var offsetX: Int
+    var offsetY: Int
 
-    @Published var offsetX: Int = 0
-    @Published var offsetY: Int = 0
+    init(alpha: Int = 255,
+         isVisible: Bool = true,
 
-    let imageSize: CGSize = CGSize(width: 1000, height: 1000)
-
-    var dotImage: UIImage {
-        UIImage.dotImage(with: imageSize,
-                         dotSize: CGFloat(diameter),
-                         spacing: CGFloat(spacing),
-                         offset: CGPoint(x: offsetX, y: offsetY),
-                         color: UIColor(red: CGFloat(red) / 255.0,
-                                        green: CGFloat(green) / 255.0,
-                                        blue: CGFloat(blue) / 255.0,
-                                        alpha: CGFloat(alpha) / 255.0 ))
-    }
-
-    init(title: String? = nil,
          red: Int = 0,
          green: Int = 0,
          blue: Int = 0,
@@ -53,7 +39,8 @@ class SubImageCreationData: ObservableObject, Identifiable {
          offsetX: Int = 0,
          offsetY: Int = 0) {
 
-        self.title = title ?? ""
+        self.alpha = alpha
+        self.isVisible = isVisible
 
         self.red = max(0, min(255, red))
         self.green = max(0, min(255, green))
@@ -64,37 +51,28 @@ class SubImageCreationData: ObservableObject, Identifiable {
 
         self.offsetX = offsetX
         self.offsetY = offsetY
-
-        reset()
     }
-    func apply(_ data: SubImageData) {
-        red = data.red
-        green = data.green
-        blue = data.blue
 
-        diameter = data.diameter
-        spacing = data.spacing
+    init(_ data: SubImageData,
+         alpha: Int = 255,
+         isVisible: Bool = true) {
 
-        offsetX = data.offsetX
-        offsetY = data.offsetY
-    }
-    func setAlphaValue(value: Int) {
-        alpha = value
-    }
-    func reset() {
-        red = 0
-        green = 0
-        blue = 0
+        self.alpha = alpha
+        self.isVisible = isVisible
 
-        diameter = DefaultDotValue.diameter
-        spacing = DefaultDotValue.spacing
+        self.red = data.red
+        self.green = data.green
+        self.blue = data.blue
 
-        offsetX = 0
-        offsetY = 0
+        self.diameter = data.diameter
+        self.spacing = data.spacing
+
+        self.offsetX = data.offsetX
+        self.offsetY = data.offsetY
     }
 }
 
-extension SubImageCreationData {
+extension SubImageModel {
     var currentColor: UIColor {
         UIColor(red: CGFloat(red) / 255.0,
                 green: CGFloat(green) / 255.0,

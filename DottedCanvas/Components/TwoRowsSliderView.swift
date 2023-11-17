@@ -80,7 +80,7 @@ struct TwoRowsSliderView: View {
 
 struct TwoRowsSliderView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var data = SubImageCreationData()
+        @State var data = SubImageModel()
 
         VStack {
             TwoRowsSliderView(title: "Red", value: $data.red, style: data.redStyle)
