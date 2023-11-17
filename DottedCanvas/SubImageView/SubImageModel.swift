@@ -70,20 +70,6 @@ struct SubImageModel {
         self.offsetX = data.offsetX
         self.offsetY = data.offsetY
     }
-
-    /*
-    func reset() {
-        red = 0
-        green = 0
-        blue = 0
-
-        diameter = DefaultDotValue.diameter
-        spacing = DefaultDotValue.spacing
-
-        offsetX = 0
-        offsetY = 0
-    }
-     */
 }
 
 extension SubImageModel {
