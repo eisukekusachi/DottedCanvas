@@ -13,9 +13,8 @@ struct DefaultDotValue {
     static let spacing = 24
 }
 
-class SubImageModel: ObservableObject, Identifiable {
+class SubImageModel {
 
-    var id: UUID
     var title: String
 
     var alpha: Int
@@ -44,8 +43,6 @@ class SubImageModel: ObservableObject, Identifiable {
          offsetX: Int = 0,
          offsetY: Int = 0) {
 
-        self.id = UUID()
-
         self.title = title ?? ""
 
         self.alpha = alpha
@@ -64,8 +61,6 @@ class SubImageModel: ObservableObject, Identifiable {
     func apply(_ data: SubImageData,
                alpha: Int = 255,
                isVisible: Bool = true) {
-
-        self.id = UUID()
 
         self.alpha = alpha
         self.isVisible = isVisible
