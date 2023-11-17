@@ -13,9 +13,7 @@ struct DefaultDotValue {
     static let spacing = 24
 }
 
-class SubImageModel {
-
-    var title: String
+struct SubImageModel {
 
     var alpha: Int
     var isVisible: Bool
@@ -30,9 +28,7 @@ class SubImageModel {
     var offsetX: Int
     var offsetY: Int
 
-    init(title: String? = nil,
-
-         alpha: Int = 255,
+    init(alpha: Int = 255,
          isVisible: Bool = true,
 
          red: Int = 0,
@@ -42,8 +38,6 @@ class SubImageModel {
          spacing: Int = 20,
          offsetX: Int = 0,
          offsetY: Int = 0) {
-
-        self.title = title ?? ""
 
         self.alpha = alpha
         self.isVisible = isVisible
@@ -58,9 +52,10 @@ class SubImageModel {
         self.offsetX = offsetX
         self.offsetY = offsetY
     }
-    func apply(_ data: SubImageData,
-               alpha: Int = 255,
-               isVisible: Bool = true) {
+
+    init(_ data: SubImageData,
+         alpha: Int = 255,
+         isVisible: Bool = true) {
 
         self.alpha = alpha
         self.isVisible = isVisible
@@ -75,6 +70,8 @@ class SubImageModel {
         self.offsetX = data.offsetX
         self.offsetY = data.offsetY
     }
+
+    /*
     func reset() {
         red = 0
         green = 0
@@ -86,6 +83,7 @@ class SubImageModel {
         offsetX = 0
         offsetY = 0
     }
+     */
 }
 
 extension SubImageModel {

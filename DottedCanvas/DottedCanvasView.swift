@@ -127,7 +127,7 @@ struct DottedCanvasView: View {
                             ].joined()
             let action = {
                 mainImageLayerViewModel.reset()
-                selectedSubImageData.reset()
+                selectedSubImageData = SubImageModel()
             }
 
             return Alert(title: Text(title),
@@ -148,7 +148,7 @@ struct DottedCanvasView: View {
     }
     private func updateSubImageCreationData() {
         if let subLayer = mainImageLayerViewModel.selectedSubLayer {
-            selectedSubImageData.apply(subLayer)
+            selectedSubImageData = SubImageModel(subLayer)
         }
     }
 

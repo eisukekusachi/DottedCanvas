@@ -72,7 +72,8 @@ extension SubImageView {
         HStack {
             Spacer()
             Button(action: {
-                viewModel.data.reset()
+                viewModel.data = SubImageModel()
+                
             }, label: {
                 Text("Reset").buttonTextModifier(size: 16)
             })
