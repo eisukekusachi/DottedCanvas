@@ -11,7 +11,7 @@ class SubImageViewModel: ObservableObject {
     @Published var data: SubImageModel
 
     var dotImage: UIImage {
-        UIImage.dotImage(with: data.imageSize,
+        UIImage.dotImage(with: SubImageView.imageSize,
                          dotSize: CGFloat(data.diameter),
                          spacing: CGFloat(data.spacing),
                          offset: CGPoint(x: data.offsetX, y: data.offsetY),

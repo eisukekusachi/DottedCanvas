@@ -15,11 +15,13 @@ struct SubImagePreviewView: View {
         ZStack {
             Rectangle()
                 .foregroundColor(.white)
-                .frame(width: viewSize, height: viewSize)
+                .frame(width: viewSize,
+                       height: viewSize)
 
             Image(uiImage: viewModel.dotImage)
                 .resizable()
-                .frame(width: viewSize, height: viewSize)
+                .frame(width: viewSize,
+                       height: viewSize)
                 .overlay(
                     Rectangle()
                         .strokeBorder(Color(uiColor: .init(white: 0.9, alpha: 1.0)),

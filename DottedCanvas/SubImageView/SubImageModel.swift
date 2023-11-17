@@ -31,9 +31,11 @@ class SubImageModel: ObservableObject, Identifiable {
     var offsetX: Int
     var offsetY: Int
 
-    let imageSize: CGSize = CGSize(width: 1000, height: 1000)
-
     init(title: String? = nil,
+
+         alpha: Int = 255,
+         isVisible: Bool = true,
+
          red: Int = 0,
          green: Int = 0,
          blue: Int = 0,
@@ -46,8 +48,8 @@ class SubImageModel: ObservableObject, Identifiable {
 
         self.title = title ?? ""
 
-        self.alpha = 255
-        self.isVisible = true
+        self.alpha = alpha
+        self.isVisible = isVisible
 
         self.red = max(0, min(255, red))
         self.green = max(0, min(255, green))
@@ -59,12 +61,14 @@ class SubImageModel: ObservableObject, Identifiable {
         self.offsetX = offsetX
         self.offsetY = offsetY
     }
-    func apply(_ data: SubImageData) {
+    func apply(_ data: SubImageData,
+               alpha: Int = 255,
+               isVisible: Bool = true) {
 
         self.id = UUID()
 
-        self.alpha = 255
-        self.isVisible = true
+        self.alpha = alpha
+        self.isVisible = isVisible
 
         self.red = data.red
         self.green = data.green
@@ -75,9 +79,6 @@ class SubImageModel: ObservableObject, Identifiable {
 
         self.offsetX = data.offsetX
         self.offsetY = data.offsetY
-    }
-    func setAlphaValue(value: Int) {
-        alpha = value
     }
     func reset() {
         red = 0
