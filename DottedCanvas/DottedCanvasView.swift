@@ -147,8 +147,8 @@ struct DottedCanvasView: View {
         mainImageLayerViewModel.addSubLayer(newData)
     }
     private func updateSubImageCreationData() {
-        if let subLayer = mainImageLayerViewModel.selectedSubLayer {
-            selectedSubImageData = SubImageModel(subLayer)
+        if let subImageData = mainImageLayerViewModel.selectedSubImageData {
+            selectedSubImageData = SubImageModel(subImageData)
         }
     }
 
@@ -189,7 +189,7 @@ struct DottedCanvasView: View {
             let projectData = try mainImageLayerViewModel.loadData(fromZipFileURL: zipFileURL)
 
             mainImageLayerViewModel.update(projectData)
-            selectedSubImageAlpha = mainImageLayerViewModel.selectedSubLayer?.alpha ?? 255
+            selectedSubImageAlpha = mainImageLayerViewModel.selectedSubImageData?.alpha ?? 255
 
             if let fileName = zipFileURL.fileName {
                 mainImageLayerViewModel.projectName = fileName

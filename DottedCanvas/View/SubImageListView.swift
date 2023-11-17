@@ -32,7 +32,7 @@ extension SubImageListView {
             style: sliderStyle,
             range: range) { value in
 
-                mainImageLayerViewModel.updateSubLayer(id: mainImageLayerViewModel.selectedSubLayer?.id,
+                mainImageLayerViewModel.updateSubLayer(id: mainImageLayerViewModel.selectedSubImageData?.id,
                                                        alpha: value)
         }
             .padding()
@@ -40,20 +40,20 @@ extension SubImageListView {
     private var imageList: some View {
         List {
             ForEach(Array(mainImageLayerViewModel.subLayers.enumerated().reversed()),
-                    id: \.element) { index, layer in
+                    id: \.element) { index, data in
 
                 SubImageItem(
-                    imageItem: layer,
-                    selected: layer == mainImageLayerViewModel.selectedSubLayer,
+                    imageItem: data,
+                    selected: data == mainImageLayerViewModel.selectedSubImageData,
                     didTapVisibleButton: { result in
 
-                        mainImageLayerViewModel.updateSubLayer(id: layer.id, isVisible: result)
+                        mainImageLayerViewModel.updateSubLayer(id: data.id, isVisible: result)
                         mainImageLayerViewModel.updateMergedSubLayers()
                     })
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        mainImageLayerViewModel.selectedSubLayer = layer
-                        selectedSubImageAlpha = layer.alpha
+                        mainImageLayerViewModel.selectedSubImageData = data
+                        selectedSubImageAlpha = data.alpha
 
                         didSelectItem?(index)
                     }
