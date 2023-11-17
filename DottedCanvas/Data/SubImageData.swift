@@ -57,10 +57,11 @@ struct SubImageData: Identifiable, Hashable {
     }
     init(title: String,
          isVisible: Bool = true,
+         image: UIImage?,
          data: SubImageModel) {
 
         self.title = title
-        self.image = data.dotImage
+        self.image = image
         self.thumbnail = image?.resize(to: CGSize(width: 256, height: 256))
 
         self.isVisible = isVisible

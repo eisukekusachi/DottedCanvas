@@ -23,7 +23,7 @@ struct DottedCanvasView: View {
     @State var isNewImageAlertPresented: Bool = false
     @State var isDocumentsFolderViewPresented: Bool = false
 
-    @State var subImageData = SubImageModel()
+    @State var selectedSubImageData = SubImageModel()
     @State var selectedSubImageAlpha: Int = 255
 
     @State var message: String = ""
@@ -100,9 +100,11 @@ struct DottedCanvasView: View {
         }
         .sheet(isPresented: $isCreationViewPresented) {
             SubImageView(isViewPresented: $isCreationViewPresented,
-                         creationData: subImageData) {
-                let newData = updateMainImage()
-                selectedSubImageAlpha = newData.alpha
+                         data: selectedSubImageData) { data, image in
+
+                updateMainImage(newSubImageData: data,
+                                dotImage: image)
+                selectedSubImageAlpha = data.alpha
             }
         }
         .sheet(isPresented: $isDocumentsFolderViewPresented) {
@@ -125,7 +127,7 @@ struct DottedCanvasView: View {
                             ].joined()
             let action = {
                 mainImageLayerViewModel.reset()
-                subImageData.reset()
+                selectedSubImageData.reset()
             }
 
             return Alert(title: Text(title),
@@ -136,17 +138,17 @@ struct DottedCanvasView: View {
         }
     }
 
-    private func updateMainImage() -> SubImageData {
+    private func updateMainImage(newSubImageData: SubImageModel,
+                                 dotImage: UIImage?) {
         let newData = SubImageData(title: TimeStampFormatter.current(template: "MMM dd HH mm ss"),
-                                   data: subImageData)
+                                   image: dotImage,
+                                   data: newSubImageData)
 
         mainImageLayerViewModel.addSubLayer(newData)
-
-        return newData
     }
     private func updateSubImageCreationData() {
         if let subLayer = mainImageLayerViewModel.selectedSubLayer {
-            subImageData.apply(subLayer)
+            selectedSubImageData.apply(subLayer)
         }
     }
 

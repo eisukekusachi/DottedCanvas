@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct SubImagePreviewView: View {
-
-    @EnvironmentObject var data: SubImageModel
+    @ObservedObject var viewModel: SubImageViewModel
     let viewSize: CGFloat
 
     var body: some View {
@@ -18,7 +17,7 @@ struct SubImagePreviewView: View {
                 .foregroundColor(.white)
                 .frame(width: viewSize, height: viewSize)
 
-            Image(uiImage: data.dotImage)
+            Image(uiImage: viewModel.dotImage)
                 .resizable()
                 .frame(width: viewSize, height: viewSize)
                 .overlay(
@@ -32,9 +31,9 @@ struct SubImagePreviewView: View {
 
 struct SubImagePreviewView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var data = SubImageModel()
+        @State var viewModel = SubImageViewModel(data: SubImageModel())
 
-        SubImagePreviewView(viewSize: 300.0)
-            .environmentObject(data)
+        SubImagePreviewView(viewModel: viewModel,
+                            viewSize: 300.0)
     }
 }

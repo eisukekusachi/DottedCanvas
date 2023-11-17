@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SubImageView: View {
     @Binding var isViewPresented: Bool
-    @ObservedObject var creationData: SubImageModel
-    var completion: (() -> Void)?
+    @ObservedObject var viewModel: SubImageViewModel
+    var completion: ((SubImageModel, UIImage?) -> Void)?
 
     private let previewViewSize: CGFloat = min(500, UIScreen.main.bounds.width * 0.6)
     private let sliderWidth: CGFloat = 16
@@ -19,6 +19,14 @@ struct SubImageView: View {
     private let buttonSize: CGFloat = 20
 
     @State private var scrollViewEnabled: Bool = true
+
+    init(isViewPresented: Binding<Bool>,
+         data: SubImageModel,
+         completion: ((SubImageModel, UIImage?) -> Void)?) {
+        self._isViewPresented = isViewPresented
+        self.viewModel = SubImageViewModel(data: data)
+        self.completion = completion
+    }
 
     var body: some View {
         ScrollView(scrollViewEnabled ? .vertical : []) {
@@ -41,7 +49,8 @@ struct SubImageView: View {
 
     private var previewSection: some View {
         HStack(alignment: .top) {
-            SubImagePreviewView(viewSize: previewViewSize).environmentObject(creationData)
+            SubImagePreviewView(viewModel: viewModel,
+                                viewSize: previewViewSize)
         }
     }
 
@@ -49,7 +58,7 @@ struct SubImageView: View {
         HStack {
             Spacer()
             Button(action: {
-                creationData.reset()
+                viewModel.data.reset()
             }, label: {
                 Text("Reset").buttonTextModifier(size: 16)
             })
@@ -59,38 +68,52 @@ struct SubImageView: View {
     private var offsetLabelSection: some View {
         HStack {
             Text("OffsetX: ").font(.footnote)
-            Text("\(creationData.offsetX)").font(.footnote)
+            Text("\(viewModel.data.offsetX)").font(.footnote)
             Spacer().frame(width: 24)
             Text("OffsetY: ").font(.footnote)
-            Text("\(creationData.offsetY)").font(.footnote)
+            Text("\(viewModel.data.offsetY)").font(.footnote)
         }
     }
 
     private var offsetSlidersSection: some View {
         VStack(spacing: spacing) {
-            TwoRowsSliderView(title: "OffsetX", value: $creationData.offsetX, style: sliderStyle, range: -256 ... 256)
-            TwoRowsSliderView(title: "OffsetY", value: $creationData.offsetY, style: sliderStyle, range: -256 ... 256)
+            TwoRowsSliderView(title: "OffsetX", 
+                              value: $viewModel.data.offsetX,
+                              style: sliderStyle, range: -256 ... 256)
+            TwoRowsSliderView(title: "OffsetY", 
+                              value: $viewModel.data.offsetY,
+                              style: sliderStyle, range: -256 ... 256)
         }
     }
 
     private var colorSlidersSection: some View {
         VStack(spacing: spacing) {
-            TwoRowsSliderView(title: "Red", value: $creationData.red, style: creationData.redStyle)
-            TwoRowsSliderView(title: "Green", value: $creationData.green, style: creationData.greenStyle)
-            TwoRowsSliderView(title: "Blue", value: $creationData.blue, style: creationData.blueStyle)
+            TwoRowsSliderView(title: "Red", 
+                              value: $viewModel.data.red,
+                              style: viewModel.data.redStyle)
+            TwoRowsSliderView(title: "Green",
+                              value: $viewModel.data.green,
+                              style: viewModel.data.greenStyle)
+            TwoRowsSliderView(title: "Blue",
+                              value: $viewModel.data.blue,
+                              style: viewModel.data.blueStyle)
         }
     }
 
     private var dotSlidersSection: some View {
         VStack(spacing: spacing) {
-            TwoRowsSliderView(title: "Size", value: $creationData.diameter, style: sliderStyle, range: 1 ... 256)
-            TwoRowsSliderView(title: "Spacing", value: $creationData.spacing, style: sliderStyle, range: 0 ... 250)
+            TwoRowsSliderView(title: "Size", 
+                              value: $viewModel.data.diameter,
+                              style: sliderStyle, range: 1 ... 256)
+            TwoRowsSliderView(title: "Spacing", 
+                              value: $viewModel.data.spacing,
+                              style: sliderStyle, range: 0 ... 250)
         }
     }
 
     private var createImageButton: some View {
         Button(action: {
-            completion?()
+            completion?(viewModel.data, viewModel.dotImage)
             isViewPresented = false
         }, label: {
             ZStack {
@@ -109,10 +132,10 @@ struct SubImageView: View {
 struct SubImageView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
-
+        
         SubImageView(isViewPresented: $isViewPresented,
-                     creationData: SubImageModel()) {
-            print("Image creation completed")
+                     data: SubImageModel()) { _, _ in
+            print("result")
         }
     }
 }

@@ -15,34 +15,23 @@ struct DefaultDotValue {
 
 class SubImageModel: ObservableObject, Identifiable {
 
-    var id = UUID()
-    var title: String = ""
+    var id: UUID
+    var title: String
 
-    @Published var alpha: Int = 255
-    @Published var isVisible: Bool = true
+    var alpha: Int
+    var isVisible: Bool
 
-    @Published var red: Int = 0
-    @Published var green: Int = 0
-    @Published var blue: Int = 0
+    var red: Int
+    var green: Int
+    var blue: Int
 
-    @Published var diameter: Int = 0
-    @Published var spacing: Int = 0
+    var diameter: Int
+    var spacing: Int
 
-    @Published var offsetX: Int = 0
-    @Published var offsetY: Int = 0
+    var offsetX: Int
+    var offsetY: Int
 
     let imageSize: CGSize = CGSize(width: 1000, height: 1000)
-
-    var dotImage: UIImage {
-        UIImage.dotImage(with: imageSize,
-                         dotSize: CGFloat(diameter),
-                         spacing: CGFloat(spacing),
-                         offset: CGPoint(x: offsetX, y: offsetY),
-                         color: UIColor(red: CGFloat(red) / 255.0,
-                                        green: CGFloat(green) / 255.0,
-                                        blue: CGFloat(blue) / 255.0,
-                                        alpha: CGFloat(alpha) / 255.0 ))
-    }
 
     init(title: String? = nil,
          red: Int = 0,
@@ -53,7 +42,12 @@ class SubImageModel: ObservableObject, Identifiable {
          offsetX: Int = 0,
          offsetY: Int = 0) {
 
+        self.id = UUID()
+
         self.title = title ?? ""
+
+        self.alpha = 255
+        self.isVisible = true
 
         self.red = max(0, min(255, red))
         self.green = max(0, min(255, green))
@@ -64,19 +58,23 @@ class SubImageModel: ObservableObject, Identifiable {
 
         self.offsetX = offsetX
         self.offsetY = offsetY
-
-        reset()
     }
     func apply(_ data: SubImageData) {
-        red = data.red
-        green = data.green
-        blue = data.blue
 
-        diameter = data.diameter
-        spacing = data.spacing
+        self.id = UUID()
 
-        offsetX = data.offsetX
-        offsetY = data.offsetY
+        self.alpha = 255
+        self.isVisible = true
+
+        self.red = data.red
+        self.green = data.green
+        self.blue = data.blue
+
+        self.diameter = data.diameter
+        self.spacing = data.spacing
+
+        self.offsetX = data.offsetX
+        self.offsetY = data.offsetY
     }
     func setAlphaValue(value: Int) {
         alpha = value
