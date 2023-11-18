@@ -14,7 +14,6 @@ struct DottedCanvasSubLayerList: View {
 
     private let style = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
     private let range = 0 ... 255
-    private let buttonDiameter: CGFloat = 16
 
     private let sliderStyle = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
 

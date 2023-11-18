@@ -111,18 +111,4 @@ struct DottedCanvasSubLayerModel: Identifiable, Hashable {
         self.offsetX = offsetX
         self.offsetY = offsetY
     }
-
-    func createDotImage(size: CGSize) -> UIImage {
-        let color = UIColor(red: CGFloat(red) / 255.0,
-                            green: CGFloat(green) / 255.0,
-                            blue: CGFloat(blue) / 255.0,
-                            alpha: 1.0)
-
-        return UIImage.dotImage(with: size,
-                                dotSize: CGFloat(diameter),
-                                spacing: CGFloat(spacing),
-                                offset: CGPoint(x: CGFloat(offsetX),
-                                                y: CGFloat(offsetY)),
-                                color: color)
-    }
 }

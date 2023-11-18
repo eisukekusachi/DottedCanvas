@@ -11,10 +11,6 @@ struct DottedCanvasView: View {
     @ObservedObject var dottedCanvasViewModel: DottedCanvasViewModel
     @ObservedObject var projectListViewModel: ProjectListViewModel
 
-    private let previewImageDiamter: CGFloat
-
-    let defaultImageSize: CGSize = CGSize(width: 1000, height: 1000)
-
     @State var isSubImageViewPresented: Bool = false
     @State var isVisibleLoadingView: Bool = false
     @State var isVisibleSnackbar: Bool = false
@@ -32,8 +28,6 @@ struct DottedCanvasView: View {
 
         self.dottedCanvasViewModel = dottedCanvasViewModel
         self.projectListViewModel = projectListViewModel
-
-        previewImageDiamter = min(UIScreen.main.bounds.size.width * 0.8, 500)
     }
     var body: some View {
         ZStack {
@@ -65,7 +59,7 @@ struct DottedCanvasView: View {
                     .frame(height: 12)
 
                 DottedCanvasPreviewView(image: $dottedCanvasViewModel.mergedSubLayerImage,
-                                        diameter: previewImageDiamter)
+                                        diameter: min(UIScreen.main.bounds.size.width * 0.8, 500))
 
                 if dottedCanvasViewModel.subLayers.isEmpty {
                     Spacer()
@@ -185,7 +179,6 @@ struct DottedCanvasView: View {
     }
     private func loadProject(zipFileURL: URL) {
         do {
-            let tmpFolderURL = URL.documents.appendingPathComponent(Output.tmpFolder)
             let projectData = try dottedCanvasViewModel.loadData(fromZipFileURL: zipFileURL)
 
             dottedCanvasViewModel.update(projectData)
