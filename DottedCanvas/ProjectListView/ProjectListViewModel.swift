@@ -34,7 +34,6 @@ class ProjectListViewModel: ObservableObject {
     }
 
     func loadData(fromZipFileURL zipFileURL: URL) throws -> ProjectListModel {
-
         let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
 
         // Clean up the temporary folder when done
@@ -47,7 +46,7 @@ class ProjectListViewModel: ObservableObject {
         try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
 
         let jsonUrl = uniqueFolderURL.appendingPathComponent(Output.jsonFileName)
-        if let data: ProjectCodableData = Input.loadJson(url: jsonUrl) {
+        if let data: DottedCanvasModelCodable = Input.loadJson(url: jsonUrl) {
             return ProjectListModel(
                 projectName: zipFileURL.fileName!,
                 folderURL: uniqueFolderURL,
@@ -59,8 +58,7 @@ class ProjectListViewModel: ObservableObject {
         }
     }
 
-    func saveData(projectData: ProjectData, zipFileURL: URL) throws {
-
+    func saveData(projectData: DottedCanvasModel, zipFileURL: URL) throws {
         let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
 
         // Clean up the temporary folder when done
@@ -72,9 +70,9 @@ class ProjectListViewModel: ObservableObject {
 
 
         // Create codable data
-        let codableData = ProjectCodableData(
-            subImageCodableDataArray: projectData.subImageLayers.map { SubImageCodableData(data: $0) },
-            selectedIndex: projectData.subImageLayerIndex
+        let codableData = DottedCanvasModelCodable(
+            subLayerDataCoableArray: projectData.subLayers.map { DottedCanvasSubLayerModelCodable(data: $0) },
+            selectedIndex: projectData.subLayerIndex
         )
 
         do {
@@ -101,10 +99,10 @@ class ProjectListViewModel: ObservableObject {
         }
 
         // Write subImage
-        for i in 0..<projectData.subImageLayers.count {
+        for i in 0..<projectData.subLayers.count {
             do {
-                let imageURL = uniqueFolderURL.appendingPathComponent(projectData.subImageLayers[i].imagePath)
-                try projectData.subImageLayers[i].image?.pngData()?.write(to: imageURL)
+                let imageURL = uniqueFolderURL.appendingPathComponent(projectData.subLayers[i].imagePath)
+                try projectData.subLayers[i].image?.pngData()?.write(to: imageURL)
             } catch {
                 throw error
             }

@@ -8,50 +8,43 @@
 import SwiftUI
 
 struct DottedCanvasView: View {
-
-    @ObservedObject var mainImageLayerViewModel: MainImageLayerViewModel
+    @ObservedObject var dottedCanvasViewModel: DottedCanvasViewModel
     @ObservedObject var projectListViewModel: ProjectListViewModel
 
-    private let previewImageDiamter: CGFloat
-
-    let defaultImageSize: CGSize = CGSize(width: 1000, height: 1000)
-
-    @State var isCreationViewPresented: Bool = false
+    @State var isSubImageViewPresented: Bool = false
     @State var isVisibleLoadingView: Bool = false
     @State var isVisibleSnackbar: Bool = false
     @State var isZippingCompleted: Bool = false
     @State var isNewImageAlertPresented: Bool = false
     @State var isDocumentsFolderViewPresented: Bool = false
 
-    @State var selectedSubImageData = SubImageModel()
+    @State var selectedSubImage = SubImageModel()
     @State var selectedSubImageAlpha: Int = 255
 
     @State var message: String = ""
 
-    init(mainImageLayerViewModel: MainImageLayerViewModel,
+    init(dottedCanvasViewModel: DottedCanvasViewModel,
          projectListViewModel: ProjectListViewModel) {
 
-        self.mainImageLayerViewModel = mainImageLayerViewModel
+        self.dottedCanvasViewModel = dottedCanvasViewModel
         self.projectListViewModel = projectListViewModel
-
-        previewImageDiamter = min(UIScreen.main.bounds.size.width * 0.8, 500)
     }
     var body: some View {
         ZStack {
             VStack {
-                Toolbar(
-                    mainImageLayerViewModel: mainImageLayerViewModel,
+                DottedCanvasToolbarView(
+                    dottedCanvasViewModel: dottedCanvasViewModel,
                     projectListViewModel: projectListViewModel,
-                    addSubImageData: {
-                        isCreationViewPresented = true
-                        updateSubImageCreationData()
+                    addSubLayer: {
+                        isSubImageViewPresented = true
+                        updateSubLayer()
                     },
-                    removeSubImageData: {
-                        mainImageLayerViewModel.removeSelectedSubLayer()
-                        updateSubImageCreationData()
+                    removeSubLayer: {
+                        dottedCanvasViewModel.removeSelectedSubLayer()
+                        updateSubLayer()
                     },
                     saveProject: {
-                        let zipFileName = mainImageLayerViewModel.projectName + "." + "\(Output.zipSuffix)"
+                        let zipFileName = dottedCanvasViewModel.projectName + "." + "\(Output.zipSuffix)"
                         saveProject(zipFileURL: URL.documents.appendingPathComponent(zipFileName))
                     },
                     loadProject: {
@@ -65,20 +58,20 @@ struct DottedCanvasView: View {
                 Spacer()
                     .frame(height: 12)
 
-                MainImagePreviewView(mainImage: $mainImageLayerViewModel.mergedSubLayers,
-                                     diameter: previewImageDiamter)
+                DottedCanvasPreviewView(image: $dottedCanvasViewModel.mergedSubLayerImage,
+                                        diameter: min(UIScreen.main.bounds.size.width * 0.8, 500))
 
-                if mainImageLayerViewModel.subLayers.isEmpty {
+                if dottedCanvasViewModel.subLayers.isEmpty {
                     Spacer()
                     Text("Tap the + button to create a new image.")
                     Spacer()
 
                 } else {
-                    SubImageListView(
-                        mainImageLayerViewModel: mainImageLayerViewModel,
+                    DottedCanvasSubLayerList(
+                        viewModel: dottedCanvasViewModel,
                         selectedSubImageAlpha: $selectedSubImageAlpha,
-                        didSelectItem: { _ in
-                            updateSubImageCreationData()
+                        didSelectLayer: { _ in
+                            updateSubLayer()
                     })
                 }
             }
@@ -98,9 +91,9 @@ struct DottedCanvasView: View {
                          comment: isZippingCompleted ? "Success" : "Error")
             }
         }
-        .sheet(isPresented: $isCreationViewPresented) {
-            SubImageView(isViewPresented: $isCreationViewPresented,
-                         data: selectedSubImageData) { data, image in
+        .sheet(isPresented: $isSubImageViewPresented) {
+            SubImageView(isViewPresented: $isSubImageViewPresented,
+                         data: selectedSubImage) { data, image in
 
                 updateMainImage(newSubImageData: data,
                                 dotImage: image)
@@ -126,8 +119,8 @@ struct DottedCanvasView: View {
                            "Are you sure you want to continue?"
                             ].joined()
             let action = {
-                mainImageLayerViewModel.reset()
-                selectedSubImageData = SubImageModel()
+                dottedCanvasViewModel.reset()
+                selectedSubImage = SubImageModel()
             }
 
             return Alert(title: Text(title),
@@ -140,20 +133,21 @@ struct DottedCanvasView: View {
 
     private func updateMainImage(newSubImageData: SubImageModel,
                                  dotImage: UIImage?) {
-        let newData = SubImageData(title: TimeStampFormatter.current(template: "MMM dd HH mm ss"),
-                                   image: dotImage,
-                                   data: newSubImageData)
+        let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
+        let newData = DottedCanvasSubLayerModel(title: title,
+                                                image: dotImage,
+                                                data: newSubImageData)
 
-        mainImageLayerViewModel.addSubLayer(newData)
+        dottedCanvasViewModel.addSubLayer(newData)
     }
-    private func updateSubImageCreationData() {
-        if let subImageData = mainImageLayerViewModel.selectedSubImageData {
-            selectedSubImageData = SubImageModel(subImageData)
+    private func updateSubLayer() {
+        if let subLayerData = dottedCanvasViewModel.selectedSubLayer {
+            selectedSubImage = SubImageModel(layerData: subLayerData)
         }
     }
 
     private func saveProject(zipFileURL: URL) {
-        guard let projectData = mainImageLayerViewModel.projectData else { return }
+        guard let data = dottedCanvasViewModel.dottedCanvasData else { return }
         Task {
             do {
                 let startDate = Date()
@@ -164,11 +158,11 @@ struct DottedCanvasView: View {
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
-                try projectListViewModel.saveData(projectData: projectData,
+                try projectListViewModel.saveData(projectData: data,
                                                   zipFileURL: zipFileURL)
 
                 projectListViewModel.upsertData(projectName: projectName,
-                                                newThumbnail: projectData.mainImageThumbnail)
+                                                newThumbnail: data.mainImageThumbnail)
 
                 let sleep: CGFloat = 1.0 - Date().timeIntervalSince(startDate)
                 if sleep > 0.0 {
@@ -185,14 +179,13 @@ struct DottedCanvasView: View {
     }
     private func loadProject(zipFileURL: URL) {
         do {
-            let tmpFolderURL = URL.documents.appendingPathComponent(Output.tmpFolder)
-            let projectData = try mainImageLayerViewModel.loadData(fromZipFileURL: zipFileURL)
+            let projectData = try dottedCanvasViewModel.loadData(fromZipFileURL: zipFileURL)
 
-            mainImageLayerViewModel.update(projectData)
-            selectedSubImageAlpha = mainImageLayerViewModel.selectedSubImageData?.alpha ?? 255
+            dottedCanvasViewModel.update(projectData)
+            selectedSubImageAlpha = dottedCanvasViewModel.selectedSubLayer?.alpha ?? 255
 
             if let fileName = zipFileURL.fileName {
-                mainImageLayerViewModel.projectName = fileName
+                dottedCanvasViewModel.projectName = fileName
             }
 
         } catch {
@@ -207,13 +200,13 @@ struct DottedCanvasView: View {
 
 struct DottedCanvasView_Previews: PreviewProvider {
     static var previews: some View {
-        @StateObject var viewModel = MainImageLayerViewModel(
+        @StateObject var dottedCanvasViewModel = DottedCanvasViewModel(
             initialSubLayers: [.init(title: "Title 0", alpha: 125),
                                .init(title: "Title 1", alpha: 225, isVisible: false),
                                .init(title: "Title 2", alpha: 25)
             ])
 
-        DottedCanvasView(mainImageLayerViewModel: viewModel,
+        DottedCanvasView(dottedCanvasViewModel: dottedCanvasViewModel,
                          projectListViewModel: ProjectListViewModel())
     }
 }

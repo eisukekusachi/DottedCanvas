@@ -1,5 +1,5 @@
 //
-//  Toolbar.swift
+//  DottedCanvasToolbarView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct Toolbar: View {
-    @ObservedObject var mainImageLayerViewModel: MainImageLayerViewModel
+struct DottedCanvasToolbarView: View {
+    @ObservedObject var dottedCanvasViewModel: DottedCanvasViewModel
     @ObservedObject var projectListViewModel: ProjectListViewModel
 
-    var addSubImageData: () -> Void
-    var removeSubImageData: () -> Void
+    var addSubLayer: () -> Void
+    var removeSubLayer: () -> Void
     var saveProject: () -> Void
     var loadProject: () -> Void
     var newProject: () -> Void
@@ -21,10 +21,9 @@ struct Toolbar: View {
 
     var body: some View {
         HStack(spacing: 24) {
-
             Button(
                 action: {
-                    addSubImageData()
+                    addSubLayer()
             },
                    label: {
                        Image(systemName: "plus.circle")
@@ -33,13 +32,13 @@ struct Toolbar: View {
 
             Button(
                 action: {
-                    removeSubImageData()
+                    removeSubLayer()
             },
                 label: {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: mainImageLayerViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -52,7 +51,7 @@ struct Toolbar: View {
                     Image(systemName: "square.and.arrow.up")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: mainImageLayerViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
 
             Button(
                 action: {
@@ -75,20 +74,20 @@ struct Toolbar: View {
                     Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: mainImageLayerViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
         }
     }
 }
 
-struct Toolbar_Previews: PreviewProvider {
+struct DottedCanvasToolbarView_Previews: PreviewProvider {
     static var previews: some View {
-        Toolbar(
-            mainImageLayerViewModel: MainImageLayerViewModel(),
+        DottedCanvasToolbarView(
+            dottedCanvasViewModel: DottedCanvasViewModel(),
             projectListViewModel: ProjectListViewModel(),
-            addSubImageData: {
+            addSubLayer: {
                 print("add")
             },
-            removeSubImageData: {
+            removeSubLayer: {
                 print("remove")
             },
             saveProject: {
