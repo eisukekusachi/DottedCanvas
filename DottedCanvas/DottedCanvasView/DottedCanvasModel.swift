@@ -8,10 +8,10 @@
 import UIKit
 
 struct DottedCanvasModel {
-    var mainImageThumbnail: UIImage?
-    var subLayers: [DottedCanvasSubLayerModel]
-    var subLayerIndex: Int
-    var latestUpdateDate: Date
+    let mainImageThumbnail: UIImage?
+    let subLayers: [DottedCanvasSubLayerModel]
+    let subLayerIndex: Int
+    let latestUpdateDate: Date
 
     init(codableData: DottedCanvasModelCodable, folderURL: URL) {
         self.mainImageThumbnail = nil
