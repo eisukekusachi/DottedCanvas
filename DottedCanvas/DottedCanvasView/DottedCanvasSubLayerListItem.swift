@@ -1,5 +1,5 @@
 //
-//  SubImageItem.swift
+//  DottedCanvasSubLayerListItem.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct SubImageItem: View {
+struct DottedCanvasSubLayerListItem: View {
     @Environment(\.colorScheme) var colorScheme
 
-    var imageItem: SubImageData
+    var subLayer: DottedCanvasSubLayerModel
     var selected: Bool
     let didTapVisibleButton: ((Bool) -> Void)
 
@@ -23,23 +23,23 @@ struct SubImageItem: View {
                 Spacer()
                     .frame(width: 8)
 
-                Text(imageItem.title)
+                Text(subLayer.title)
                     .font(.headline)
                     .foregroundColor(Color(textColor))
 
                 Spacer()
 
-                Text("Alpha: \(imageItem.alpha)")
+                Text("Alpha: \(subLayer.alpha)")
                     .font(.subheadline)
                     .foregroundColor(Color(textColor))
 
                 Spacer()
 
-                Image(systemName: imageItem.isVisible ? "eye" : "eye.slash.fill")
+                Image(systemName: subLayer.isVisible ? "eye" : "eye.slash.fill")
                     .frame(width: 32, height: 32)
                     .foregroundColor(iconColor)
                     .onTapGesture {
-                        didTapVisibleButton(!imageItem.isVisible)
+                        didTapVisibleButton(!subLayer.isVisible)
                     }
 
                 Spacer()
@@ -50,7 +50,7 @@ struct SubImageItem: View {
 }
 
 // Colors
-extension SubImageItem {
+extension DottedCanvasSubLayerListItem {
     private var backgroundColor: UIColor {
         if !selected {
             return .clear
@@ -68,13 +68,13 @@ extension SubImageItem {
     private var iconColor: Color {
         if !selected {
             if colorScheme == .light {
-                if imageItem.isVisible {
+                if subLayer.isVisible {
                     return Color(uiColor: .black)
                 } else {
                     return Color(uiColor: .darkGray)
                 }
             } else {
-                if imageItem.isVisible {
+                if subLayer.isVisible {
                     return Color(uiColor: .white)
                 } else {
                     return Color(uiColor: .lightGray)
@@ -82,13 +82,13 @@ extension SubImageItem {
             }
         } else {
             if colorScheme == .light {
-                if imageItem.isVisible {
+                if subLayer.isVisible {
                     return Color(uiColor: .white)
                 } else {
                     return Color(uiColor: .lightGray)
                 }
             } else {
-                if imageItem.isVisible {
+                if subLayer.isVisible {
                     return Color(uiColor: .black)
                 } else {
                     return Color(uiColor: .darkGray)
@@ -98,17 +98,16 @@ extension SubImageItem {
     }
 }
 
-struct SubImageItem_Previews: PreviewProvider {
+struct DottedCanvasSubLayerListItem_Previews: PreviewProvider {
     static var previews: some View {
-
-        SubImageItem(
-            imageItem: .init(title: "Test0"),
+        DottedCanvasSubLayerListItem(
+            subLayer: .init(title: "Test0"),
             selected: true,
             didTapVisibleButton: { _ in
                 print("Code button actions")
         })
-        SubImageItem(
-            imageItem: .init(title: "Test1"),
+        DottedCanvasSubLayerListItem(
+            subLayer: .init(title: "Test1"),
             selected: false,
             didTapVisibleButton: { _ in
                 print("Code button actions")

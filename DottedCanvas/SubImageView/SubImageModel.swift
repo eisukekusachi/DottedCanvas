@@ -53,22 +53,22 @@ struct SubImageModel {
         self.offsetY = offsetY
     }
 
-    init(_ data: SubImageData,
+    init(layerData: DottedCanvasSubLayerModel,
          alpha: Int = 255,
          isVisible: Bool = true) {
 
         self.alpha = alpha
         self.isVisible = isVisible
 
-        self.red = data.red
-        self.green = data.green
-        self.blue = data.blue
+        self.red = layerData.red
+        self.green = layerData.green
+        self.blue = layerData.blue
 
-        self.diameter = data.diameter
-        self.spacing = data.spacing
+        self.diameter = layerData.diameter
+        self.spacing = layerData.spacing
 
-        self.offsetX = data.offsetX
-        self.offsetY = data.offsetY
+        self.offsetX = layerData.offsetX
+        self.offsetY = layerData.offsetY
     }
 }
 

@@ -11,19 +11,19 @@
 		D423B5282AB6CEFA0014BDD6 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = D423B5272AB6CEF90014BDD6 /* ZipArchive */; };
 		D42988122AB76060003AD47E /* ProjectListViewModelUpsertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42988112AB7605F003AD47E /* ProjectListViewModelUpsertTests.swift */; };
 		D48D97E82B0782F40017B7B2 /* SubImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48D97E72B0782F40017B7B2 /* SubImageViewModel.swift */; };
-		D4A5A4D42AB32977006B1D2A /* MainImageLayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */; };
+		D4A5A4D42AB32977006B1D2A /* DottedCanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A5A4D32AB32977006B1D2A /* DottedCanvasViewModel.swift */; };
 		D4A91A062A9CBD3600CE13A0 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A91A052A9CBD3600CE13A0 /* Input.swift */; };
 		D4B0C3902AA2CEF80005CF50 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C38F2AA2CEF80005CF50 /* ProjectListView.swift */; };
 		D4B0C3982AA2D5CE0005CF50 /* ProjectListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C3972AA2D5CE0005CF50 /* ProjectListModel.swift */; };
 		D4B0C39A2AA2D6540005CF50 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B0C3992AA2D6540005CF50 /* ProjectListViewModel.swift */; };
 		D4B498712AA49B82002133E4 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B498702AA49B82002133E4 /* ViewModifiers.swift */; };
-		D4BDAC802A99DC9400A765CA /* SubImageCodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */; };
-		D4BDAC822A99DF1200A765CA /* ProjectCodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC812A99DF1200A765CA /* ProjectCodableData.swift */; };
+		D4BDAC802A99DC9400A765CA /* DottedCanvasSubLayerModelCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC7F2A99DC9400A765CA /* DottedCanvasSubLayerModelCodable.swift */; };
+		D4BDAC822A99DF1200A765CA /* DottedCanvasModelCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC812A99DF1200A765CA /* DottedCanvasModelCodable.swift */; };
 		D4BDAC852A99E27900A765CA /* Output.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC842A99E27900A765CA /* Output.swift */; };
 		D4BDAC872A99E39700A765CA /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC862A99E39700A765CA /* FileManagerExtensions.swift */; };
 		D4BDAC892A99E4FA00A765CA /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC882A99E4FA00A765CA /* URLExtensions.swift */; };
 		D4BDAC8B2A99E7B200A765CA /* CalendarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAC8A2A99E7B200A765CA /* CalendarExtensions.swift */; };
-		D4BDAE5B2A9A04A100A765CA /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAE5A2A9A04A100A765CA /* ProjectData.swift */; };
+		D4BDAE5B2A9A04A100A765CA /* DottedCanvasModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BDAE5A2A9A04A100A765CA /* DottedCanvasModel.swift */; };
 		D4BDAE5E2A9A165600A765CA /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = D4BDAE5D2A9A165600A765CA /* ZipArchive */; };
 		D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */; };
 		D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60C32A97AC9F009FCEE3 /* ContentView.swift */; };
@@ -38,12 +38,12 @@
 		D4CF60F92A97B121009FCEE3 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60F52A97B121009FCEE3 /* UIImageExtensions.swift */; };
 		D4CF60FC2A97B12E009FCEE3 /* IntSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60FA2A97B12D009FCEE3 /* IntSlider.swift */; };
 		D4CF60FD2A97B12E009FCEE3 /* SliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60FB2A97B12D009FCEE3 /* SliderStyle.swift */; };
-		D4CF60FF2A97B13D009FCEE3 /* SubImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60FE2A97B13D009FCEE3 /* SubImageData.swift */; };
+		D4CF60FF2A97B13D009FCEE3 /* DottedCanvasSubLayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF60FE2A97B13D009FCEE3 /* DottedCanvasSubLayerModel.swift */; };
 		D4CF61012A97B14A009FCEE3 /* TimeStampFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61002A97B149009FCEE3 /* TimeStampFormatter.swift */; };
-		D4CF61062A97B158009FCEE3 /* MainImagePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61022A97B157009FCEE3 /* MainImagePreviewView.swift */; };
-		D4CF61072A97B158009FCEE3 /* SubImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61032A97B157009FCEE3 /* SubImageItem.swift */; };
-		D4CF61082A97B158009FCEE3 /* SubImageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61042A97B158009FCEE3 /* SubImageListView.swift */; };
-		D4CF61092A97B158009FCEE3 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61052A97B158009FCEE3 /* Toolbar.swift */; };
+		D4CF61062A97B158009FCEE3 /* DottedCanvasPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61022A97B157009FCEE3 /* DottedCanvasPreviewView.swift */; };
+		D4CF61072A97B158009FCEE3 /* DottedCanvasSubLayerListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61032A97B157009FCEE3 /* DottedCanvasSubLayerListItem.swift */; };
+		D4CF61082A97B158009FCEE3 /* DottedCanvasSubLayerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61042A97B158009FCEE3 /* DottedCanvasSubLayerList.swift */; };
+		D4CF61092A97B158009FCEE3 /* DottedCanvasToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61052A97B158009FCEE3 /* DottedCanvasToolbarView.swift */; };
 		D4CF610D2A97B1C7009FCEE3 /* ColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4CF610C2A97B1C7009FCEE3 /* ColorAssets.xcassets */; };
 		D4CF610F2A97B1FE009FCEE3 /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF610E2A97B1FE009FCEE3 /* GlobalData.swift */; };
 		D4CF61112A97B205009FCEE3 /* DottedCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */; };
@@ -75,19 +75,19 @@
 		D41DF72F2A98C0E10063202F /* Snackbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snackbar.swift; sourceTree = "<group>"; };
 		D42988112AB7605F003AD47E /* ProjectListViewModelUpsertTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelUpsertTests.swift; sourceTree = "<group>"; };
 		D48D97E72B0782F40017B7B2 /* SubImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageViewModel.swift; sourceTree = "<group>"; };
-		D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageLayerViewModel.swift; sourceTree = "<group>"; };
+		D4A5A4D32AB32977006B1D2A /* DottedCanvasViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasViewModel.swift; sourceTree = "<group>"; };
 		D4A91A052A9CBD3600CE13A0 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		D4B0C38F2AA2CEF80005CF50 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D4B0C3972AA2D5CE0005CF50 /* ProjectListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListModel.swift; sourceTree = "<group>"; };
 		D4B0C3992AA2D6540005CF50 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		D4B498702AA49B82002133E4 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
-		D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubImageCodableData.swift; sourceTree = "<group>"; };
-		D4BDAC812A99DF1200A765CA /* ProjectCodableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCodableData.swift; sourceTree = "<group>"; };
+		D4BDAC7F2A99DC9400A765CA /* DottedCanvasSubLayerModelCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasSubLayerModelCodable.swift; sourceTree = "<group>"; };
+		D4BDAC812A99DF1200A765CA /* DottedCanvasModelCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasModelCodable.swift; sourceTree = "<group>"; };
 		D4BDAC842A99E27900A765CA /* Output.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Output.swift; sourceTree = "<group>"; };
 		D4BDAC862A99E39700A765CA /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
 		D4BDAC882A99E4FA00A765CA /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		D4BDAC8A2A99E7B200A765CA /* CalendarExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExtensions.swift; sourceTree = "<group>"; };
-		D4BDAE5A2A9A04A100A765CA /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
+		D4BDAE5A2A9A04A100A765CA /* DottedCanvasModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasModel.swift; sourceTree = "<group>"; };
 		D4BDAE5F2A9A172500A765CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D4CF60BE2A97AC9F009FCEE3 /* DottedCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DottedCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DottedCanvasApp.swift; sourceTree = "<group>"; };
@@ -105,12 +105,12 @@
 		D4CF60F52A97B121009FCEE3 /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		D4CF60FA2A97B12D009FCEE3 /* IntSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntSlider.swift; sourceTree = "<group>"; };
 		D4CF60FB2A97B12D009FCEE3 /* SliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderStyle.swift; sourceTree = "<group>"; };
-		D4CF60FE2A97B13D009FCEE3 /* SubImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubImageData.swift; sourceTree = "<group>"; };
+		D4CF60FE2A97B13D009FCEE3 /* DottedCanvasSubLayerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasSubLayerModel.swift; sourceTree = "<group>"; };
 		D4CF61002A97B149009FCEE3 /* TimeStampFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStampFormatter.swift; sourceTree = "<group>"; };
-		D4CF61022A97B157009FCEE3 /* MainImagePreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImagePreviewView.swift; sourceTree = "<group>"; };
-		D4CF61032A97B157009FCEE3 /* SubImageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubImageItem.swift; sourceTree = "<group>"; };
-		D4CF61042A97B158009FCEE3 /* SubImageListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubImageListView.swift; sourceTree = "<group>"; };
-		D4CF61052A97B158009FCEE3 /* Toolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
+		D4CF61022A97B157009FCEE3 /* DottedCanvasPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasPreviewView.swift; sourceTree = "<group>"; };
+		D4CF61032A97B157009FCEE3 /* DottedCanvasSubLayerListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasSubLayerListItem.swift; sourceTree = "<group>"; };
+		D4CF61042A97B158009FCEE3 /* DottedCanvasSubLayerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasSubLayerList.swift; sourceTree = "<group>"; };
+		D4CF61052A97B158009FCEE3 /* DottedCanvasToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasToolbarView.swift; sourceTree = "<group>"; };
 		D4CF610C2A97B1C7009FCEE3 /* ColorAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ColorAssets.xcassets; sourceTree = "<group>"; };
 		D4CF610E2A97B1FE009FCEE3 /* GlobalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
 		D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DottedCanvasView.swift; sourceTree = "<group>"; };
@@ -166,6 +166,23 @@
 			path = SubImageView;
 			sourceTree = "<group>";
 		};
+		D48D97E92B07967C0017B7B2 /* DottedCanvasView */ = {
+			isa = PBXGroup;
+			children = (
+				D4BDAE5A2A9A04A100A765CA /* DottedCanvasModel.swift */,
+				D4BDAC812A99DF1200A765CA /* DottedCanvasModelCodable.swift */,
+				D4CF61022A97B157009FCEE3 /* DottedCanvasPreviewView.swift */,
+				D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */,
+				D4A5A4D32AB32977006B1D2A /* DottedCanvasViewModel.swift */,
+				D4CF60FE2A97B13D009FCEE3 /* DottedCanvasSubLayerModel.swift */,
+				D4BDAC7F2A99DC9400A765CA /* DottedCanvasSubLayerModelCodable.swift */,
+				D4CF61042A97B158009FCEE3 /* DottedCanvasSubLayerList.swift */,
+				D4CF61032A97B157009FCEE3 /* DottedCanvasSubLayerListItem.swift */,
+				D4CF61052A97B158009FCEE3 /* DottedCanvasToolbarView.swift */,
+			);
+			path = DottedCanvasView;
+			sourceTree = "<group>";
+		};
 		D4B4986F2AA49B62002133E4 /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,18 +236,15 @@
 			children = (
 				D4BDAE5F2A9A172500A765CA /* Info.plist */,
 				D4CF60ED2A97B0DA009FCEE3 /* Components */,
-				D4CF60EE2A97B0E5009FCEE3 /* Data */,
 				D4CF60EC2A97AE1C009FCEE3 /* Extensions */,
 				D4BDAC832A99E26F00A765CA /* IO */,
+				D48D97E92B07967C0017B7B2 /* DottedCanvasView */,
 				D4BB410B2B00722F004DABB4 /* ProjectListView */,
 				D48D97E42B077FF20017B7B2 /* SubImageView */,
 				D4CF60EF2A97B0EE009FCEE3 /* Utils */,
-				D4CF60F02A97B0F7009FCEE3 /* View */,
-				D4CF60F12A97B0FF009FCEE3 /* ViewModel */,
 				D4B4986F2AA49B62002133E4 /* ViewModifiers */,
 				D4CF60C32A97AC9F009FCEE3 /* ContentView.swift */,
 				D4CF60C12A97AC9F009FCEE3 /* DottedCanvasApp.swift */,
-				D4CF61102A97B205009FCEE3 /* DottedCanvasView.swift */,
 				D4CF610E2A97B1FE009FCEE3 /* GlobalData.swift */,
 				D4CF60C52A97ACA1009FCEE3 /* Assets.xcassets */,
 				D4CF610C2A97B1C7009FCEE3 /* ColorAssets.xcassets */,
@@ -291,42 +305,12 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		D4CF60EE2A97B0E5009FCEE3 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				D4BDAE5A2A9A04A100A765CA /* ProjectData.swift */,
-				D4BDAC812A99DF1200A765CA /* ProjectCodableData.swift */,
-				D4CF60FE2A97B13D009FCEE3 /* SubImageData.swift */,
-				D4BDAC7F2A99DC9400A765CA /* SubImageCodableData.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		D4CF60EF2A97B0EE009FCEE3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				D4CF61002A97B149009FCEE3 /* TimeStampFormatter.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		D4CF60F02A97B0F7009FCEE3 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D4CF61022A97B157009FCEE3 /* MainImagePreviewView.swift */,
-				D4CF61032A97B157009FCEE3 /* SubImageItem.swift */,
-				D4CF61042A97B158009FCEE3 /* SubImageListView.swift */,
-				D4CF61052A97B158009FCEE3 /* Toolbar.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		D4CF60F12A97B0FF009FCEE3 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D4A5A4D32AB32977006B1D2A /* MainImageLayerViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -492,7 +476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4BDAC802A99DC9400A765CA /* SubImageCodableData.swift in Sources */,
+				D4BDAC802A99DC9400A765CA /* DottedCanvasSubLayerModelCodable.swift in Sources */,
 				D4BDAC872A99E39700A765CA /* FileManagerExtensions.swift in Sources */,
 				D4BDAC892A99E4FA00A765CA /* URLExtensions.swift in Sources */,
 				D4CF60FD2A97B12E009FCEE3 /* SliderStyle.swift in Sources */,
@@ -500,11 +484,11 @@
 				D4CF61132A97B524009FCEE3 /* TwoRowsSliderView.swift in Sources */,
 				D4CF611B2A98BD43009FCEE3 /* LoadingDialog.swift in Sources */,
 				D4B0C39A2AA2D6540005CF50 /* ProjectListViewModel.swift in Sources */,
-				D4A5A4D42AB32977006B1D2A /* MainImageLayerViewModel.swift in Sources */,
-				D4CF61072A97B158009FCEE3 /* SubImageItem.swift in Sources */,
+				D4A5A4D42AB32977006B1D2A /* DottedCanvasViewModel.swift in Sources */,
+				D4CF61072A97B158009FCEE3 /* DottedCanvasSubLayerListItem.swift in Sources */,
 				D4CF61172A97B5EF009FCEE3 /* SubImageView.swift in Sources */,
-				D4CF60FF2A97B13D009FCEE3 /* SubImageData.swift in Sources */,
-				D4BDAC822A99DF1200A765CA /* ProjectCodableData.swift in Sources */,
+				D4CF60FF2A97B13D009FCEE3 /* DottedCanvasSubLayerModel.swift in Sources */,
+				D4BDAC822A99DF1200A765CA /* DottedCanvasModelCodable.swift in Sources */,
 				D4CF60C42A97AC9F009FCEE3 /* ContentView.swift in Sources */,
 				D4B0C3982AA2D5CE0005CF50 /* ProjectListModel.swift in Sources */,
 				D48D97E82B0782F40017B7B2 /* SubImageViewModel.swift in Sources */,
@@ -513,17 +497,17 @@
 				D4CF60F62A97B121009FCEE3 /* TextExtensions.swift in Sources */,
 				D4BDAC852A99E27900A765CA /* Output.swift in Sources */,
 				D4CF610F2A97B1FE009FCEE3 /* GlobalData.swift in Sources */,
-				D4BDAE5B2A9A04A100A765CA /* ProjectData.swift in Sources */,
+				D4BDAE5B2A9A04A100A765CA /* DottedCanvasModel.swift in Sources */,
 				D4CF61112A97B205009FCEE3 /* DottedCanvasView.swift in Sources */,
-				D4CF61062A97B158009FCEE3 /* MainImagePreviewView.swift in Sources */,
+				D4CF61062A97B158009FCEE3 /* DottedCanvasPreviewView.swift in Sources */,
 				D4CF61152A97B54A009FCEE3 /* SubImageModel.swift in Sources */,
 				D4CF60C22A97AC9F009FCEE3 /* DottedCanvasApp.swift in Sources */,
 				D4A91A062A9CBD3600CE13A0 /* Input.swift in Sources */,
-				D4CF61092A97B158009FCEE3 /* Toolbar.swift in Sources */,
+				D4CF61092A97B158009FCEE3 /* DottedCanvasToolbarView.swift in Sources */,
 				D4CF60F92A97B121009FCEE3 /* UIImageExtensions.swift in Sources */,
 				D4CF60F72A97B121009FCEE3 /* ImageExtensions.swift in Sources */,
 				D4BDAC8B2A99E7B200A765CA /* CalendarExtensions.swift in Sources */,
-				D4CF61082A97B158009FCEE3 /* SubImageListView.swift in Sources */,
+				D4CF61082A97B158009FCEE3 /* DottedCanvasSubLayerList.swift in Sources */,
 				D4CF60FC2A97B12E009FCEE3 /* IntSlider.swift in Sources */,
 				D4B0C3902AA2CEF80005CF50 /* ProjectListView.swift in Sources */,
 				D4CF60F82A97B121009FCEE3 /* UIColorExtensions.swift in Sources */,

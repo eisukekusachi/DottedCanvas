@@ -1,5 +1,5 @@
 //
-//  DotImageViewModel.swift
+//  DottedCanvasViewModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -8,32 +8,21 @@
 import UIKit
 import Combine
 
-protocol ImageLayerManager {
-    var mergedSubLayers: UIImage? { get }
-    var subLayers: [SubImageData] { get }
+class DottedCanvasViewModel: ObservableObject {
+    @Published var mergedSubLayerImage: UIImage?
 
-    func addSubLayer(_ newData: SubImageData)
-    func removeSubLayer(index: Int) -> Bool
-    func updateSubLayer(id: UUID?, isVisible: Bool?, alpha: Int?)
-    func updateMergedSubLayers()
-}
+    @Published var subLayers: [DottedCanvasSubLayerModel]
+    @Published var selectedSubLayer: DottedCanvasSubLayerModel?
 
-class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
-
-    @Published var mergedSubLayers: UIImage?
-    @Published var subLayers: [SubImageData]
-
-    @Published var selectedSubImageData: SubImageData?
-
-    var projectData: ProjectData? {
-        ProjectData(mainImageThumbnail: mergedSubLayers?.resize(sideLength: 256, scale: 1),
-                    subImageLayers: subLayers,
-                    subImageLayerIndex: getSelectedSubLayerIndex() ?? 0,
-                    latestUpdateDate: Date())
+    var dottedCanvasData: DottedCanvasModel? {
+        DottedCanvasModel(mainImageThumbnail: mergedSubLayerImage?.resize(sideLength: 256, scale: 1),
+                          subLayers: subLayers,
+                          subLayerIndex: getSelectedSubLayerIndex() ?? 0,
+                          latestUpdateDate: Date())
     }
 
-    var selectedLayerIndex: Int {
-        subLayers.firstIndex(where: { $0 == selectedSubImageData }) ?? 0
+    var selectedSubLayerIndex: Int {
+        subLayers.firstIndex(where: { $0 == selectedSubLayer }) ?? 0
     }
 
     var projectName: String = Calendar.currentDate
@@ -43,14 +32,14 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     convenience init() {
         self.init(initialSubLayers: [])
     }
-    init(initialSubLayers: [SubImageData]) {
+    init(initialSubLayers: [DottedCanvasSubLayerModel]) {
         subLayers = initialSubLayers
 
-        if subLayers.count != 0, let data = subLayers.first {
-            selectedSubImageData = data
+        if subLayers.count != 0, let layer = subLayers.first {
+            selectedSubLayer = layer
         }
 
-        $selectedSubImageData
+        $selectedSubLayer
             .debounce(for: .milliseconds(50), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.updateMergedSubLayers()
@@ -66,26 +55,26 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     }
 
     func reset() {
-        mergedSubLayers = nil
+        mergedSubLayerImage = nil
         subLayers = []
-        selectedSubImageData = nil
+        selectedSubLayer = nil
 
         projectName = Calendar.currentDate
     }
 
     func getSelectedSubLayerIndex() -> Int? {
-        if let selectedSubImageData {
-            return getSubLayerIndex(from: selectedSubImageData.id)
+        if let selectedSubLayer {
+            return getSubLayerIndex(from: selectedSubLayer.id)
         }
         return nil
     }
     func removeSelectedSubLayer() {
-        if removeSubLayer(index: selectedLayerIndex) {
+        if removeSubLayer(index: selectedSubLayerIndex) {
             updateMergedSubLayers()
         }
     }
 
-    func loadData(fromZipFileURL zipFileURL: URL) throws -> ProjectData {
+    func loadData(fromZipFileURL zipFileURL: URL) throws -> DottedCanvasModel {
 
         let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
 
@@ -99,9 +88,9 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
         try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
 
         let jsonUrl = uniqueFolderURL.appendingPathComponent(Output.jsonFileName)
-        if let data: ProjectCodableData = Input.loadJson(url: jsonUrl) {
-            return ProjectData(codableData: data,
-                               folderURL: uniqueFolderURL)
+        if let data: DottedCanvasModelCodable = Input.loadJson(url: jsonUrl) {
+            return DottedCanvasModel(codableData: data,
+                                     folderURL: uniqueFolderURL)
 
         } else {
             throw InputError.failedToLoadJson
@@ -109,32 +98,32 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
     }
 
     // MARK: Add, Remove, Update
-    func addSubLayer(_ newData: SubImageData) {
+    func addSubLayer(_ newLayer: DottedCanvasSubLayerModel) {
         if subLayers.isEmpty {
-            appendSubImageData(newData)
+            appendSubLayer(newLayer)
         } else {
-            insertSubImageData(newData, at: selectedLayerIndex + 1)
+            insertSubLayer(newLayer, at: selectedSubLayerIndex + 1)
         }
 
-        selectedSubImageData = newData
+        selectedSubLayer = newLayer
         updateMergedSubLayers()
     }
 
-    func appendSubImageData(_ newData: SubImageData) {
-        subLayers.append(newData)
-        selectedSubImageData = newData
+    func appendSubLayer(_ newLayer: DottedCanvasSubLayerModel) {
+        subLayers.append(newLayer)
+        selectedSubLayer = newLayer
     }
 
     @discardableResult
-    func insertSubImageData(_ newData: SubImageData, at index: Int) -> Bool {
+    func insertSubLayer(_ newLayer: DottedCanvasSubLayerModel, at index: Int) -> Bool {
         guard   index >= 0 &&
                 index <= subLayers.count
         else {
             return false
         }
 
-        subLayers.insert(newData, at: index)
-        selectedSubImageData = newData
+        subLayers.insert(newLayer, at: index)
+        selectedSubLayer = newLayer
 
         return true
     }
@@ -148,29 +137,29 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
             return false
         }
 
-        let tmpCurrentData = subLayers[index]
+        let currentSubLayer = subLayers[index]
 
         subLayers.remove(at: index)
 
         if subLayers.count == 0 {
-            selectedSubImageData = nil
+            selectedSubLayer = nil
 
-        } else if selectedSubImageData == tmpCurrentData {
-            let index = min(max(0, index), subLayers.count - 1)
-            let data = subLayers[index]
-            selectedSubImageData = data
+        } else if selectedSubLayer == currentSubLayer {
+            let newIndex = min(max(0, index), subLayers.count - 1)
+            let newLayer = subLayers[newIndex]
+            selectedSubLayer = newLayer
         }
 
         return true
     }
 
-    func update(_ projectData: ProjectData) {
-        subLayers = projectData.subImageLayers
-        updateSelectedSubLayer(index: projectData.subImageLayerIndex)
+    func update(_ projectData: DottedCanvasModel) {
+        subLayers = projectData.subLayers
+        updateSelectedSubLayer(index: projectData.subLayerIndex)
     }
     func updateSelectedSubLayer(index: Int) {
         if index < subLayers.count {
-            selectedSubImageData = subLayers[index]
+            selectedSubLayer = subLayers[index]
         }
     }
 
@@ -187,8 +176,8 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
             subLayers[index].alpha = alpha
         }
 
-        if selectedSubImageData?.id == id {
-            selectedSubImageData = subLayers[index]
+        if selectedSubLayer?.id == id {
+            selectedSubLayer = subLayers[index]
         }
     }
 
@@ -208,7 +197,6 @@ class MainImageLayerViewModel: ObservableObject, ImageLayerManager {
                 }
             }
         }
-
-        mergedSubLayers = image
+        mergedSubLayerImage = image
     }
 }

@@ -1,5 +1,5 @@
 //
-//  SubImageData.swift
+//  DottedCanvasSubLayerModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct SubImageData: Identifiable, Hashable {
+struct DottedCanvasSubLayerModel: Identifiable, Hashable {
     var id = UUID()
     var title: String = ""
 
@@ -31,8 +31,7 @@ struct SubImageData: Identifiable, Hashable {
         id.uuidString
     }
 
-    init() {}
-    init(codableData: SubImageCodableData, folderURL: URL) {
+    init(codableData: DottedCanvasSubLayerModelCodable, folderURL: URL) {
         title = codableData.title
 
         let url = folderURL.appendingPathComponent(codableData.imagePath)
@@ -112,6 +111,7 @@ struct SubImageData: Identifiable, Hashable {
         self.offsetX = offsetX
         self.offsetY = offsetY
     }
+
     func createDotImage(size: CGSize) -> UIImage {
         let color = UIColor(red: CGFloat(red) / 255.0,
                             green: CGFloat(green) / 255.0,
