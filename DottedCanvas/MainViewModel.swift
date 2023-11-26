@@ -14,6 +14,8 @@ class MainViewModel: ObservableObject {
     @Published var subLayers: [SubLayerModel]
     @Published var selectedSubLayer: SubLayerModel?
 
+    @Published var selectedSubImageAlpha: Int = 255
+
     var dottedCanvasData: MainModel? {
         MainModel(mainImageThumbnail: mergedSubLayerImage?.resize(sideLength: 256, scale: 1),
                   subLayers: subLayers,

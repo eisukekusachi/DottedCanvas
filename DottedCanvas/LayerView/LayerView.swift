@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LayerView: View {
     @ObservedObject var mainViewModel: MainViewModel
+    @Binding var isProjectListViewPresented: Bool
     @Binding var isProjectsEmpty: Bool
 
     @State var isSubImageViewPresented: Bool = false
@@ -16,10 +17,8 @@ struct LayerView: View {
     @State var isVisibleSnackbar: Bool = false
     @State var isZippingCompleted: Bool = false
     @State var isNewImageAlertPresented: Bool = false
-    @State var isProjectListViewPresented: Bool = false
 
     @State var selectedSubImage = SubImageModel()
-    @State var selectedSubImageAlpha: Int = 255
 
     @State var message: String = ""
 
@@ -63,7 +62,7 @@ struct LayerView: View {
                 } else {
                     SubLayerList(
                         viewModel: mainViewModel,
-                        selectedSubImageAlpha: $selectedSubImageAlpha,
+                        selectedSubImageAlpha: $mainViewModel.selectedSubImageAlpha,
                         didSelectLayer: { _ in
                             updateSubLayer()
                     })
@@ -91,21 +90,8 @@ struct LayerView: View {
 
                 updateMainImage(newSubImageData: data,
                                 dotImage: image)
-                selectedSubImageAlpha = data.alpha
+                mainViewModel.selectedSubImageAlpha = data.alpha
             }
-        }
-        .sheet(isPresented: $isProjectListViewPresented) {
-            /*
-            ProjectListView(
-                isViewPresented: $isDocumentsFolderViewPresented,
-                viewModel: projectListViewModel,
-                didSelectItem: { index in
-
-                    let projectName = projectListViewModel.projects[index].projectName
-                    let zipFileURL = URL.documents.appendingPathComponent(projectName + ".zip")
-                    loadProject(zipFileURL: zipFileURL)
-                })
-             */
         }
         .alert(isPresented: $isNewImageAlertPresented) {
             let title = "Confirm"
@@ -175,24 +161,6 @@ struct LayerView: View {
         }
         */
     }
-    private func loadProject(zipFileURL: URL) {
-        /*
-        do {
-            let projectData = try mainViewModel.loadData(fromZipFileURL: zipFileURL)
-
-            mainViewModel.update(projectData)
-            selectedSubImageAlpha = mainViewModel.selectedSubLayer?.alpha ?? 255
-
-            if let fileName = zipFileURL.fileName {
-                mainViewModel.projectName = fileName
-            }
-
-        } catch {
-            showAlert(error)
-        }
-        */
-    }
-
     private func showAlert(_ error: Error) {
         print(error)
     }
@@ -205,9 +173,11 @@ struct LayerView_Previews: PreviewProvider {
                                .init(title: "Title 1", alpha: 225, isVisible: false),
                                .init(title: "Title 2", alpha: 25)
             ])
+        @State var isProjectListViewPresented: Bool = false
         @State var isProjectsEmpty: Bool = false
 
         LayerView(mainViewModel: mainViewModel,
+                  isProjectListViewPresented: $isProjectListViewPresented,
                   isProjectsEmpty: $isProjectsEmpty)
     }
 }

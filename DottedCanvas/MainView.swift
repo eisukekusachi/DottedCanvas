@@ -10,10 +10,22 @@ import SwiftUI
 struct MainView: View {
     @StateObject var mainViewModel = MainViewModel()
     @StateObject var projectListViewModel = ProjectListViewModel()
+    @State var isProjectListViewPresented: Bool = false
 
     var body: some View {
         LayerView(mainViewModel: mainViewModel,
+                  isProjectListViewPresented: $isProjectListViewPresented,
                   isProjectsEmpty: projectListViewModel.isProjectsEmptyBinding)
+        .sheet(isPresented: $isProjectListViewPresented) {
+            ProjectListView(
+                isViewPresented: $isProjectListViewPresented,
+                viewModel: projectListViewModel,
+                didSelectItem: { index in
+                    let projectName = projectListViewModel.projects[index].projectName
+                    let zipFileURL = URL.documents.appendingPathComponent(projectName + ".zip")
+                    loadProject(zipFileURL: zipFileURL)
+                })
+        }
         .onAppear {
             Task {
                 do {
@@ -31,6 +43,21 @@ struct MainView: View {
         }
     }
 
+    private func loadProject(zipFileURL: URL) {
+        do {
+            let projectData = try mainViewModel.loadData(fromZipFileURL: zipFileURL)
+
+            mainViewModel.update(projectData)
+            mainViewModel.selectedSubImageAlpha = mainViewModel.selectedSubLayer?.alpha ?? 255
+
+            if let fileName = zipFileURL.fileName {
+                mainViewModel.projectName = fileName
+            }
+
+        } catch {
+            showAlert(error)
+        }
+    }
     private func loadListProjectDataArray(from allURLs: [URL]) async throws -> [ProjectListModel] {
         return try await withThrowingTaskGroup(of: ProjectListModel?.self) { group in
             var dataArray: [ProjectListModel] = []
@@ -51,6 +78,10 @@ struct MainView: View {
 
             return dataArray
         }
+    }
+
+    private func showAlert(_ error: Error) {
+        print(error)
     }
 }
 
