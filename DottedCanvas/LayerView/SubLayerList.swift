@@ -1,5 +1,5 @@
 //
-//  DottedCanvasSubLayerList.swift
+//  SubLayerList.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct DottedCanvasSubLayerList: View {
-    @ObservedObject var viewModel: DottedCanvasViewModel
+struct SubLayerList: View {
+    @ObservedObject var viewModel: MainViewModel
     @Binding var selectedSubImageAlpha: Int
     var didSelectLayer: ((Int) -> Void)?
 
@@ -23,7 +23,7 @@ struct DottedCanvasSubLayerList: View {
     }
 }
 
-extension DottedCanvasSubLayerList {
+extension SubLayerList {
     private var selectedSubLayerAlphaSlider: some View {
         TwoRowsSliderView(
             title: "Alpha",
@@ -40,7 +40,7 @@ extension DottedCanvasSubLayerList {
             ForEach(Array(viewModel.subLayers.enumerated().reversed()),
                     id: \.element) { index, sublayer in
 
-                DottedCanvasSubLayerListItem(
+                SubLayerListItem(
                     subLayer: sublayer,
                     selected: sublayer == viewModel.selectedSubLayer,
                     didTapVisibleButton: { result in
@@ -70,11 +70,11 @@ extension DottedCanvasSubLayerList {
     }
 }
 
-struct DottedCanvasSubImageList_Previews: PreviewProvider {
+struct SubLayerList_Previews: PreviewProvider {
     static var previews: some View {
-        @StateObject var viewModel = DottedCanvasViewModel()
+        @StateObject var viewModel = MainViewModel()
         @State var selectedSubImageAlpha: Int = 0
-        DottedCanvasSubLayerList(
+        SubLayerList(
             viewModel: viewModel,
             selectedSubImageAlpha: $selectedSubImageAlpha)
     }

@@ -1,5 +1,5 @@
 //
-//  DottedCanvasSubLayerModel.swift
+//  SubLayerModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct DottedCanvasSubLayerModel: Identifiable, Hashable {
+struct SubLayerModel: Identifiable, Hashable {
     let id: UUID
     let title: String
 
@@ -31,7 +31,7 @@ struct DottedCanvasSubLayerModel: Identifiable, Hashable {
         id.uuidString
     }
 
-    init(codableData: DottedCanvasSubLayerModelCodable, folderURL: URL) {
+    init(codableData: SubLayerModelCodable, folderURL: URL) {
         self.id = UUID()
         self.title = codableData.title
 

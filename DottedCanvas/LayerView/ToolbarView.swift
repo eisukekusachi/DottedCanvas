@@ -1,5 +1,5 @@
 //
-//  DottedCanvasToolbarView.swift
+//  ToolbarView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct DottedCanvasToolbarView: View {
-    @ObservedObject var dottedCanvasViewModel: DottedCanvasViewModel
-    @ObservedObject var projectListViewModel: ProjectListViewModel
+struct ToolbarView: View {
+    @ObservedObject var mainViewModel: MainViewModel
+    @Binding var isProjectsEmpty: Bool
 
     var addSubLayer: () -> Void
     var removeSubLayer: () -> Void
@@ -38,7 +38,7 @@ struct DottedCanvasToolbarView: View {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainViewModel.subLayers.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -51,7 +51,7 @@ struct DottedCanvasToolbarView: View {
                     Image(systemName: "square.and.arrow.up")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainViewModel.subLayers.isEmpty))
 
             Button(
                 action: {
@@ -61,7 +61,7 @@ struct DottedCanvasToolbarView: View {
                     Image(systemName: "square.and.arrow.down")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: projectListViewModel.projects.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: isProjectsEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -74,16 +74,17 @@ struct DottedCanvasToolbarView: View {
                     Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainViewModel.subLayers.isEmpty))
         }
     }
 }
 
-struct DottedCanvasToolbarView_Previews: PreviewProvider {
+struct ToolbarView_Previews: PreviewProvider {
     static var previews: some View {
-        DottedCanvasToolbarView(
-            dottedCanvasViewModel: DottedCanvasViewModel(),
-            projectListViewModel: ProjectListViewModel(),
+        @State var isProjectsEmpty: Bool = false
+        ToolbarView(
+            mainViewModel: MainViewModel(),
+            isProjectsEmpty: $isProjectsEmpty,
             addSubLayer: {
                 print("add")
             },

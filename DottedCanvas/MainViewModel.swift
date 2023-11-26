@@ -1,5 +1,5 @@
 //
-//  DottedCanvasViewModel.swift
+//  MainViewModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -8,17 +8,17 @@
 import UIKit
 import Combine
 
-class DottedCanvasViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
     @Published var mergedSubLayerImage: UIImage?
 
-    @Published var subLayers: [DottedCanvasSubLayerModel]
-    @Published var selectedSubLayer: DottedCanvasSubLayerModel?
+    @Published var subLayers: [SubLayerModel]
+    @Published var selectedSubLayer: SubLayerModel?
 
-    var dottedCanvasData: DottedCanvasModel? {
-        DottedCanvasModel(mainImageThumbnail: mergedSubLayerImage?.resize(sideLength: 256, scale: 1),
-                          subLayers: subLayers,
-                          subLayerIndex: getSelectedSubLayerIndex() ?? 0,
-                          latestUpdateDate: Date())
+    var dottedCanvasData: MainModel? {
+        MainModel(mainImageThumbnail: mergedSubLayerImage?.resize(sideLength: 256, scale: 1),
+                  subLayers: subLayers,
+                  subLayerIndex: getSelectedSubLayerIndex() ?? 0,
+                  latestUpdateDate: Date())
     }
 
     var selectedSubLayerIndex: Int {
@@ -32,7 +32,7 @@ class DottedCanvasViewModel: ObservableObject {
     convenience init() {
         self.init(initialSubLayers: [])
     }
-    init(initialSubLayers: [DottedCanvasSubLayerModel]) {
+    init(initialSubLayers: [SubLayerModel]) {
         subLayers = initialSubLayers
 
         if subLayers.count != 0, let layer = subLayers.first {
@@ -74,7 +74,7 @@ class DottedCanvasViewModel: ObservableObject {
         }
     }
 
-    func loadData(fromZipFileURL zipFileURL: URL) throws -> DottedCanvasModel {
+    func loadData(fromZipFileURL zipFileURL: URL) throws -> MainModel {
 
         let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
 
@@ -88,9 +88,9 @@ class DottedCanvasViewModel: ObservableObject {
         try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
 
         let jsonUrl = uniqueFolderURL.appendingPathComponent(Output.jsonFileName)
-        if let data: DottedCanvasModelCodable = Input.loadJson(url: jsonUrl) {
-            return DottedCanvasModel(codableData: data,
-                                     folderURL: uniqueFolderURL)
+        if let data: MainModelCodable = Input.loadJson(url: jsonUrl) {
+            return MainModel(codableData: data,
+                             folderURL: uniqueFolderURL)
 
         } else {
             throw InputError.failedToLoadJson
@@ -98,7 +98,7 @@ class DottedCanvasViewModel: ObservableObject {
     }
 
     // MARK: Add, Remove, Update
-    func addSubLayer(_ newLayer: DottedCanvasSubLayerModel) {
+    func addSubLayer(_ newLayer: SubLayerModel) {
         if subLayers.isEmpty {
             appendSubLayer(newLayer)
         } else {
@@ -109,13 +109,13 @@ class DottedCanvasViewModel: ObservableObject {
         updateMergedSubLayers()
     }
 
-    func appendSubLayer(_ newLayer: DottedCanvasSubLayerModel) {
+    func appendSubLayer(_ newLayer: SubLayerModel) {
         subLayers.append(newLayer)
         selectedSubLayer = newLayer
     }
 
     @discardableResult
-    func insertSubLayer(_ newLayer: DottedCanvasSubLayerModel, at index: Int) -> Bool {
+    func insertSubLayer(_ newLayer: SubLayerModel, at index: Int) -> Bool {
         guard   index >= 0 &&
                 index <= subLayers.count
         else {
@@ -153,9 +153,9 @@ class DottedCanvasViewModel: ObservableObject {
         return true
     }
 
-    func update(_ projectData: DottedCanvasModel) {
-        subLayers = projectData.subLayers
-        updateSelectedSubLayer(index: projectData.subLayerIndex)
+    func update(_ mainModel: MainModel) {
+        subLayers = mainModel.subLayers
+        updateSelectedSubLayer(index: mainModel.subLayerIndex)
     }
     func updateSelectedSubLayer(index: Int) {
         if index < subLayers.count {

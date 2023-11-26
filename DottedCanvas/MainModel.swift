@@ -1,5 +1,5 @@
 //
-//  DottedCanvasModel.swift
+//  MainModel.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/26.
@@ -7,22 +7,22 @@
 
 import UIKit
 
-struct DottedCanvasModel {
+struct MainModel {
     let mainImageThumbnail: UIImage?
-    let subLayers: [DottedCanvasSubLayerModel]
+    let subLayers: [SubLayerModel]
     let subLayerIndex: Int
     let latestUpdateDate: Date
 
-    init(codableData: DottedCanvasModelCodable, folderURL: URL) {
+    init(codableData: MainModelCodable, folderURL: URL) {
         self.mainImageThumbnail = nil
         self.subLayers = codableData.subImages.map {
-            DottedCanvasSubLayerModel(codableData: $0, folderURL: folderURL)
+            SubLayerModel(codableData: $0, folderURL: folderURL)
         }
         self.subLayerIndex = codableData.selectedSubImageIndex
         self.latestUpdateDate = Date()
     }
     init(mainImageThumbnail: UIImage?,
-         subLayers: [DottedCanvasSubLayerModel],
+         subLayers: [SubLayerModel],
          subLayerIndex: Int,
          latestUpdateDate: Date) {
         self.mainImageThumbnail = mainImageThumbnail

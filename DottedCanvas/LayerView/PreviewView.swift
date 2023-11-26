@@ -1,5 +1,5 @@
 //
-//  DottedCanvasPreviewView.swift
+//  PreviewView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DottedCanvasPreviewView: View {
+struct PreviewView: View {
     @Binding var image: UIImage?
     let diameter: CGFloat
 
@@ -31,11 +31,10 @@ struct DottedCanvasPreviewView: View {
     }
 }
 
-struct DottedCanvasPreviewView_Previews: PreviewProvider {
+struct PreviewView_Previews: PreviewProvider {
     static var previews: some View {
-
-        @ObservedObject var viewModel = DottedCanvasViewModel()
-        DottedCanvasPreviewView(image: $viewModel.mergedSubLayerImage,
-                                diameter: 200)
+        @ObservedObject var viewModel = MainViewModel()
+        PreviewView(image: $viewModel.mergedSubLayerImage,
+                    diameter: 200)
     }
 }

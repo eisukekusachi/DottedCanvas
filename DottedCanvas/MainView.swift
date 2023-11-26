@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/25.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @StateObject var dottedCanvasViewModel = DottedCanvasViewModel()
+struct MainView: View {
+    @StateObject var mainViewModel = MainViewModel()
     @StateObject var projectListViewModel = ProjectListViewModel()
 
     var body: some View {
-        DottedCanvasView(dottedCanvasViewModel: dottedCanvasViewModel,
-                         projectListViewModel: projectListViewModel)
+        LayerView(mainViewModel: mainViewModel,
+                  isProjectsEmpty: projectListViewModel.isProjectsEmptyBinding)
         .onAppear {
             Task {
                 do {
@@ -56,6 +56,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MainView()
     }
 }
