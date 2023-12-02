@@ -52,11 +52,7 @@ struct LayerView: View {
                 Spacer()
 
             } else {
-                SubLayerList(
-                    viewModel: mainViewModel,
-                    selectedSubImageAlpha: $mainViewModel.selectedSubImageAlpha,
-                    didSelectLayer: { _ in
-                })
+                SubLayerList(viewModel: mainViewModel)
             }
         }
         .padding()

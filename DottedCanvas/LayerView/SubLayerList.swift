@@ -7,10 +7,9 @@
 
 import SwiftUI
 
+/// A list that manages sub-layers and allows for reordering, updating visibility, and updating alpha.
 struct SubLayerList: View {
     @ObservedObject var viewModel: MainViewModel
-    @Binding var selectedSubImageAlpha: Int
-    var didSelectLayer: ((Int) -> Void)?
 
     private let style = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
     private let range = 0 ... 255
@@ -27,7 +26,7 @@ extension SubLayerList {
     private var selectedSubLayerAlphaSlider: some View {
         TwoRowsSliderView(
             title: "Alpha",
-            value: $selectedSubImageAlpha,
+            value: $viewModel.selectedSubImageAlpha,
             style: sliderStyle,
             range: range) { value in
                 viewModel.updateSubLayer(id: viewModel.selectedSubLayer?.id,
@@ -38,44 +37,36 @@ extension SubLayerList {
     private var subLayerList: some View {
         List {
             ForEach(Array(viewModel.subLayers.enumerated().reversed()),
-                    id: \.element) { index, sublayer in
+                    id: \.element) { _, sublayer in
 
                 SubLayerListItem(
                     subLayer: sublayer,
                     selected: sublayer == viewModel.selectedSubLayer,
                     didTapVisibleButton: { result in
-
                         viewModel.updateSubLayer(id: sublayer.id, isVisible: result)
                         viewModel.updateMergedSubLayers()
                     })
                     .contentShape(Rectangle())
                     .onTapGesture {
                         viewModel.selectedSubLayer = sublayer
-                        selectedSubImageAlpha = sublayer.alpha
-
-                        didSelectLayer?(index)
+                        viewModel.selectedSubImageAlpha = sublayer.alpha
                     }
             }
-            .onMove(perform: moveItem)
+                    .onMove(perform: { source, destination in
+                        viewModel.subLayers = viewModel.subLayers.reversed()
+                        viewModel.subLayers.move(fromOffsets: source, toOffset: destination)
+                        viewModel.subLayers = viewModel.subLayers.reversed()
+
+                        viewModel.updateMergedSubLayers()
+                    })
         }
         .listStyle(PlainListStyle())
         .listRowInsets(EdgeInsets())
-    }
-    private func moveItem(from source: IndexSet, to destination: Int) {
-        viewModel.subLayers = viewModel.subLayers.reversed()
-        viewModel.subLayers.move(fromOffsets: source, toOffset: destination)
-        viewModel.subLayers = viewModel.subLayers.reversed()
-
-        viewModel.updateMergedSubLayers()
     }
 }
 
 struct SubLayerList_Previews: PreviewProvider {
     static var previews: some View {
-        @StateObject var viewModel = MainViewModel()
-        @State var selectedSubImageAlpha: Int = 0
-        SubLayerList(
-            viewModel: viewModel,
-            selectedSubImageAlpha: $selectedSubImageAlpha)
+        SubLayerList(viewModel: MainViewModel())
     }
 }
