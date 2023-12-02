@@ -29,6 +29,11 @@ class ProjectListViewModel: ObservableObject {
         self.projects = projects
     }
 
+    func getZipFileURLFromProjectList(index: Int) -> URL {
+        let projectName = projects[index].projectName
+        return URL.documents.appendingPathComponent(projectName + "." + Output.zipSuffix)
+    }
+
     func upsertData(projectName: String, newThumbnail: UIImage?) {
         // If the project data is found in the array, update it. if not found, add it to the array.
         let projectData = ProjectListModel(

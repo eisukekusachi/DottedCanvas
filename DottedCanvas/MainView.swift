@@ -28,8 +28,7 @@ struct MainView: View {
                 isSubImageViewPresented = true
             },
                       saveProject: {
-                let zipFileName = mainViewModel.projectName + "." + "\(Output.zipSuffix)"
-                saveProject(zipFileURL: URL.documents.appendingPathComponent(zipFileName))
+                saveProject(zipFileURL: mainViewModel.currentZipFileUrl)
             },
                       loadProject: {
                 isProjectListViewPresented = true
@@ -42,9 +41,7 @@ struct MainView: View {
                     isViewPresented: $isProjectListViewPresented,
                     viewModel: projectListViewModel,
                     didSelectItem: { index in
-                        let projectName = projectListViewModel.projects[index].projectName
-                        let zipFileURL = URL.documents.appendingPathComponent(projectName + ".zip")
-                        loadProject(zipFileURL: zipFileURL)
+                        loadProject(zipFileURL: projectListViewModel.getZipFileURLFromProjectList(index: index))
                     })
             }
             .alert(isPresented: $isNewImageAlertPresented) {

@@ -27,6 +27,9 @@ class MainViewModel: ObservableObject {
     var selectedSubLayerIndex: Int {
         subLayers.firstIndex(where: { $0 == selectedSubLayer }) ?? 0
     }
+    var currentZipFileUrl: URL {
+        URL.documents.appendingPathComponent(projectName + "." + Output.zipSuffix)
+    }
 
     var projectName: String = Calendar.currentDate
 
