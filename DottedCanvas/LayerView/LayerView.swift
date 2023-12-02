@@ -52,7 +52,7 @@ struct LayerView: View {
                 Spacer()
 
             } else {
-                SubLayerList(viewModel: mainViewModel)
+                LayerListView(viewModel: mainViewModel)
             }
         }
         .padding()

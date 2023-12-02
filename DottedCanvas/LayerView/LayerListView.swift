@@ -1,5 +1,5 @@
 //
-//  SubLayerList.swift
+//  LayerListView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-/// A list that manages sub-layers and allows for reordering, updating visibility, and updating alpha.
-struct SubLayerList: View {
+/// A list that manages layers and allows for reordering, updating visibility, and updating alpha.
+struct LayerListView: View {
     @ObservedObject var viewModel: MainViewModel
 
     private let style = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
@@ -22,7 +22,7 @@ struct SubLayerList: View {
     }
 }
 
-extension SubLayerList {
+extension LayerListView {
     private var selectedSubLayerAlphaSlider: some View {
         TwoRowsSliderView(
             title: "Alpha",
@@ -39,7 +39,7 @@ extension SubLayerList {
             ForEach(Array(viewModel.subLayers.enumerated().reversed()),
                     id: \.element) { _, sublayer in
 
-                SubLayerListItem(
+                LayerListItem(
                     subLayer: sublayer,
                     selected: sublayer == viewModel.selectedSubLayer,
                     didTapVisibleButton: { result in
@@ -65,8 +65,8 @@ extension SubLayerList {
     }
 }
 
-struct SubLayerList_Previews: PreviewProvider {
+struct LayerListView_Previews: PreviewProvider {
     static var previews: some View {
-        SubLayerList(viewModel: MainViewModel())
+        LayerListView(viewModel: MainViewModel())
     }
 }
