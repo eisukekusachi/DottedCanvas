@@ -13,6 +13,7 @@ struct DefaultDotValue {
     static let spacing = 24
 }
 
+/// A struct for sub-image data
 struct SubImageModel {
 
     var alpha: Int
@@ -53,22 +54,35 @@ struct SubImageModel {
         self.offsetY = offsetY
     }
 
-    init(layerData: DottedCanvasSubLayerModel,
+    init(subLayerData: SubLayerModel?,
          alpha: Int = 255,
          isVisible: Bool = true) {
 
         self.alpha = alpha
         self.isVisible = isVisible
 
-        self.red = layerData.red
-        self.green = layerData.green
-        self.blue = layerData.blue
+        if let subLayerData {
+            self.red = subLayerData.red
+            self.green = subLayerData.green
+            self.blue = subLayerData.blue
 
-        self.diameter = layerData.diameter
-        self.spacing = layerData.spacing
+            self.diameter = subLayerData.diameter
+            self.spacing = subLayerData.spacing
 
-        self.offsetX = layerData.offsetX
-        self.offsetY = layerData.offsetY
+            self.offsetX = subLayerData.offsetX
+            self.offsetY = subLayerData.offsetY
+
+        } else {
+            self.red = 0
+            self.green = 0
+            self.blue = 0
+
+            self.diameter = 24
+            self.spacing = 20
+
+            self.offsetX = 0
+            self.offsetY = 0
+        }
     }
 }
 

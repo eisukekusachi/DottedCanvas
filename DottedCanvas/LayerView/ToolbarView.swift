@@ -1,5 +1,5 @@
 //
-//  DottedCanvasToolbarView.swift
+//  ToolbarView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct DottedCanvasToolbarView: View {
-    @ObservedObject var dottedCanvasViewModel: DottedCanvasViewModel
+struct ToolbarView: View {
+    @ObservedObject var mainViewModel: MainViewModel
     @ObservedObject var projectListViewModel: ProjectListViewModel
 
     var addSubLayer: () -> Void
@@ -38,7 +38,7 @@ struct DottedCanvasToolbarView: View {
                     Image(systemName: "minus.circle")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainViewModel.subLayers.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -51,7 +51,7 @@ struct DottedCanvasToolbarView: View {
                     Image(systemName: "square.and.arrow.up")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainViewModel.subLayers.isEmpty))
 
             Button(
                 action: {
@@ -74,16 +74,16 @@ struct DottedCanvasToolbarView: View {
                     Image(systemName: "doc.badge.plus")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: dottedCanvasViewModel.subLayers.isEmpty))
+            .modifier(ButtonDisabled(isDisabled: mainViewModel.subLayers.isEmpty))
         }
     }
 }
 
-struct DottedCanvasToolbarView_Previews: PreviewProvider {
+struct ToolbarView_Previews: PreviewProvider {
     static var previews: some View {
-        DottedCanvasToolbarView(
-            dottedCanvasViewModel: DottedCanvasViewModel(),
-            projectListViewModel: ProjectListViewModel(),
+        ToolbarView(
+            mainViewModel: MainViewModel(),
+            projectListViewModel: ProjectListViewModel(projects: []),
             addSubLayer: {
                 print("add")
             },

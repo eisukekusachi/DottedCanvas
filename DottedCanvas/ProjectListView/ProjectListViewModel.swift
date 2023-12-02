@@ -5,10 +5,10 @@
 //  Created by Eisuke Kusachi on 2023/09/02.
 //
 
-import UIKit
+import SwiftUI
 
 class ProjectListViewModel: ObservableObject {
-
+    
     @Published var projects: [ProjectListModel]
 
     convenience init() {
@@ -16,6 +16,11 @@ class ProjectListViewModel: ObservableObject {
     }
     init(projects: [ProjectListModel]) {
         self.projects = projects
+    }
+
+    func getZipFileURLFromProjectList(index: Int) -> URL {
+        let projectName = projects[index].projectName
+        return URL.documents.appendingPathComponent(projectName + "." + Output.zipSuffix)
     }
 
     func upsertData(projectName: String, newThumbnail: UIImage?) {
@@ -46,7 +51,7 @@ class ProjectListViewModel: ObservableObject {
         try Input.unzipFile(from: zipFileURL, to: uniqueFolderURL)
 
         let jsonUrl = uniqueFolderURL.appendingPathComponent(Output.jsonFileName)
-        if let data: DottedCanvasModelCodable = Input.loadJson(url: jsonUrl) {
+        if let data: MainModelCodable = Input.loadJson(url: jsonUrl) {
             return ProjectListModel(
                 projectName: zipFileURL.fileName!,
                 folderURL: uniqueFolderURL,
@@ -58,7 +63,7 @@ class ProjectListViewModel: ObservableObject {
         }
     }
 
-    func saveData(projectData: DottedCanvasModel, zipFileURL: URL) throws {
+    func saveData(mainModel: MainModel, zipFileURL: URL) throws {
         let uniqueFolderURL = URL.tmp.appendingPathComponent(UUID().uuidString)
 
         // Clean up the temporary folder when done
@@ -70,9 +75,9 @@ class ProjectListViewModel: ObservableObject {
 
 
         // Create codable data
-        let codableData = DottedCanvasModelCodable(
-            subLayerDataCoableArray: projectData.subLayers.map { DottedCanvasSubLayerModelCodable(data: $0) },
-            selectedIndex: projectData.subLayerIndex
+        let codableData = MainModelCodable(
+            subLayerDataCoableArray: mainModel.subLayers.map { SubLayerModelCodable(data: $0) },
+            selectedIndex: mainModel.subLayerIndex
         )
 
         do {
@@ -93,16 +98,16 @@ class ProjectListViewModel: ObservableObject {
         do {
             // Write mainImage thumbnail
             let imageURL = uniqueFolderURL.appendingPathComponent(Output.thumbnailName)
-            try projectData.mainImageThumbnail?.pngData()?.write(to: imageURL)
+            try mainModel.mainImageThumbnail?.pngData()?.write(to: imageURL)
         } catch {
             throw error
         }
 
         // Write subImage
-        for i in 0..<projectData.subLayers.count {
+        for i in 0 ..< mainModel.subLayers.count {
             do {
-                let imageURL = uniqueFolderURL.appendingPathComponent(projectData.subLayers[i].imagePath)
-                try projectData.subLayers[i].image?.pngData()?.write(to: imageURL)
+                let imageURL = uniqueFolderURL.appendingPathComponent(mainModel.subLayers[i].imagePath)
+                try mainModel.subLayers[i].image?.pngData()?.write(to: imageURL)
             } catch {
                 throw error
             }

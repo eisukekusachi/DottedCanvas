@@ -1,5 +1,5 @@
 //
-//  DottedCanvasSubLayerModelCodable.swift
+//  SubLayerModelCodable.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DottedCanvasSubLayerModelCodable: Codable {
+struct SubLayerModelCodable: Codable {
     var title: String
 
     var imagePath: String
@@ -25,7 +25,7 @@ struct DottedCanvasSubLayerModelCodable: Codable {
     var offsetX: Int = 0
     var offsetY: Int = 0
 
-    init(data: DottedCanvasSubLayerModel) {
+    init(data: SubLayerModel) {
         self.title = data.title
 
         self.imagePath = data.imagePath

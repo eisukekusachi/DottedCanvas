@@ -1,5 +1,5 @@
 //
-//  DottedCanvasSubLayerListItem.swift
+//  LayerListItem.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct DottedCanvasSubLayerListItem: View {
+struct LayerListItem: View {
     @Environment(\.colorScheme) var colorScheme
 
-    var subLayer: DottedCanvasSubLayerModel
+    var subLayer: SubLayerModel
     var selected: Bool
     let didTapVisibleButton: ((Bool) -> Void)
 
@@ -50,7 +50,7 @@ struct DottedCanvasSubLayerListItem: View {
 }
 
 // Colors
-extension DottedCanvasSubLayerListItem {
+extension LayerListItem {
     private var backgroundColor: UIColor {
         if !selected {
             return .clear
@@ -98,15 +98,15 @@ extension DottedCanvasSubLayerListItem {
     }
 }
 
-struct DottedCanvasSubLayerListItem_Previews: PreviewProvider {
+struct LayerListItem_Previews: PreviewProvider {
     static var previews: some View {
-        DottedCanvasSubLayerListItem(
+        LayerListItem(
             subLayer: .init(title: "Test0"),
             selected: true,
             didTapVisibleButton: { _ in
                 print("Code button actions")
         })
-        DottedCanvasSubLayerListItem(
+        LayerListItem(
             subLayer: .init(title: "Test1"),
             selected: false,
             didTapVisibleButton: { _ in

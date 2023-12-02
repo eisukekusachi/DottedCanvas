@@ -21,7 +21,7 @@ struct SubImageView: View {
     static let imageSize: CGSize = CGSize(width: 1000, height: 1000)
 
     init(isViewPresented: Binding<Bool>,
-         data: SubImageModel,
+         data: SubImageModel?,
          completion: ((SubImageModel, UIImage?) -> Void)?) {
         self._isViewPresented = isViewPresented
         self.viewModel = SubImageViewModel(data: data)
@@ -126,7 +126,7 @@ extension SubImageView {
 struct SubImageView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
-        
+
         SubImageView(isViewPresented: $isViewPresented,
                      data: SubImageModel()) { _, _ in
             print("result")

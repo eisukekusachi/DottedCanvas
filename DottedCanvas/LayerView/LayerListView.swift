@@ -1,5 +1,5 @@
 //
-//  DottedCanvasSubLayerList.swift
+//  LayerListView.swift
 //  DottedCanvas
 //
 //  Created by Eisuke Kusachi on 2023/08/16.
@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-struct DottedCanvasSubLayerList: View {
-    @ObservedObject var viewModel: DottedCanvasViewModel
-    @Binding var selectedSubImageAlpha: Int
-    var didSelectLayer: ((Int) -> Void)?
+/// A list that manages layers and allows for reordering, updating visibility, and updating alpha.
+struct LayerListView: View {
+    @ObservedObject var viewModel: MainViewModel
 
     private let style = SliderStyleImpl(trackLeftColor: GlobalData.getAssetColor(.trackColor))
     private let range = 0 ... 255
@@ -23,11 +22,11 @@ struct DottedCanvasSubLayerList: View {
     }
 }
 
-extension DottedCanvasSubLayerList {
+extension LayerListView {
     private var selectedSubLayerAlphaSlider: some View {
         TwoRowsSliderView(
             title: "Alpha",
-            value: $selectedSubImageAlpha,
+            value: $viewModel.selectedSubImageAlpha,
             style: sliderStyle,
             range: range) { value in
                 viewModel.updateSubLayer(id: viewModel.selectedSubLayer?.id,
@@ -38,44 +37,36 @@ extension DottedCanvasSubLayerList {
     private var subLayerList: some View {
         List {
             ForEach(Array(viewModel.subLayers.enumerated().reversed()),
-                    id: \.element) { index, sublayer in
+                    id: \.element) { _, sublayer in
 
-                DottedCanvasSubLayerListItem(
+                LayerListItem(
                     subLayer: sublayer,
                     selected: sublayer == viewModel.selectedSubLayer,
                     didTapVisibleButton: { result in
-
                         viewModel.updateSubLayer(id: sublayer.id, isVisible: result)
                         viewModel.updateMergedSubLayers()
                     })
                     .contentShape(Rectangle())
                     .onTapGesture {
                         viewModel.selectedSubLayer = sublayer
-                        selectedSubImageAlpha = sublayer.alpha
-
-                        didSelectLayer?(index)
+                        viewModel.selectedSubImageAlpha = sublayer.alpha
                     }
             }
-            .onMove(perform: moveItem)
+                    .onMove(perform: { source, destination in
+                        viewModel.subLayers = viewModel.subLayers.reversed()
+                        viewModel.subLayers.move(fromOffsets: source, toOffset: destination)
+                        viewModel.subLayers = viewModel.subLayers.reversed()
+
+                        viewModel.updateMergedSubLayers()
+                    })
         }
         .listStyle(PlainListStyle())
         .listRowInsets(EdgeInsets())
     }
-    private func moveItem(from source: IndexSet, to destination: Int) {
-        viewModel.subLayers = viewModel.subLayers.reversed()
-        viewModel.subLayers.move(fromOffsets: source, toOffset: destination)
-        viewModel.subLayers = viewModel.subLayers.reversed()
-
-        viewModel.updateMergedSubLayers()
-    }
 }
 
-struct DottedCanvasSubImageList_Previews: PreviewProvider {
+struct LayerListView_Previews: PreviewProvider {
     static var previews: some View {
-        @StateObject var viewModel = DottedCanvasViewModel()
-        @State var selectedSubImageAlpha: Int = 0
-        DottedCanvasSubLayerList(
-            viewModel: viewModel,
-            selectedSubImageAlpha: $selectedSubImageAlpha)
+        LayerListView(viewModel: MainViewModel())
     }
 }
