@@ -9,9 +9,9 @@ import SwiftUI
 
 struct Snackbar: View {
 
-    @Binding var isDisplayed: Bool
+    @Binding var isPresented: Bool
 
-    @State var isBodyDisplayed: Bool = false
+    @State var isBodyPresented: Bool = false
     @State var autoViewHidingTask: Task<Void, Never>?
 
     let imageSystemName: String
@@ -46,11 +46,11 @@ struct Snackbar: View {
                     Color(.clear)
                         .frame(height: insetBottom)
                 }
-                .offset(y: isBodyDisplayed ? 0 : snackbarHeight + insetBottom)
+                .offset(y: isBodyPresented ? 0 : snackbarHeight + insetBottom)
 
                 .onTapGesture {
                     withAnimation(.easeOut(duration: fadeTime)) {
-                        isBodyDisplayed = false
+                        isBodyPresented = false
                     }
 
                     Task {
@@ -59,7 +59,7 @@ struct Snackbar: View {
                         autoViewHidingTask?.cancel()
 
                         withAnimation(.easeOut(duration: fadeTime)) {
-                            isDisplayed = false
+                            isPresented = false
                         }
                     }
                 }
@@ -68,18 +68,18 @@ struct Snackbar: View {
             .onAppear {
 
                 withAnimation(.easeOut(duration: fadeTime)) {
-                    isBodyDisplayed = true
+                    isBodyPresented = true
                 }
 
                 autoViewHidingTask = Task {
 
                     try? await Task.sleep(nanoseconds: UInt64(displayTime * 1_000_000_000))
                     withAnimation(.easeOut(duration: fadeTime)) {
-                        isBodyDisplayed = false
+                        isBodyPresented = false
                     }
 
                     try? await Task.sleep(nanoseconds: UInt64(fadeTime * 1_000_000_000))
-                    isDisplayed = false
+                    isPresented = false
                 }
             }
         }
@@ -89,8 +89,8 @@ struct Snackbar: View {
 
 struct Snackbar_Previews: PreviewProvider {
     static var previews: some View {
-        @State var isViewDisplayed: Bool = true
-        Snackbar(isDisplayed: $isViewDisplayed,
+        @State var isViewPresented: Bool = true
+        Snackbar(isPresented: $isViewPresented,
                  imageSystemName: "hand.thumbsup.fill",
                  comment: "Success")
     }

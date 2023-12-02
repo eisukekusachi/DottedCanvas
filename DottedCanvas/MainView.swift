@@ -10,15 +10,15 @@ import SwiftUI
 struct MainView: View {
     @StateObject var mainViewModel = MainViewModel()
     @StateObject var projectListViewModel = ProjectListViewModel()
-    @State var isProjectListViewPresented: Bool = false
 
     @State var message: String = ""
-    @State var isVisibleLoadingView: Bool = false
-    @State var isVisibleSnackbar: Bool = false
     @State var isZippingCompleted: Bool = false
 
+    @State var isSnackbarPresented: Bool = false
     @State var isNewImageAlertPresented: Bool = false
+    @State var isLoadingViewPresented: Bool = false
     @State var isSubImageViewPresented: Bool = false
+    @State var isProjectListViewPresented: Bool = false
 
     var body: some View {
         ZStack {
@@ -69,12 +69,11 @@ struct MainView: View {
                              data: mainViewModel.selectedSubImage) { data, image in
 
                     let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
-                    let newData = SubLayerModel(title: title,
-                                                image: image,
-                                                data: data)
-                    mainViewModel.addSubLayer(newData)
-
-                    mainViewModel.selectedSubImageAlpha = data.alpha
+                    let newLayerData = SubLayerModel(title: title,
+                                                     image: image,
+                                                     data: data)
+                    mainViewModel.addSubLayer(newLayerData)
+                    mainViewModel.selectedSubImageAlpha = newLayerData.alpha
                 }
             }
             .onAppear {
@@ -92,15 +91,15 @@ struct MainView: View {
                 }
             }
 
-            if isVisibleLoadingView {
-                LoadingDialog(isVisibleLoadingView: $isVisibleLoadingView,
+            if isLoadingViewPresented {
+                LoadingDialog(isLoadingViewPresented: $isLoadingViewPresented,
                               message: $message)
                 .onDisappear {
-                    isVisibleSnackbar = true
+                    isSnackbarPresented = true
                 }
             }
-            if isVisibleSnackbar {
-                Snackbar(isDisplayed: $isVisibleSnackbar,
+            if isSnackbarPresented {
+                Snackbar(isPresented: $isSnackbarPresented,
                          imageSystemName: "hand.thumbsup.fill",
                          comment: isZippingCompleted ? "Success" : "Error")
             }
@@ -115,7 +114,7 @@ struct MainView: View {
                 let projectName = zipFileURL.fileName!
 
                 message = "Saving..."
-                isVisibleLoadingView = true
+                isLoadingViewPresented = true
                 isZippingCompleted = false
                 try await Task.sleep(nanoseconds: UInt64(1 * 1000))
 
@@ -130,7 +129,7 @@ struct MainView: View {
                     try await Task.sleep(nanoseconds: UInt64(sleep * 1000 * 1000 * 1000))
                 }
 
-                isVisibleLoadingView = false
+                isLoadingViewPresented = false
                 isZippingCompleted = true
 
             } catch {

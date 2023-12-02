@@ -62,7 +62,7 @@ struct LayerView: View {
         }
         .padding()
         .onReceive(mainViewModel.$selectedSubLayer, perform: { subLayer in
-            mainViewModel.selectedSubImage = SubImageModel(layerData: subLayer)
+            mainViewModel.selectedSubImage = SubImageModel(subLayerData: subLayer)
         })
     }
 }

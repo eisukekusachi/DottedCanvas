@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// A structure to store id, title, and ``SubImageModel`` data
 struct SubLayerModel: Identifiable, Hashable {
     let id: UUID
     let title: String

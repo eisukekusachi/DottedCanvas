@@ -126,7 +126,7 @@ extension SubImageView {
 struct SubImageView_Previews: PreviewProvider {
     static var previews: some View {
         @State var isViewPresented: Bool = true
-        
+
         SubImageView(isViewPresented: $isViewPresented,
                      data: SubImageModel()) { _, _ in
             print("result")

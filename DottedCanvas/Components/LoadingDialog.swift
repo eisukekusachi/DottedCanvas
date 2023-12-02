@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoadingDialog: View {
 
-    @Binding var isVisibleLoadingView: Bool
+    @Binding var isLoadingViewPresented: Bool
     @Binding var message: String
 
     var body: some View {
@@ -41,9 +41,9 @@ struct LoadingDialog: View {
 
 struct LoadingDialog_Previews: PreviewProvider {
     static var previews: some View {
-        @State var isVisibleLoadingView: Bool = false
+        @State var isLoadingViewPresented: Bool = false
         @State var message: String = "Loading..."
-        LoadingDialog(isVisibleLoadingView: $isVisibleLoadingView,
+        LoadingDialog(isLoadingViewPresented: $isLoadingViewPresented,
                       message: $message)
             .edgesIgnoringSafeArea(.all)
     }
