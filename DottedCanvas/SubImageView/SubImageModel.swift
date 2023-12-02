@@ -53,22 +53,35 @@ struct SubImageModel {
         self.offsetY = offsetY
     }
 
-    init(layerData: SubLayerModel,
+    init(layerData: SubLayerModel?,
          alpha: Int = 255,
          isVisible: Bool = true) {
 
         self.alpha = alpha
         self.isVisible = isVisible
 
-        self.red = layerData.red
-        self.green = layerData.green
-        self.blue = layerData.blue
+        if let layerData {
+            self.red = layerData.red
+            self.green = layerData.green
+            self.blue = layerData.blue
 
-        self.diameter = layerData.diameter
-        self.spacing = layerData.spacing
+            self.diameter = layerData.diameter
+            self.spacing = layerData.spacing
 
-        self.offsetX = layerData.offsetX
-        self.offsetY = layerData.offsetY
+            self.offsetX = layerData.offsetX
+            self.offsetY = layerData.offsetY
+
+        } else {
+            self.red = 0
+            self.green = 0
+            self.blue = 0
+
+            self.diameter = 24
+            self.spacing = 20
+
+            self.offsetX = 0
+            self.offsetY = 0
+        }
     }
 }
 

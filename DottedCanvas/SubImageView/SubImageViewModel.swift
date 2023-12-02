@@ -21,7 +21,7 @@ class SubImageViewModel: ObservableObject {
                                         alpha: CGFloat(data.alpha) / 255.0 ))
     }
 
-    init(data: SubImageModel) {
-        self.data = data
+    init(data: SubImageModel?) {
+        self.data = data ?? SubImageModel()
     }
 }

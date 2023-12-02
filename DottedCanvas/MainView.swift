@@ -18,11 +18,15 @@ struct MainView: View {
     @State var isZippingCompleted: Bool = false
 
     @State var isNewImageAlertPresented: Bool = false
+    @State var isSubImageViewPresented: Bool = false
 
     var body: some View {
         ZStack {
             LayerView(mainViewModel: mainViewModel,
                       isProjectsEmpty: projectListViewModel.isProjectsEmptyBinding,
+                      addSubLayer: {
+                isSubImageViewPresented = true
+            },
                       saveProject: {
                 let zipFileName = mainViewModel.projectName + "." + "\(Output.zipSuffix)"
                 saveProject(zipFileURL: URL.documents.appendingPathComponent(zipFileName))
@@ -53,29 +57,41 @@ struct MainView: View {
                 let action = {
                     mainViewModel.reset()
                 }
-                
+
                 return Alert(title: Text(title),
                              message: Text(message),
                              primaryButton: .default(Text("OK"),
                                                      action: action),
                              secondaryButton: .destructive(Text("Cancel")))
             }
+            .sheet(isPresented: $isSubImageViewPresented) {
+                SubImageView(isViewPresented: $isSubImageViewPresented,
+                             data: mainViewModel.selectedSubImage) { data, image in
+
+                    let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
+                    let newData = SubLayerModel(title: title,
+                                                image: image,
+                                                data: data)
+                    mainViewModel.addSubLayer(newData)
+
+                    mainViewModel.selectedSubImageAlpha = data.alpha
+                }
+            }
             .onAppear {
                 Task {
                     do {
                         let urls = URL.documents.allURLs
                         let projects = try await loadListProjectDataArray(from: urls)
-                        
                         DispatchQueue.main.async {
                             self.projectListViewModel.projects = projects
                         }
-                        
+
                     } catch {
                         throw error
                     }
                 }
             }
-            
+
             if isVisibleLoadingView {
                 LoadingDialog(isVisibleLoadingView: $isVisibleLoadingView,
                               message: $message)
@@ -83,7 +99,6 @@ struct MainView: View {
                     isVisibleSnackbar = true
                 }
             }
-            
             if isVisibleSnackbar {
                 Snackbar(isDisplayed: $isVisibleSnackbar,
                          imageSystemName: "hand.thumbsup.fill",
@@ -128,7 +143,7 @@ struct MainView: View {
             let projectData = try mainViewModel.loadData(fromZipFileURL: zipFileURL)
 
             mainViewModel.update(projectData)
-            mainViewModel.selectedSubImageAlpha = mainViewModel.selectedSubLayer?.alpha ?? 255
+            mainViewModel.selectedSubImageAlpha = mainViewModel.selectedSubImage.alpha
 
             if let fileName = zipFileURL.fileName {
                 mainViewModel.projectName = fileName

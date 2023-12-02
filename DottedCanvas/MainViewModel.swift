@@ -14,6 +14,7 @@ class MainViewModel: ObservableObject {
     @Published var subLayers: [SubLayerModel]
     @Published var selectedSubLayer: SubLayerModel?
 
+    @Published var selectedSubImage = SubImageModel()
     @Published var selectedSubImageAlpha: Int = 255
 
     var dottedCanvasData: MainModel? {
