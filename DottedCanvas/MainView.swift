@@ -37,41 +37,13 @@ struct MainView: View {
                 isNewImageAlertPresented = true
             })
             .sheet(isPresented: $isProjectListViewPresented) {
-                ProjectListView(
-                    isViewPresented: $isProjectListViewPresented,
-                    viewModel: projectListViewModel,
-                    didSelectItem: { index in
-                        loadProject(zipFileURL: projectListViewModel.getZipFileURLFromProjectList(index: index))
-                    })
+                projectListView
             }
             .alert(isPresented: $isNewImageAlertPresented) {
-                let title = "Confirm"
-                let message = ["If you create a new project, ",
-                               "any existing work will be deleted.",
-                               "\n",
-                               "Are you sure you want to continue?"
-                ].joined()
-                let action = {
-                    mainViewModel.reset()
-                }
-
-                return Alert(title: Text(title),
-                             message: Text(message),
-                             primaryButton: .default(Text("OK"),
-                                                     action: action),
-                             secondaryButton: .destructive(Text("Cancel")))
+                alertView
             }
             .sheet(isPresented: $isSubImageViewPresented) {
-                SubImageView(isViewPresented: $isSubImageViewPresented,
-                             data: mainViewModel.selectedSubImage) { data, image in
-
-                    let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
-                    let newLayerData = SubLayerModel(title: title,
-                                                     image: image,
-                                                     data: data)
-                    mainViewModel.addSubLayer(newLayerData)
-                    mainViewModel.selectedSubImageAlpha = newLayerData.alpha
-                }
+                subImageView
             }
             .onAppear {
                 Task {
@@ -87,7 +59,6 @@ struct MainView: View {
                     }
                 }
             }
-
             if isLoadingViewPresented {
                 LoadingDialog(isLoadingViewPresented: $isLoadingViewPresented,
                               message: $message)
@@ -102,7 +73,9 @@ struct MainView: View {
             }
         }
     }
+}
 
+extension MainView {
     private func saveProject(zipFileURL: URL) {
         guard let data = mainViewModel.dottedCanvasData else { return }
         Task {
@@ -170,13 +143,51 @@ struct MainView: View {
             return dataArray
         }
     }
+}
 
+extension MainView {
+    private var projectListView: some View {
+        ProjectListView(
+            isViewPresented: $isProjectListViewPresented,
+            viewModel: projectListViewModel,
+            didSelectItem: { index in
+                loadProject(zipFileURL: projectListViewModel.getZipFileURLFromProjectList(index: index))
+            })
+    }
+    private var subImageView: some View {
+        SubImageView(isViewPresented: $isSubImageViewPresented,
+                     data: mainViewModel.selectedSubImage) { data, image in
+
+            let title = TimeStampFormatter.current(template: "MMM dd HH mm ss")
+            let newLayerData = SubLayerModel(title: title,
+                                             image: image,
+                                             data: data)
+            mainViewModel.addSubLayer(newLayerData)
+            mainViewModel.selectedSubImageAlpha = newLayerData.alpha
+        }
+    }
+    private var alertView: Alert {
+        let title = "Confirm"
+        let message = ["If you create a new project, ",
+                       "any existing work will be deleted.",
+                       "\n",
+                       "Are you sure you want to continue?"
+        ].joined()
+        let action = {
+            mainViewModel.reset()
+        }
+        return Alert(title: Text(title),
+                     message: Text(message),
+                     primaryButton: .default(Text("OK"),
+                                             action: action),
+                     secondaryButton: .destructive(Text("Cancel")))
+    }
     private func showAlert(_ error: Error) {
         print(error)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
     }
