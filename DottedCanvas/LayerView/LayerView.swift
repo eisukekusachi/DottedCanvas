@@ -9,8 +9,7 @@ import SwiftUI
 
 struct LayerView: View {
     @ObservedObject var mainViewModel: MainViewModel
-
-    @Binding var isProjectsEmpty: Bool
+    @ObservedObject var projectListViewModel: ProjectListViewModel
 
     var addSubLayer: () -> Void
     var saveProject: () -> Void
@@ -23,7 +22,7 @@ struct LayerView: View {
         VStack {
             ToolbarView(
                 mainViewModel: mainViewModel,
-                isProjectsEmpty: $isProjectsEmpty,
+                projectListViewModel: projectListViewModel,
                 addSubLayer: {
                     addSubLayer()
                 },
@@ -74,10 +73,10 @@ struct LayerView_Previews: PreviewProvider {
                                .init(title: "Title 1", alpha: 225, isVisible: false),
                                .init(title: "Title 2", alpha: 25)
             ])
-        @State var isProjectsEmpty: Bool = false
+        @StateObject var projectListViewModel = ProjectListViewModel(projects: [])
 
         LayerView(mainViewModel: mainViewModel,
-                  isProjectsEmpty: $isProjectsEmpty,
+                  projectListViewModel: projectListViewModel,
                   addSubLayer: {
             print("addSubLayer")
         },

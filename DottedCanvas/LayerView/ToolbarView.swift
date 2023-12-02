@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ToolbarView: View {
     @ObservedObject var mainViewModel: MainViewModel
-    @Binding var isProjectsEmpty: Bool
+    @ObservedObject var projectListViewModel: ProjectListViewModel
 
     var addSubLayer: () -> Void
     var removeSubLayer: () -> Void
@@ -61,7 +61,7 @@ struct ToolbarView: View {
                     Image(systemName: "square.and.arrow.down")
                         .buttonModifier(diameter: buttonDiameter)
             })
-            .modifier(ButtonDisabled(isDisabled: isProjectsEmpty))
+            .modifier(ButtonDisabled(isDisabled: projectListViewModel.projects.isEmpty))
 
             Divider()
                 .frame(height: 24)
@@ -81,10 +81,9 @@ struct ToolbarView: View {
 
 struct ToolbarView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var isProjectsEmpty: Bool = false
         ToolbarView(
             mainViewModel: MainViewModel(),
-            isProjectsEmpty: $isProjectsEmpty,
+            projectListViewModel: ProjectListViewModel(projects: []),
             addSubLayer: {
                 print("add")
             },

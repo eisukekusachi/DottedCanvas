@@ -8,19 +8,8 @@
 import SwiftUI
 
 class ProjectListViewModel: ObservableObject {
-
+    
     @Published var projects: [ProjectListModel]
-
-    var isProjectsEmptyBinding: Binding<Bool> {
-        Binding<Bool>(
-            get: {
-                self.projects.isEmpty
-            },
-            set: { _ in
-
-            }
-        )
-    }
 
     convenience init() {
         self.init(projects: [])

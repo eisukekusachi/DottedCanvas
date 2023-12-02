@@ -23,7 +23,7 @@ struct MainView: View {
     var body: some View {
         ZStack {
             LayerView(mainViewModel: mainViewModel,
-                      isProjectsEmpty: projectListViewModel.isProjectsEmptyBinding,
+                      projectListViewModel: projectListViewModel,
                       addSubLayer: {
                 isSubImageViewPresented = true
             },
